@@ -3,14 +3,16 @@ using System;
 using BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(UserContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20200916131404_new columns")]
+    partial class newcolumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,23 +25,11 @@ namespace BackEnd.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("City")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("text");
-
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Hobby")
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .HasColumnType("text");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(4000)");

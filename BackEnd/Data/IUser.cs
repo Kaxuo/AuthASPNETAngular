@@ -5,7 +5,6 @@ namespace BackEnd.Data
 {
     public interface IUser
     {
-        bool SaveChanges();
         User Authenticate(string username,string password);
         IEnumerable<User> GetAllUsers();
         User GetUserById(int id);

@@ -5,11 +5,9 @@ namespace BackEnd.Data
 {
     public class UserContext : DbContext
     {
-        public UserContext(DbContextOptions<UserContext> opt): base(opt)
+        public UserContext(DbContextOptions<UserContext> opt) : base(opt)
         {
-
         }
-
-        public DbSet<User> Users { get ; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

@@ -91,3 +91,13 @@ C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\obj\Debug\netco
 C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\obj\Debug\netcoreapp3.1\BackEnd.dll
 C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\obj\Debug\netcoreapp3.1\BackEnd.pdb
 C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\obj\Debug\netcoreapp3.1\BackEnd.genruntimeconfig.cache
+C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Kaxuo\OneDrive\Desktop\Txt\C#\AuthASPNETAngular\BackEnd\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

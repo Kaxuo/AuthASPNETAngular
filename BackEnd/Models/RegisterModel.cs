@@ -1,19 +1,20 @@
+using System.ComponentModel.DataAnnotations;
 
 namespace BackEnd.Models
 {
-    public class User
+    public class RegisterModel
     {
-        public int Id { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
         public string Username { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
-
+        [Required]
+        public string Password { get; set; }
         public int Number { get; set; }
         public string City { get; set; }
         public string Hobby { get; set; }
         public string Country { get; set; }
-        // public string desc { get; set; }
     }
 }
