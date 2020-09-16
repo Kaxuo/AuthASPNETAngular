@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using BackEnd.Data;
 using BackEnd.Models;
-using BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEnd.Controllers
@@ -9,16 +9,17 @@ namespace BackEnd.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly MongoAuthServices _users;
-        public UserController(MongoAuthServices services)
-        {
-            _users = services;
-        }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<User>> GetEverything()
+        private readonly IUser _repository;
+
+        public UserController(IUser repository)
         {
-            var items = _users.Get();
+            _repository = repository;
+        }
+        [HttpGet]
+        public ActionResult<IEnumerable<User>> GetAll()
+        {
+            var items = _repository.GetAllUsers();
             return Ok(items);
         }
     }

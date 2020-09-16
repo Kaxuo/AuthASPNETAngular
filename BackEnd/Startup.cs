@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BackEnd.Interfaces;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,8 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using BackEnd.Services;
 using Microsoft.Extensions.Options;
+using BackEnd.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd
 {
@@ -28,14 +28,12 @@ namespace BackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<DatabaseSettings>(
-               Configuration.GetSection(nameof(DatabaseSettings)));
-
-            services.AddSingleton<IDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
-
-            services.AddSingleton<MongoAuthServices>();
             services.AddControllers();
+            services.AddMvc();
+            services.AddDbContext<UserContext>(options => options.UseMySQL(
+            Configuration.GetConnectionString("DefaultConnection")
+        ));
+            services.AddScoped<IUser, MySQLData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
