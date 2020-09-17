@@ -11,7 +11,12 @@
     <!--Card content-->
     <mdb-card-body class="px-lg-5 pt-0">
       <!-- Form -->
-      <form [formGroup]="registerForm" (ngSubmit)="sendData(registerForm.value)" class="text-center" style="color: #757575">
+      <form
+        [formGroup]="registerForm"
+        (ngSubmit)="sendData(registerForm.value)"
+        class="text-center"
+        style="color: #757575"
+      >
         <div class="form-row">
           <div class="col">
             <!-- First name -->
@@ -24,6 +29,13 @@
                 formControlName="firstName"
               />
               <label for="materialRegisterFormFirstName">First name</label>
+              <em
+                *ngIf="
+                  registerForm.get('firstName').hasError('required') &&
+                  registerForm.get('firstName').touched
+                "
+                >Required</em
+              >
             </div>
           </div>
           <div class="col">
@@ -37,6 +49,13 @@
                 formControlName="lastName"
               />
               <label for="materialRegisterFormLastName">Last name</label>
+              <em
+              *ngIf="
+                registerForm.get('lastName').hasError('required') &&
+                registerForm.get('lastName').touched
+              "
+              >Required</em
+            >
             </div>
           </div>
         </div>
@@ -51,6 +70,13 @@
             formControlName="username"
           />
           <label for="materialSubscriptionFormUsername">UserName</label>
+          <em
+          *ngIf="
+            registerForm.get('username').hasError('required') &&
+            registerForm.get('username').touched
+          "
+          >Required</em
+        >
         </div>
 
         <!-- Password -->
@@ -64,6 +90,13 @@
             formControlName="password"
           />
           <label for="materialRegisterFormPassword">Password</label>
+          <em
+          *ngIf="
+            registerForm.get('password').hasError('required') &&
+            registerForm.get('password').touched
+          "
+          >Required</em
+        >
           <small
             id="materialRegisterFormPasswordHelpBlock"
             class="form-text text-muted mb-4"
@@ -75,7 +108,7 @@
         <!-- Phone number -->
         <div class="md-form">
           <input
-            type="tel"
+            type="number"
             id="materialRegisterFormPhone"
             class="form-control"
             aria-describedby="materialRegisterFormPhoneHelpBlock"
@@ -83,6 +116,13 @@
             formControlName="number"
           />
           <label for="materialRegisterFormPhone">Phone number</label>
+          <em
+          *ngIf="
+            registerForm.get('number').hasError('required') &&
+            registerForm.get('number').touched
+          "
+          >Required</em
+        >
         </div>
 
         <!-- City -->
@@ -95,6 +135,13 @@
             formControlName="city"
           />
           <label for="materialSubscriptionFormCity">City</label>
+          <em
+          *ngIf="
+            registerForm.get('city').hasError('required') &&
+            registerForm.get('city').touched
+          "
+          >Required</em
+        >
         </div>
 
         <!-- Country -->
@@ -107,6 +154,13 @@
             formControlName="country"
           />
           <label for="materialSubscriptionFormCountryCity">Country</label>
+          <em
+          *ngIf="
+            registerForm.get('country').hasError('required') &&
+            registerForm.get('country').touched
+          "
+          >Required</em
+        >
         </div>
 
         <!-- Name -->
@@ -119,10 +173,18 @@
             formControlName="hobby"
           />
           <label for="materialSubscriptionFormHobby">Hobby</label>
+          <em
+          *ngIf="
+            registerForm.get('hobby').hasError('required') &&
+            registerForm.get('hobby').touched
+          "
+          >Required</em
+        >
         </div>
 
         <!-- Sign up button -->
         <button
+        [disabled] = "registerForm.invalid"
           mdbBtn
           color="info"
           outline="true"

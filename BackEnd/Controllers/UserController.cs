@@ -29,7 +29,6 @@ namespace BackEnd.Controllers
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
-
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetAll()
         {
@@ -49,7 +48,25 @@ namespace BackEnd.Controllers
             {
                 // create user
                 _repository.CreateUser(user, model.Password);
-                return Ok();
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
+
+                return Ok(new
+                {
+                    Id = user.Id,
+                    Token = tokenString
+                });
             }
             catch (AppException ex)
             {
@@ -114,7 +131,7 @@ namespace BackEnd.Controllers
             catch (AppException ex)
             {
                 return BadRequest(new { message = ex.Message });
-                
+
             }
         }
 
