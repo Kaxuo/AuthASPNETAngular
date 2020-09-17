@@ -31,6 +31,11 @@ export class AuthService {
     );
   }
 
+  logout(){
+    this.removeSession();
+    this.router.navigate(['/register'])
+  }
+
   private setSession(
     userId: string,
     accessToken: string,
