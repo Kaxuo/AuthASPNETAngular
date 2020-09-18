@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -8,15 +10,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  token: string = localStorage.getItem('token');
-  id: any;
-  authenticated: boolean;
+  authenticated: Observable<boolean> = this.auth.isAuthenticated();
+  isAuth: boolean;
 
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-
-  }
+    this.authenticated.subscribe((result) => {
+      this.isAuth = result
+    });
+  } 
 
   logout() {
     this.auth.logout();

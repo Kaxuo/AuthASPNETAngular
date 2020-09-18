@@ -17,7 +17,7 @@ import {
 import { MainComponent } from './components/main/main.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BearerTokenInterceptor } from './services/bearer-token.interceptor';
-import { AuthService } from './services/auth.service';
+import {NgxWebstorageModule} from 'ngx-webstorage';
 
 @NgModule({
   declarations: [
@@ -37,6 +37,7 @@ import { AuthService } from './services/auth.service';
     ReactiveFormsModule,
     HttpClientModule,
     TableModule,
+    NgxWebstorageModule.forRoot(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -45,7 +46,6 @@ import { AuthService } from './services/auth.service';
       useClass: BearerTokenInterceptor,
       multi: true,
     },
-    AuthService,
   ],
   bootstrap: [AppComponent],
 })
