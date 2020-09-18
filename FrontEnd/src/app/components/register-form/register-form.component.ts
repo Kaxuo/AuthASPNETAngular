@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { UserRegister } from '../../Models/UserRegister';
+import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register-form',
@@ -11,11 +13,14 @@ import { UserRegister } from '../../Models/UserRegister';
 })
 export class RegisterFormComponent implements OnInit {
   registerForm: FormGroup;
+  message:string;
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-
+    if (localStorage.getItem('token')) {
+      this.router.navigate(['/']);
+    }
     this.registerForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
@@ -30,8 +35,15 @@ export class RegisterFormComponent implements OnInit {
 
   sendData(values: UserRegister) {
     console.log(values);
-    this.auth.register(values).subscribe((res: HttpResponse<any>) => {
-      console.log(res);
-    });
+    this.auth
+      .register(values)
+      .pipe(take(1))
+      .subscribe(
+        (res: HttpResponse<any>) => {
+          console.log(res);
+          this.router.navigate(['/']);
+        },
+        (err: HttpErrorResponse) => (this.message = err.error.message)
+      );
   }
 }

@@ -21,6 +21,13 @@
             formControlName="username"
           />
           <label for="materialLoginFormUsername">Username</label>
+          <em
+          *ngIf="
+            signInForm.get('username').hasError('required') &&
+            signInForm.get('username').touched
+          "
+          >Required</em
+        >
         </div>
 
         <!-- Password -->
@@ -33,9 +40,16 @@
             formControlName="password"
           />
           <label for="materialLoginFormPassword">Password</label>
+          <em
+          *ngIf="
+            signInForm.get('password').hasError('required') &&
+            signInForm.get('password').touched
+          "
+          >Required</em
+        >
         </div>
 
-
+        <em *ngIf="message">{{message}}</em>
         <!-- Sign in button -->
         <button
           mdbBtn
@@ -46,6 +60,7 @@
           class="my-4 waves-effect z-depth-0"
           mdbWavesEffect
           type="submit"
+          [disabled] ="signInForm.invalid"
         >
           Sign in
         </button>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { WebRequestService } from './web-request.service';
 import { UserRegister } from '../Models/UserRegister';
 import { shareReplay, tap } from 'rxjs/operators';
+import { UserAuth } from '../Models/UserAuth';
 
 @Injectable({
   providedIn: 'root',
@@ -23,23 +24,26 @@ export class AuthService {
     return this.webRequest.register(payload).pipe(
       shareReplay(),
       tap((res: HttpResponse<any>) => {
-        this.setSession(
-          res.body.id,
-          res.body.token,
-        )
+        this.setSession(res.body.id, res.body.token);
       })
     );
   }
 
-  logout(){
-    this.removeSession();
-    this.router.navigate(['/register'])
+  login(payload: UserAuth) {
+    return this.webRequest.authenticate(payload).pipe(
+      shareReplay(),
+      tap((res:HttpResponse<any>) => {
+        this.setSession(res.body.id,res.body.token);
+      })
+    )
   }
 
-  private setSession(
-    userId: string,
-    accessToken: string,
-  ) {
+  logout() {
+    this.removeSession();
+    this.router.navigate(['/register']);
+  }
+
+  private setSession(userId: string, accessToken: string) {
     localStorage.setItem('user-id', userId);
     localStorage.setItem('token', accessToken);
   }

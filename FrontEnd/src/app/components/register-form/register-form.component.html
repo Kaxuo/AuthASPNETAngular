@@ -181,7 +181,7 @@
           >Required</em
         >
         </div>
-
+        <em *ngIf="message">{{message}}</em>
         <!-- Sign up button -->
         <button
         [disabled] = "registerForm.invalid"

@@ -25,7 +25,7 @@ export class WebRequestService {
   }
 
   authenticate(payload: UserAuth) {
-    return this.http.post(`${this.ROOT_URL}/users/authenticate}`, payload, {
+    return this.http.post(`${this.ROOT_URL}/api/users/authenticate`, payload, {
       observe: 'response',
     });
   }

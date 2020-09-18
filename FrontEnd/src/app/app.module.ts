@@ -8,7 +8,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SignInFormComponent } from './components/sign-in-form/sign-in-form.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { NavbarModule, WavesModule, ButtonsModule } from 'angular-bootstrap-md';
+import { NavbarModule, WavesModule, ButtonsModule,TableModule } from 'angular-bootstrap-md';
 import { MainComponent } from './components/main/main.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BearerTokenInterceptor } from './services/bearer-token.interceptor';
@@ -30,6 +30,7 @@ import { BearerTokenInterceptor } from './services/bearer-token.interceptor';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    TableModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
