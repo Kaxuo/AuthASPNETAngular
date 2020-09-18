@@ -10,6 +10,8 @@ import { UserAuth } from '../Models/UserAuth';
   providedIn: 'root',
 })
 export class AuthService {
+  authenticated: boolean;
+
   constructor(
     private webRequest: WebRequestService,
     private router: Router,
@@ -24,6 +26,7 @@ export class AuthService {
     return this.webRequest.register(payload).pipe(
       shareReplay(),
       tap((res: HttpResponse<any>) => {
+        this.authenticated = true;
         this.setSession(res.body.id, res.body.token);
       })
     );
@@ -32,15 +35,19 @@ export class AuthService {
   login(payload: UserAuth) {
     return this.webRequest.authenticate(payload).pipe(
       shareReplay(),
-      tap((res:HttpResponse<any>) => {
-        this.setSession(res.body.id,res.body.token);
+      tap((res: HttpResponse<any>) => {
+        this.authenticated = true;
+        console.log(this.authenticated)
+        this.setSession(res.body.id, res.body.token);
       })
-    )
+    );
   }
 
   logout() {
+    this.authenticated = false;
     this.removeSession();
     this.router.navigate(['/register']);
+    console.log(this.authenticated)
   }
 
   private setSession(userId: string, accessToken: string) {

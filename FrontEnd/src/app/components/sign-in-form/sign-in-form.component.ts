@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class SignInFormComponent implements OnInit {
   signInForm: FormGroup;
-  message: string;
+  message: string; 
 
   constructor(private auth: AuthService, private router: Router) {}
 
