@@ -1,25 +1,93 @@
 <div class="form">
   <div *ngIf="data" class="list-group">
-    <a class="list-group-item active waves-light" mdbWavesEffect>
+    <a
+      style="text-align: center"
+      class="list-group-item active waves-light"
+      mdbWavesEffect
+    >
       <strong>Profile Information </strong>
     </a>
-    <a class="list-group-item waves-light" mdbWavesEffect
-      >Name: <strong>{{ data.firstName }} {{ data.lastName }} </strong></a
+    <form
+      [formGroup]="firstName"
+      (ngSubmit)="sendData(firstName.value)"
+      class="list-group-item bob waves-light"
     >
-    <a class="list-group-item waves-light" mdbWavesEffect
-      >Username: <strong>{{ data.username }} </strong></a
+      <span class="left" *ngIf="!firstNameedit">
+        First Name: <strong>{{ data.firstName }} </strong>
+      </span>
+      <div *ngIf="firstNameedit" class="md-form left">
+        <input
+          mdbInput
+          type="text"
+          id="form1"
+          class="form-control"
+          formControlName="firstName"
+        />
+        <label for="form1" class="">First Name</label>
+      </div>
+
+      <button
+        *ngIf="!firstNameedit"
+        mdbBtn
+        (click)="firstNameedit = true"
+        type="button"
+        color="primary"
+        mdbWavesEffect
+      >
+        Edit
+      </button>
+      <button
+        *ngIf="firstNameedit"
+        mdbBtn
+        type="button"
+        color="indigo"
+        mdbWavesEffect
+        type="submit"
+      >
+        Update
+      </button>
+    </form>
+
+    <form
+      [formGroup]="lastName"
+      (ngSubmit)="sendData(lastName.value)"
+      class="list-group-item bob waves-light"
     >
-    <a class="list-group-item waves-light" mdbWavesEffect
-      >City: <strong>{{ data.city }} </strong></a
-    >
-    <a class="list-group-item waves-light" mdbWavesEffect
-      >Country:<strong> {{ data.country }}</strong></a
-    >
-    <a class="list-group-item waves-light" mdbWavesEffect
-      >Hobby: <strong> {{ data.hobby }}</strong></a
-    >
-    <a class="list-group-item waves-light" mdbWavesEffect
-      >Phone Number :<strong>{{ data.number }} </strong></a
-    >
+      <span class="left" *ngIf="!lastNameEdit">
+        Last Name: <strong>{{ data.lastName }} </strong>
+      </span>
+      <div *ngIf="lastNameEdit" class="md-form left">
+        <input
+          mdbInput
+          type="text"
+          id="form1"
+          class="form-control"
+          formControlName="lastName"
+        />
+        <label for="form1" class="">First Name</label>
+      </div>
+
+      <button
+        *ngIf="!lastNameEdit"
+        mdbBtn
+        (click)="lastNameEdit = true"
+        type="button"
+        color="primary"
+        mdbWavesEffect
+      >
+        Edit
+      </button>
+      <button
+        *ngIf="lastNameEdit"
+        mdbBtn
+        type="button"
+        color="indigo"
+        mdbWavesEffect
+        type="submit"
+      >
+        Update
+      </button>
+    </form>
   </div>
+  <em *ngIf="message">{{ message }}</em>
 </div>

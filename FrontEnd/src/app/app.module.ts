@@ -13,6 +13,7 @@ import {
   WavesModule,
   ButtonsModule,
   TableModule,
+  CollapseModule
 } from 'angular-bootstrap-md';
 import { MainComponent } from './components/main/main.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
