@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserRegister } from '../Models/UserRegister';
 import { UserAuth } from '../Models/UserAuth';
 import { SingleUser } from '../Models/SingleUser';
+import { UpdateUser } from '../Models/UpdateUser';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +35,7 @@ export class WebRequestService {
     });
   }
 
-  editUser(url: string, payload: UserRegister) {
+  editUser(url: string, payload: UpdateUser) {
     return this.http.put(`${this.ROOT_URL}/${url}`, payload);
   }
 

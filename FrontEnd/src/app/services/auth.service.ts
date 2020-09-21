@@ -7,6 +7,7 @@ import { map, shareReplay, tap } from 'rxjs/operators';
 import { UserAuth } from '../Models/UserAuth';
 import { BehaviorSubject, merge, Observable, of, zip } from 'rxjs';
 import {LocalStorageService} from 'ngx-webstorage';
+import { UpdateUser } from '../Models/UpdateUser'
 
 @Injectable({
   providedIn: 'root',
@@ -38,12 +39,18 @@ export class AuthService {
     return this.webRequest.getOneUser(`api/users`, id)
   }
 
+  editUser(id:number, data:UpdateUser){
+    return this.webRequest.editUser(`api/users/${id}`, data).pipe(
+      shareReplay()
+    )
+  }
+
   register(payload: UserRegister) {
     return this.webRequest.register(payload).pipe(
       shareReplay(),
       tap((res: HttpResponse<any>) => {
         //this.authenticated.next(true);
-        this.setSession(res.body.id, res.body.token);
+        this.setSession(res.body.token);
       })
     );
   }
@@ -53,7 +60,7 @@ export class AuthService {
       shareReplay(),
       tap((res: HttpResponse<any>) => {
         //this.authenticated.next(true);
-        this.setSession(res.body.id, res.body.token);
+        this.setSession( res.body.token);
       })
     );
   }
@@ -64,7 +71,7 @@ export class AuthService {
     this.router.navigate(['/register']);
   }
 
-  private setSession(userId: string, accessToken: string) {
+  private setSession( accessToken: string) {
     this.localStorageService.store('token', accessToken)
   }
 

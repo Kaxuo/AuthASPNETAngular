@@ -5,8 +5,8 @@
       </tr>
     </thead>
     <tbody class="tablebody">
-      <tr mdbTableCol *ngFor="let el of data">
-        <th scope="row">{{el.id}}</th>
+      <tr mdbTableCol *ngFor="let el of data; let index = index">
+        <th scope="row">{{index +1}}</th>
         <td>{{el.firstName}}</td>
         <td>{{el.lastName}}</td>
         <td>{{el.username}}</td>

@@ -1,1 +1,186 @@
-<p>update-profile works!</p>
+<!-- Material form login -->
+<div class="form">
+  <!-- Material form register -->
+  <mdb-card class="form2">
+    <mdb-card-header class="info-color white-text text-center py-4">
+      <h5>
+        <strong>Update</strong>
+      </h5>
+    </mdb-card-header>
+
+    <!--Card content-->
+    <mdb-card-body class="px-lg-5 pt-0">
+      <!-- Form -->
+      <form
+        [formGroup]="registerForm"
+        (ngSubmit)="sendData(registerForm.value)"
+        class="text-center"
+        style="color: #757575"
+        *ngIf="registerForm"
+      >
+        <div class="form-row">
+          <div class="col">
+            <!-- First name -->
+            <div class="md-form">
+              <input
+                type="text"
+                id="materialRegisterFormFirstName"
+                class="form-control"
+                mdbInput
+                formControlName="firstName"
+              />
+              <label for="materialRegisterFormFirstName">First name</label>
+              <em
+                *ngIf="
+                  registerForm.get('firstName').hasError('required') &&
+                  registerForm.get('firstName').touched
+                "
+                >Required</em
+              >
+            </div>
+          </div>
+          <div class="col">
+            <!-- Last name -->
+            <div class="md-form">
+              <input
+                type="email"
+                id="materialRegisterFormLastName"
+                class="form-control"
+                mdbInput
+                formControlName="lastName"
+              />
+              <label for="materialRegisterFormLastName">Last name</label>
+              <em
+              *ngIf="
+                registerForm.get('lastName').hasError('required') &&
+                registerForm.get('lastName').touched
+              "
+              >Required</em
+            >
+            </div>
+          </div>
+        </div>
+
+        <!-- Name -->
+        <div class="md-form mt-3">
+          <input
+            type="text"
+            id="materialSubscriptionFormUsername"
+            class="form-control"
+            mdbInput
+            formControlName="username"
+          />
+          <label for="materialSubscriptionFormUsername">UserName</label>
+          <em
+          *ngIf="
+            registerForm.get('username').hasError('required') &&
+            registerForm.get('username').touched
+          "
+          >Required</em
+        >
+        </div>
+
+
+        <!-- Phone number -->
+        <div class="md-form">
+          <input
+            type="number"
+            id="materialRegisterFormPhone"
+            class="form-control"
+            aria-describedby="materialRegisterFormPhoneHelpBlock"
+            mdbInput
+            formControlName="number"
+          />
+          <label for="materialRegisterFormPhone">Phone number</label>
+          <em
+          *ngIf="
+            registerForm.get('number').hasError('required') &&
+            registerForm.get('number').touched
+          "
+          >Required</em
+        >
+        </div>
+
+        <!-- City -->
+        <div class="md-form mt-3">
+          <input
+            type="text"
+            id="materialSubscriptionFormCity"
+            class="form-control"
+            mdbInput
+            formControlName="city"
+          />
+          <label for="materialSubscriptionFormCity">City</label>
+          <em
+          *ngIf="
+            registerForm.get('city').hasError('required') &&
+            registerForm.get('city').touched
+          "
+          >Required</em
+        >
+        </div>
+
+        <!-- Country -->
+        <div class="md-form mt-3">
+          <input
+            type="text"
+            id="materialSubscriptionFormCountryCity"
+            class="form-control"
+            mdbInput
+            formControlName="country"
+          />
+          <label for="materialSubscriptionFormCountryCity">Country</label>
+          <em
+          *ngIf="
+            registerForm.get('country').hasError('required') &&
+            registerForm.get('country').touched
+          "
+          >Required</em
+        >
+        </div>
+
+        <!-- Name -->
+        <div class="md-form mt-3">
+          <input
+            type="text"
+            id="materialSubscriptionFormHobby"
+            class="form-control"
+            mdbInput
+            formControlName="hobby"
+          />
+          <label for="materialSubscriptionFormHobby">Hobby</label>
+          <em
+          *ngIf="
+            registerForm.get('hobby').hasError('required') &&
+            registerForm.get('hobby').touched
+          "
+          >Required</em
+        >
+        </div>
+        <em *ngIf="message">{{message}}</em>
+        <!-- Sign up button -->
+        <button
+        [disabled] = "registerForm.invalid"
+          mdbBtn
+          color="info"
+          outline="true"
+          rounded="true"
+          block="true"
+          class="my-4 waves-effect z-depth-0"
+          mdbWavesEffect
+          type="submit"
+        >
+          Update
+        </button>
+        <p>
+          Already Registered ?
+          <a href="">Sign in</a>
+        </p>
+        <hr />
+      </form>
+      <!-- Form -->
+    </mdb-card-body>
+  </mdb-card>
+  <!-- Material form register -->
+</div>
+<!-- Material form login -->
