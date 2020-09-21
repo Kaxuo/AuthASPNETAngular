@@ -5,6 +5,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { UserRegister } from '../../Models/UserRegister';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-register-form',
@@ -15,10 +16,10 @@ export class RegisterFormComponent implements OnInit {
   registerForm: FormGroup;
   message:string;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private LocalStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    if (localStorage.getItem('token')) {
+    if (this.LocalStorageService.retrieve('token')) {
       this.router.navigate(['/']);
     }
     this.registerForm = new FormGroup({
@@ -34,7 +35,6 @@ export class RegisterFormComponent implements OnInit {
   }
 
   sendData(values: UserRegister) {
-    console.log(values);
     this.auth
       .register(values)
       .pipe(take(1))

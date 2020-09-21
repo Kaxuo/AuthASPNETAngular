@@ -5,6 +5,7 @@ import { UserAuth } from 'src/app/Models/UserAuth';
 import { take } from 'rxjs/operators';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { LocalStorageService } from 'ngx-webstorage'
 
 @Component({
   selector: 'app-sign-in-form',
@@ -15,10 +16,10 @@ export class SignInFormComponent implements OnInit {
   signInForm: FormGroup;
   message: string; 
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private  LocalStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    if (localStorage.getItem('token')) {
+    if (this. LocalStorageService.retrieve('token')) {
       this.router.navigate(['/']);
     }
     this.signInForm = new FormGroup({

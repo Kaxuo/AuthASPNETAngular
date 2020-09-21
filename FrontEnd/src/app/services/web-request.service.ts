@@ -18,6 +18,10 @@ export class WebRequestService {
     return this.http.get(`${this.ROOT_URL}/${url}`);
   }
 
+  getOneUser(url:string,id:number){
+    return this.http.get(`${this.ROOT_URL}/api/users/${id}`)
+  }
+
   register(payload: UserRegister) {
     return this.http.post(`${this.ROOT_URL}/api/users/register`, payload, {
       observe: 'response',

@@ -64,7 +64,6 @@ namespace BackEnd.Controllers
 
                 return Ok(new
                 {
-                    Id = user.Id,
                     Token = tokenString
                 });
             }

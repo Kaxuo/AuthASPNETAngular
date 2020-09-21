@@ -1,0 +1,23 @@
+<div class="form row">
+  <div *ngIf="data" class="profile col-md-4">
+    <div >
+      <!--Card-->
+      <mdb-card cascade="true">
+        <mdb-card-body cascade="true" class="text-center pb-0 px-0">
+          <!--Card content-->
+          <h4 class="card-title">
+            <strong>{{ data.firstName }} {{data.lastName}}</strong>
+          </h4>
+          <h4>Username : {{data.username}}</h4>
+          <h4>Hobby : {{data.hobby}}</h4>
+          <h4>City : {{data.city}}</h4>
+          <h4>Country : {{data.country}}</h4>
+          <h4>Phone Number : {{ data.number}}</h4>
+
+        </mdb-card-body>
+        <!--/.Card content-->
+      </mdb-card>
+      <!--/.Card-->
+    </div>
+  </div>
+</div>

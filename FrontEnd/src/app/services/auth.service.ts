@@ -1,4 +1,4 @@
-import { HttpResponse, HttpClient } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebRequestService } from './web-request.service';
@@ -17,7 +17,6 @@ export class AuthService {
   constructor(
     private webRequest: WebRequestService,
     private router: Router,
-    private http: HttpClient,
     private localStorageService: LocalStorageService
   ) {}
 
@@ -33,6 +32,10 @@ export class AuthService {
 
   getAllUsers() {
     return this.webRequest.getAllUsers('api/users');
+  }
+
+  getOne(id:number){
+    return this.webRequest.getOneUser(`api/users`, id)
   }
 
   register(payload: UserRegister) {
@@ -62,12 +65,10 @@ export class AuthService {
   }
 
   private setSession(userId: string, accessToken: string) {
-    this.localStorageService.store('user-id', userId)
     this.localStorageService.store('token', accessToken)
   }
 
   private removeSession() {
-    this.localStorageService.clear('user-id')
     this.localStorageService.clear('token')
   }
 }

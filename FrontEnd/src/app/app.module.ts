@@ -18,6 +18,8 @@ import { MainComponent } from './components/main/main.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BearerTokenInterceptor } from './services/bearer-token.interceptor';
 import {NgxWebstorageModule} from 'ngx-webstorage';
+import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import {NgxWebstorageModule} from 'ngx-webstorage';
     SignInFormComponent,
     RegisterFormComponent,
     MainComponent,
+    ProfilePageComponent,
+    UpdateProfileComponent,
   ],
   imports: [
     BrowserModule,

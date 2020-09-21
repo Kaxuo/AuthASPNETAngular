@@ -30,7 +30,7 @@
       </li>
 
       <!-- Dropdown -->
-      <li class="nav-item dropdown" dropdown>
+      <li class="nav-item dropdown" *ngIf="isAuth" dropdown>
         <a
           dropdownToggle
           mdbWavesEffect
@@ -47,10 +47,10 @@
           class="dropdown-menu dropdown-menu-right dropdown dropdown-primary"
           role="menu"
         >
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#"
+          <a class="dropdown-item waves-light" routerLink="profile" mdbWavesEffect 
             >My account</a
           >
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#"
+          <a class="dropdown-item waves-light" routerLink="update" mdbWavesEffect
             >Update</a
           >
         </div>
