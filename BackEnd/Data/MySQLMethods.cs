@@ -96,7 +96,6 @@ namespace BackEnd.Data
             if (!string.IsNullOrWhiteSpace(userParam.LastName))
                 user.LastName = userParam.LastName;
 
-            if (userParam.Number != userParam.Number)
                 user.Number = userParam.Number;
 
             if (!string.IsNullOrWhiteSpace(userParam.Country))
