@@ -21,7 +21,7 @@ export class ProfilePageComponent implements OnInit {
   firstName: FormGroup;
   lastName: FormGroup;
   username: FormGroup;
-  phonenumber: FormGroup;
+  number: FormGroup;
   country: FormGroup;
   city: FormGroup;
   hobby: FormGroup;
@@ -32,7 +32,7 @@ export class ProfilePageComponent implements OnInit {
   firstNameedit: boolean = false;
   lastNameEdit: boolean = false;
   usernameEdit: boolean = false;
-  PhoneNumberEdit: boolean = false;
+  numberEdit: boolean = false;
   CountryEdit: boolean = false;
   CityEdit: boolean = false;
   hobbyEdit: boolean = false;
@@ -66,8 +66,8 @@ export class ProfilePageComponent implements OnInit {
                 Validators.required,
               ]),
             });
-            this.phonenumber = new FormGroup({
-              phonenumber: new FormControl(this.data.number, [
+            this.number = new FormGroup({
+              number: new FormControl(this.data.number, [
                 Validators.required,
               ]),
             });
@@ -80,9 +80,7 @@ export class ProfilePageComponent implements OnInit {
               city: new FormControl(this.data.city, [Validators.required]),
             });
             this.hobby = new FormGroup({
-              hobby: new FormControl(this.data.hobby, [
-                Validators.required,
-              ]),
+              hobby: new FormControl(this.data.hobby, [Validators.required]),
             });
           });
       } else {
@@ -100,16 +98,45 @@ export class ProfilePageComponent implements OnInit {
   }
 
   sendData(values) {
-    console.log(values)
+    console.log(values);
     this.auth
       .editUser(this.object.unique_name, values)
       .pipe(take(1))
       .subscribe(
         (res: HttpResponse<any>) => {
           this.router.navigate(['profile']);
-          this.firstNameedit = false;
-          this.data.firstName = values.firstName
-          this.data.lastName = values.lastName
+          if (values.firstName) {
+            this.data.firstName = values.firstName;
+            this.firstNameedit = false;
+          }
+          if (values.lastName) {
+            this.data.lastName = values.lastName;
+            this.lastNameEdit = false;
+          }
+
+          if (values.username) {
+            this.data.username = values.username;
+            this.usernameEdit = false;
+          }
+
+          if (values.country) {
+            this.data.country = values.country;
+            this.CountryEdit = false;
+          }
+          if (values.city) {
+            this.data.city = values.city;
+            this.CityEdit = false;
+          }
+          if (values.hobby) {
+            this.data.hobby = values.hobby;
+            this.hobbyEdit = false;
+          }
+          if (values.number) {
+            this.data.number = values.number;
+            this.numberEdit = false;
+          }
+
+
         },
         (err: HttpErrorResponse) => (this.message = err.error.message)
       );

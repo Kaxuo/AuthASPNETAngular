@@ -1,5 +1,5 @@
 <div class="form">
-  <div *ngIf="data" class="list-group">
+  <div *ngIf="data" class="list-group title">
     <a
       style="text-align: center"
       class="list-group-item active waves-light"
@@ -25,69 +25,198 @@
         />
         <label for="form1" class="">First Name</label>
       </div>
-
-      <button
+      <mdb-icon
         *ngIf="!firstNameedit"
-        mdbBtn
         (click)="firstNameedit = true"
-        type="button"
-        color="primary"
-        mdbWavesEffect
-      >
-        Edit
-      </button>
-      <button
-        *ngIf="firstNameedit"
-        mdbBtn
-        type="button"
-        color="indigo"
-        mdbWavesEffect
-        type="submit"
-      >
-        Update
+        fas
+        icon="edit"
+        class="icon"
+      ></mdb-icon>
+      <button *ngIf="firstNameedit" type="submit">
+        <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
       </button>
     </form>
 
     <form
-      [formGroup]="lastName"
-      (ngSubmit)="sendData(lastName.value)"
-      class="list-group-item bob waves-light"
-    >
-      <span class="left" *ngIf="!lastNameEdit">
-        Last Name: <strong>{{ data.lastName }} </strong>
-      </span>
-      <div *ngIf="lastNameEdit" class="md-form left">
-        <input
-          mdbInput
-          type="text"
-          id="form1"
-          class="form-control"
-          formControlName="lastName"
-        />
-        <label for="form1" class="">First Name</label>
-      </div>
+    [formGroup]="lastName"
+    (ngSubmit)="sendData(lastName.value)"
+    class="list-group-item bob waves-light"
+  >
+    <span class="left" *ngIf="!lastNameEdit">
+      Last Name: <strong>{{ data.lastName }} </strong>
+    </span>
+    <div *ngIf="lastNameEdit" class="md-form left">
+      <input
+        mdbInput
+        type="text"
+        id="form1"
+        class="form-control"
+        formControlName="lastName"
+      />
+      <label for="form1" class="">Last Name</label>
+    </div>
+    <mdb-icon
+      *ngIf="!lastNameEdit"
+      (click)="lastNameEdit = true"
+      fas
+      icon="edit"
+      class="icon"
+    ></mdb-icon>
+    <button *ngIf="lastNameEdit" type="submit">
+      <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+    </button>
+  </form>
 
-      <button
-        *ngIf="!lastNameEdit"
-        mdbBtn
-        (click)="lastNameEdit = true"
-        type="button"
-        color="primary"
-        mdbWavesEffect
-      >
-        Edit
-      </button>
-      <button
-        *ngIf="lastNameEdit"
-        mdbBtn
-        type="button"
-        color="indigo"
-        mdbWavesEffect
-        type="submit"
-      >
-        Update
-      </button>
-    </form>
+  <form
+  [formGroup]="username"
+  (ngSubmit)="sendData(username.value)"
+  class="list-group-item bob waves-light"
+>
+  <span class="left" *ngIf="!usernameEdit">
+    Username: <strong>{{ data.username }} </strong>
+  </span>
+  <div *ngIf="usernameEdit" class="md-form left">
+    <input
+      mdbInput
+      type="text"
+      id="form1"
+      class="form-control"
+      formControlName="username"
+    />
+    <label for="form1" class="">Username</label>
+  </div>
+  <mdb-icon
+    *ngIf="!usernameEdit"
+    (click)="usernameEdit = true"
+    fas
+    icon="edit"
+    class="icon"
+  ></mdb-icon>
+  <button *ngIf="usernameEdit" type="submit">
+    <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+  </button>
+</form>
+
+<form
+[formGroup]="number"
+(ngSubmit)="sendData(number.value)"
+class="list-group-item bob waves-light"
+>
+<span class="left" *ngIf="!numberEdit">
+  Phone Number: <strong>{{ data.number }} </strong>
+</span>
+<div *ngIf="numberEdit" class="md-form left">
+  <input
+    mdbInput
+    type="number"
+    id="form1"
+    class="form-control"
+    formControlName="number"
+  />
+  <label for="form1" class="">Phone Number</label>
+</div>
+<mdb-icon
+  *ngIf="!numberEdit"
+  (click)="numberEdit = true"
+  fas
+  icon="edit"
+  class="icon"
+></mdb-icon>
+<button *ngIf="numberEdit" type="submit">
+  <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+</button>
+</form>
+
+<form
+[formGroup]="country"
+(ngSubmit)="sendData(country.value)"
+class="list-group-item bob waves-light"
+>
+<span class="left" *ngIf="!CountryEdit">
+  Country: <strong>{{ data.country }} </strong>
+</span>
+<div *ngIf="CountryEdit" class="md-form left">
+  <input
+    mdbInput
+    type="text"
+    id="form1"
+    class="form-control"
+    formControlName="country"
+  />
+  <label for="form1" class="">Country</label>
+</div>
+<mdb-icon
+  *ngIf="!CountryEdit"
+  (click)="CountryEdit = true"
+  fas
+  icon="edit"
+  class="icon"
+></mdb-icon>
+<button *ngIf="CountryEdit" type="submit">
+  <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+</button>
+</form>
+
+<form
+[formGroup]="city"
+(ngSubmit)="sendData(city.value)"
+class="list-group-item bob waves-light"
+>
+<span class="left" *ngIf="!CityEdit">
+  City: <strong>{{ data.city }} </strong>
+</span>
+<div *ngIf="CityEdit" class="md-form left">
+  <input
+    mdbInput
+    type="text"
+    id="form1"
+    class="form-control"
+    formControlName="city"
+  />
+  <label for="form1" class="">City</label>
+</div>
+<mdb-icon
+  *ngIf="!CityEdit"
+  (click)="CityEdit = true"
+  fas
+  icon="edit"
+  class="icon"
+></mdb-icon>
+<button *ngIf="CityEdit" type="submit">
+  <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+</button>
+</form>
+
+<form
+[formGroup]="hobby"
+(ngSubmit)="sendData(hobby.value)"
+class="list-group-item bob waves-light"
+>
+<span class="left" *ngIf="!hobbyEdit">
+  Hobby : <strong>{{ data.hobby }} </strong>
+</span>
+<div *ngIf="hobbyEdit" class="md-form left">
+  <input
+    mdbInput
+    type="text"
+    id="form1"
+    class="form-control"
+    formControlName="hobby"
+  />
+  <label for="form1" class="">Hobby</label>
+</div>
+<mdb-icon
+  *ngIf="!hobbyEdit"
+  (click)="hobbyEdit = true"
+  fas
+  icon="edit"
+  class="icon"
+></mdb-icon>
+<button *ngIf="hobbyEdit" type="submit">
+  <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+</button>
+</form>
+
   </div>
   <em *ngIf="message">{{ message }}</em>
 </div>
