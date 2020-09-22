@@ -51,12 +51,12 @@
               />
               <label for="materialRegisterFormLastName">Last name</label>
               <em
-              *ngIf="
-                registerForm.get('lastName').hasError('required') &&
-                registerForm.get('lastName').touched
-              "
-              >Required</em
-            >
+                *ngIf="
+                  registerForm.get('lastName').hasError('required') &&
+                  registerForm.get('lastName').touched
+                "
+                >Required</em
+              >
             </div>
           </div>
         </div>
@@ -72,14 +72,13 @@
           />
           <label for="materialSubscriptionFormUsername">UserName</label>
           <em
-          *ngIf="
-            registerForm.get('username').hasError('required') &&
-            registerForm.get('username').touched
-          "
-          >Required</em
-        >
+            *ngIf="
+              registerForm.get('username').hasError('required') &&
+              registerForm.get('username').touched
+            "
+            >Required</em
+          >
         </div>
-
 
         <!-- Phone number -->
         <div class="md-form">
@@ -93,12 +92,12 @@
           />
           <label for="materialRegisterFormPhone">Phone number</label>
           <em
-          *ngIf="
-            registerForm.get('number').hasError('required') &&
-            registerForm.get('number').touched
-          "
-          >Required</em
-        >
+            *ngIf="
+              registerForm.get('number').hasError('required') &&
+              registerForm.get('number').touched
+            "
+            >Required</em
+          >
         </div>
 
         <!-- City -->
@@ -112,12 +111,12 @@
           />
           <label for="materialSubscriptionFormCity">City</label>
           <em
-          *ngIf="
-            registerForm.get('city').hasError('required') &&
-            registerForm.get('city').touched
-          "
-          >Required</em
-        >
+            *ngIf="
+              registerForm.get('city').hasError('required') &&
+              registerForm.get('city').touched
+            "
+            >Required</em
+          >
         </div>
 
         <!-- Country -->
@@ -131,12 +130,12 @@
           />
           <label for="materialSubscriptionFormCountryCity">Country</label>
           <em
-          *ngIf="
-            registerForm.get('country').hasError('required') &&
-            registerForm.get('country').touched
-          "
-          >Required</em
-        >
+            *ngIf="
+              registerForm.get('country').hasError('required') &&
+              registerForm.get('country').touched
+            "
+            >Required</em
+          >
         </div>
 
         <!-- Name -->
@@ -150,17 +149,17 @@
           />
           <label for="materialSubscriptionFormHobby">Hobby</label>
           <em
-          *ngIf="
-            registerForm.get('hobby').hasError('required') &&
-            registerForm.get('hobby').touched
-          "
-          >Required</em
-        >
+            *ngIf="
+              registerForm.get('hobby').hasError('required') &&
+              registerForm.get('hobby').touched
+            "
+            >Required</em
+          >
         </div>
-        <em *ngIf="message">{{message}}</em>
+        <em *ngIf="message">{{ message }}</em>
         <!-- Sign up button -->
         <button
-        [disabled] = "registerForm.invalid"
+          [disabled]="registerForm.invalid"
           mdbBtn
           color="info"
           outline="true"

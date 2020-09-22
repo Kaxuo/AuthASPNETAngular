@@ -10,25 +10,9 @@
   >
 
   <!-- Collapsible content -->
-<links>
+  <links>
     <!-- Links -->
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item" routerLinkActive="active"*ngIf="!isAuth">
-        <a class="nav-link waves-light" routerLink="signin" mdbWavesEffect
-          >Sign In<span class="sr-only">(current)</span></a
-        >
-      </li>
-      <li class="nav-item" routerLinkActive="active" *ngIf="!isAuth">
-        <a class="nav-link waves-light" routerLink="register" mdbWavesEffect
-          >Register<span class="sr-only">(current)</span></a
-        >
-      </li>
-      <li class="nav-item"  *ngIf="isAuth">
-        <a class="nav-link waves-light" (click)="logout()" mdbWavesEffect
-          >Log Out</a
-        >
-      </li>
-
       <!-- Dropdown -->
       <li class="nav-item dropdown" *ngIf="isAuth" dropdown>
         <a
@@ -47,13 +31,34 @@
           class="dropdown-menu dropdown-menu-right dropdown dropdown-primary"
           role="menu"
         >
-          <a class="dropdown-item waves-light" routerLink="profile" mdbWavesEffect 
+          <a
+            class="dropdown-item waves-light"
+            routerLink="profile"
+            mdbWavesEffect
             >My account</a
           >
-          <a class="dropdown-item waves-light" routerLink="update" mdbWavesEffect
+          <a
+            class="dropdown-item waves-light"
+            routerLink="update"
+            mdbWavesEffect
             >Update</a
           >
         </div>
+      </li>
+      <li class="nav-item" routerLinkActive="active" *ngIf="!isAuth">
+        <a class="nav-link waves-light" routerLink="signin" mdbWavesEffect
+          >Sign In<span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item" routerLinkActive="active" *ngIf="!isAuth">
+        <a class="nav-link waves-light" routerLink="register" mdbWavesEffect
+          >Register<span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item" *ngIf="isAuth">
+        <a class="nav-link waves-light" (click)="logout()" mdbWavesEffect
+          >Log Out</a
+        >
       </li>
     </ul>
     <!-- Links -->

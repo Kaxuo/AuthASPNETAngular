@@ -24,6 +24,13 @@
           formControlName="firstName"
         />
         <label for="form1" class="">First Name</label>
+        <em
+        *ngIf="
+          firstName.get('firstName').hasError('required') &&
+          firstName.get('firstName').touched
+        "
+        >Required</em
+      >
       </div>
       <mdb-icon
         *ngIf="!firstNameedit"
@@ -32,7 +39,7 @@
         icon="edit"
         class="icon"
       ></mdb-icon>
-      <button *ngIf="firstNameedit" type="submit">
+      <button [disabled]="firstName.invalid" *ngIf="firstNameedit" type="submit">
         <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
       </button>
     </form>
@@ -54,6 +61,13 @@
         formControlName="lastName"
       />
       <label for="form1" class="">Last Name</label>
+      <em
+      *ngIf="
+        lastName.get('lastName').hasError('required') &&
+        lastName.get('lastName').touched
+      "
+      >Required</em
+    >
     </div>
     <mdb-icon
       *ngIf="!lastNameEdit"
@@ -84,6 +98,21 @@
       formControlName="username"
     />
     <label for="form1" class="">Username</label>
+    <em
+    *ngIf="
+      username.get('username').hasError('required') &&
+      username.get('username').touched
+    "
+    >Required</em
+  >
+  <em
+  *ngIf="
+    username.get('username').hasError('pattern') &&
+    username.get('username').touched
+  "
+  >No White space</em
+>
+<em *ngIf="message">{{ message }}</em>
   </div>
   <mdb-icon
     *ngIf="!usernameEdit"
@@ -92,7 +121,7 @@
     icon="edit"
     class="icon"
   ></mdb-icon>
-  <button *ngIf="usernameEdit" type="submit">
+  <button *ngIf="usernameEdit" [disabled]="username.invalid" type="submit">
     <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
   </button>
 </form>
@@ -114,6 +143,13 @@ class="list-group-item bob waves-light"
     formControlName="number"
   />
   <label for="form1" class="">Phone Number</label>
+  <em
+  *ngIf="
+    number.get('number').hasError('required') &&
+    number.get('number').touched
+  "
+  >Required</em
+>
 </div>
 <mdb-icon
   *ngIf="!numberEdit"
@@ -144,6 +180,13 @@ class="list-group-item bob waves-light"
     formControlName="country"
   />
   <label for="form1" class="">Country</label>
+  <em
+  *ngIf="
+    country.get('country').hasError('required') &&
+    country.get('country').touched
+  "
+  >Required</em
+>
 </div>
 <mdb-icon
   *ngIf="!CountryEdit"
@@ -174,6 +217,13 @@ class="list-group-item bob waves-light"
     formControlName="city"
   />
   <label for="form1" class="">City</label>
+  <em
+  *ngIf="
+    city.get('city').hasError('required') &&
+    city.get('city').touched
+  "
+  >Required</em
+>
 </div>
 <mdb-icon
   *ngIf="!CityEdit"
@@ -204,6 +254,13 @@ class="list-group-item bob waves-light"
     formControlName="hobby"
   />
   <label for="form1" class="">Hobby</label>
+  <em
+  *ngIf="
+    hobby.get('hobby').hasError('required') &&
+    hobby.get('hobby').touched
+  "
+  >Required</em
+>
 </div>
 <mdb-icon
   *ngIf="!hobbyEdit"
@@ -217,6 +274,4 @@ class="list-group-item bob waves-light"
 </button>
 </form>
 
-  </div>
-  <em *ngIf="message">{{ message }}</em>
-</div>
+

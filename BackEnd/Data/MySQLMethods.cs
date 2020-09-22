@@ -46,7 +46,6 @@ namespace BackEnd.Data
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-
             _context.Users.Add(user);
             _context.SaveChanges();
 
@@ -87,7 +86,7 @@ namespace BackEnd.Data
                 // throw error if the new username is already taken
                 if (_context.Users.Any(x => x.Username == userParam.Username))
                     throw new AppException($"Username {userParam.Username} is already taken");
-                user.Username = userParam.Username;
+                user.Username = userParam.Username.Trim();
             }
             // update user properties if provided
             if (!string.IsNullOrWhiteSpace(userParam.FirstName))

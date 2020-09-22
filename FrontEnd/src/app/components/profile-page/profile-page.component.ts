@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { UserReceived } from 'src/app/Models/UsersReceived';
 import jwt_decode from 'jwt-decode';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 import { UpdateUser } from 'src/app/Models/UpdateUser';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
@@ -63,7 +63,7 @@ export class ProfilePageComponent implements OnInit {
             });
             this.username = new FormGroup({
               username: new FormControl(this.data.username, [
-                Validators.required,
+                Validators.required, Validators.pattern(/^\S*$/)
               ]),
             });
             this.number = new FormGroup({
@@ -96,6 +96,8 @@ export class ProfilePageComponent implements OnInit {
       return null;
     }
   }
+
+  
 
   sendData(values) {
     console.log(values);

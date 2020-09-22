@@ -77,7 +77,15 @@
           "
           >Required</em
         >
+        <em
+        *ngIf="
+          registerForm.get('username').hasError('pattern') &&
+          registerForm.get('username').touched
+        "
+        >No Spaces Please !</em
+      >
         </div>
+        
 
         <!-- Password -->
         <div class="md-form">

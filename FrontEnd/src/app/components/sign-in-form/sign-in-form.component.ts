@@ -29,6 +29,7 @@ export class SignInFormComponent implements OnInit {
   }
 
   sendData(values: UserAuth) {
+    values.username = values.username.trim()
     this.auth
       .login(values)
       .pipe(take(1))
