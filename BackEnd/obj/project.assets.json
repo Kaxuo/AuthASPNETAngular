@@ -7680,6 +7680,7 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 3.1.8",
       "Microsoft.EntityFrameworkCore >= 3.1.8",
       "Microsoft.EntityFrameworkCore.Design >= 3.1.8",
+      "Microsoft.EntityFrameworkCore.Relational >= 3.1.8",
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.8",
       "MongoDB.Driver >= 2.11.2",
       "MySql.Data.EntityFrameworkCore >= 8.0.21",
@@ -7740,6 +7741,10 @@
           "Microsoft.EntityFrameworkCore.Design": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
+            "target": "Package",
+            "version": "[3.1.8, )"
+          },
+          "Microsoft.EntityFrameworkCore.Relational": {
             "target": "Package",
             "version": "[3.1.8, )"
           },

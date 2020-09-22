@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { UserRegister } from '../../Models/UserRegister';
 import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { take, first } from 'rxjs/operators';
 import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
@@ -37,7 +37,7 @@ export class RegisterFormComponent implements OnInit {
   sendData(values: UserRegister) {
     this.auth
       .register(values)
-      .pipe(take(1))
+      .pipe(first())
       .subscribe(
         (res: HttpResponse<any>) => {
           console.log(res);

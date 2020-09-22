@@ -137,7 +137,7 @@ export class ProfilePageComponent implements OnInit {
             this.data.number = values.number;
             this.numberEdit = false;
           }
-
+          this.message = ""
 
         },
         (err: HttpErrorResponse) => (this.message = err.error.message)

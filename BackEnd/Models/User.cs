@@ -1,8 +1,16 @@
 
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace BackEnd.Models
 {
     public class User
     {
+
+        public User()
+        {
+            Tasks = new List<Task>();
+        }
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -14,6 +22,8 @@ namespace BackEnd.Models
         public string City { get; set; }
         public string Hobby { get; set; }
         public string Country { get; set; }
-        // public string desc { get; set; }
+        public List<Task> Tasks { get; set; }
     }
+
+
 }

@@ -1,5 +1,5 @@
 .list-group {
-  width: 80%;
+  width: 50%;
 }
 
 a {
@@ -29,3 +29,9 @@ button{
   outline:none;
 }
 
+
+@media only screen and (max-width: 1000px) {
+  .list-group {
+    width: 80%;
+  }
+}

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace BackEnd.Models
 {
     public class UserModel
@@ -11,5 +13,7 @@ namespace BackEnd.Models
         public string City { get; set; }
         public string Hobby { get; set; }
         public string Country { get; set; }
+
+        public List<Task> Tasks { get; set; }
     }
 }
