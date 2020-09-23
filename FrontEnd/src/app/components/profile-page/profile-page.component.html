@@ -1,5 +1,5 @@
 <div class="form">
-  <div *ngIf="data" class="list-group title">
+  <div *ngIf="form" class="list-group title">
     <a
       style="text-align: center"
       class="list-group-item active waves-light"
@@ -7,271 +7,270 @@
     >
       <strong>Profile Information </strong>
     </a>
-    <form
-      [formGroup]="firstName"
-      (ngSubmit)="sendData(firstName.value)"
-      class="list-group-item bob waves-light"
-    >
-      <span class="left" *ngIf="!firstNameedit">
-        First Name: <strong>{{ data.firstName }} </strong>
-      </span>
-      <div *ngIf="firstNameedit" class="md-form left">
-        <input
-          mdbInput
-          type="text"
-          id="form1"
-          class="form-control"
-          formControlName="firstName"
-        />
-        <label for="form1" class="">First Name</label>
-        <em
-        *ngIf="
-          firstName.get('firstName').hasError('required') &&
-          firstName.get('firstName').touched
-        "
-        >Required</em
-      >
+    <form [formGroup]="form">
+      <!-- First Name-->
+      <div class="list-group-item bob waves-light">
+        <span class="left" *ngIf="!propertyEditable.firstName">
+          First Name: <strong>{{ form.get("firstName").value }} </strong>
+        </span>
+        <div *ngIf="propertyEditable.firstName" class="md-form left">
+          <input
+            mdbInput
+            type="text"
+            id="form1"
+            class="form-control"
+            formControlName="firstName"
+          />
+          <label for="form1" class="">First Name</label>
+          <em
+            *ngIf="
+              form.get('firstName').hasError('required') &&
+              form.get('firstName').touched
+            "
+            >Required</em
+          >
+        </div>
+        <mdb-icon
+          *ngIf="!propertyEditable.firstName"
+          (click)="propertyEditable.firstName = true"
+          fas
+          icon="edit"
+          class="icon"
+        ></mdb-icon>
+        <button
+          *ngIf="propertyEditable.firstName"
+          (click)="sendData('firstName')"
+          type="submit"
+        >
+          <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+        </button>
       </div>
-      <mdb-icon
-        *ngIf="!firstNameedit"
-        (click)="firstNameedit = true"
-        fas
-        icon="edit"
-        class="icon"
-      ></mdb-icon>
-      <button [disabled]="firstName.invalid" *ngIf="firstNameedit" type="submit">
-        <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
-      </button>
+      <!-- Last Name -->
+      <div class="list-group-item bob waves-light">
+        <span class="left" *ngIf="!propertyEditable.lastName">
+          Last Name: <strong>{{ form.get("lastName").value }} </strong>
+        </span>
+        <div *ngIf="propertyEditable.lastName" class="md-form left">
+          <input
+            mdbInput
+            type="text"
+            id="form1"
+            class="form-control"
+            formControlName="lastName"
+          />
+          <label for="form1" class="">Last Name</label>
+          <em
+            *ngIf="
+              form.get('lastName').hasError('required') &&
+              form.get('lastName').touched
+            "
+            >Required</em
+          >
+        </div>
+        <mdb-icon
+          *ngIf="!propertyEditable.lastName"
+          (click)="propertyEditable.lastName = true"
+          fas
+          icon="edit"
+          class="icon"
+        ></mdb-icon>
+        <button
+          *ngIf="propertyEditable.lastName"
+          (click)="sendData('lastName')"
+          type="submit"
+        >
+          <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+        </button>
+      </div>
+
+      <!-- Username -->
+      <div class="list-group-item bob waves-light">
+        <span class="left" *ngIf="!propertyEditable.username">
+          Username: <strong>{{ form.get("username").value }} </strong>
+        </span>
+        <div *ngIf="propertyEditable.username" class="md-form left">
+          <input
+            mdbInput
+            type="text"
+            id="form1"
+            class="form-control"
+            formControlName="username"
+          />
+          <label for="form1" class="">Username</label>
+          <em
+            *ngIf="
+              form.get('username').hasError('required') &&
+              form.get('username').touched
+            "
+            >Required</em
+          >
+        </div>
+        <mdb-icon
+          *ngIf="!propertyEditable.username"
+          (click)="propertyEditable.username = true"
+          fas
+          icon="edit"
+          class="icon"
+        ></mdb-icon>
+        <button
+          *ngIf="propertyEditable.username"
+          (click)="sendData('username')"
+          type="submit"
+        >
+          <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+        </button>
+      </div>
+
+      <!-- Number -->
+      <div class="list-group-item bob waves-light">
+        <span class="left" *ngIf="!propertyEditable.number">
+          Phone Number: <strong>{{ form.get("number").value }} </strong>
+        </span>
+        <div *ngIf="propertyEditable.number" class="md-form left">
+          <input
+            mdbInput
+            type="number"
+            id="form1"
+            class="form-control"
+            formControlName="number"
+          />
+          <label for="form1" class="">number</label>
+          <em
+            *ngIf="
+              form.get('number').hasError('required') &&
+              form.get('number').touched
+            "
+            >Required</em
+          >
+        </div>
+        <mdb-icon
+          *ngIf="!propertyEditable.number"
+          (click)="propertyEditable.number = true"
+          fas
+          icon="edit"
+          class="icon"
+        ></mdb-icon>
+        <button
+          *ngIf="propertyEditable.number"
+          (click)="sendData('number')"
+          type="submit"
+        >
+          <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+        </button>
+      </div>
+
+      <!-- City -->
+      <div class="list-group-item bob waves-light">
+        <span class="left" *ngIf="!propertyEditable.city">
+          City: <strong>{{ form.get("city").value }} </strong>
+        </span>
+        <div *ngIf="propertyEditable.city" class="md-form left">
+          <input
+            mdbInput
+            type="text"
+            id="form1"
+            class="form-control"
+            formControlName="city"
+          />
+          <label for="form1" class="">City</label>
+          <em
+            *ngIf="
+              form.get('city').hasError('required') && form.get('city').touched
+            "
+            >Required</em
+          >
+        </div>
+        <mdb-icon
+          *ngIf="!propertyEditable.city"
+          (click)="propertyEditable.city = true"
+          fas
+          icon="edit"
+          class="icon"
+        ></mdb-icon>
+        <button
+          *ngIf="propertyEditable.city"
+          (click)="sendData('city')"
+          type="submit"
+        >
+          <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+        </button>
+      </div>
+
+      <!-- City -->
+      <div class="list-group-item bob waves-light">
+        <span class="left" *ngIf="!propertyEditable.country">
+          Country: <strong>{{ form.get("country").value }} </strong>
+        </span>
+        <div *ngIf="propertyEditable.country" class="md-form left">
+          <input
+            mdbInput
+            type="text"
+            id="form1"
+            class="form-control"
+            formControlName="country"
+          />
+          <label for="form1" class="">Country</label>
+          <em
+            *ngIf="
+              form.get('country').hasError('required') &&
+              form.get('country').touched
+            "
+            >Required</em
+          >
+        </div>
+        <mdb-icon
+          *ngIf="!propertyEditable.country"
+          (click)="propertyEditable.country = true"
+          fas
+          icon="edit"
+          class="icon"
+        ></mdb-icon>
+        <button
+          *ngIf="propertyEditable.country"
+          (click)="sendData('country')"
+          type="submit"
+        >
+          <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+        </button>
+      </div>
+
+      <!-- Hobby -->
+      <div class="list-group-item bob waves-light">
+        <span class="left" *ngIf="!propertyEditable.hobby">
+          Hobby: <strong>{{ form.get("hobby").value }} </strong>
+        </span>
+        <div *ngIf="propertyEditable.hobby" class="md-form left">
+          <input
+            mdbInput
+            type="text"
+            id="form1"
+            class="form-control"
+            formControlName="hobby"
+          />
+          <label for="form1" class="">Hobby</label>
+          <em
+            *ngIf="
+              form.get('hobby').hasError('required') &&
+              form.get('hobby').touched
+            "
+            >Required</em
+          >
+        </div>
+        <mdb-icon
+          *ngIf="!propertyEditable.hobby"
+          (click)="propertyEditable.hobby = true"
+          fas
+          icon="edit"
+          class="icon"
+        ></mdb-icon>
+        <button
+          *ngIf="propertyEditable.hobby"
+          (click)="sendData('hobby')"
+          type="submit"
+        >
+          <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
+        </button>
+      </div>
     </form>
-
-    <form
-    [formGroup]="lastName"
-    (ngSubmit)="sendData(lastName.value)"
-    class="list-group-item bob waves-light"
-  >
-    <span class="left" *ngIf="!lastNameEdit">
-      Last Name: <strong>{{ data.lastName }} </strong>
-    </span>
-    <div *ngIf="lastNameEdit" class="md-form left">
-      <input
-        mdbInput
-        type="text"
-        id="form1"
-        class="form-control"
-        formControlName="lastName"
-      />
-      <label for="form1" class="">Last Name</label>
-      <em
-      *ngIf="
-        lastName.get('lastName').hasError('required') &&
-        lastName.get('lastName').touched
-      "
-      >Required</em
-    >
-    </div>
-    <mdb-icon
-      *ngIf="!lastNameEdit"
-      (click)="lastNameEdit = true"
-      fas
-      icon="edit"
-      class="icon"
-    ></mdb-icon>
-    <button *ngIf="lastNameEdit" type="submit">
-      <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
-    </button>
-  </form>
-
-  <form
-  [formGroup]="username"
-  (ngSubmit)="sendData(username.value)"
-  class="list-group-item bob waves-light"
->
-  <span class="left" *ngIf="!usernameEdit">
-    Username: <strong>{{ data.username }} </strong>
-  </span>
-  <div *ngIf="usernameEdit" class="md-form left">
-    <input
-      mdbInput
-      type="text"
-      id="form1"
-      class="form-control"
-      formControlName="username"
-    />
-    <label for="form1" class="">Username</label>
-    <em
-    *ngIf="
-      username.get('username').hasError('required') &&
-      username.get('username').touched
-    "
-    >Required</em
-  >
-  <em
-  *ngIf="
-    username.get('username').hasError('pattern') &&
-    username.get('username').touched
-  "
-  >No White space</em
->
-<em *ngIf="message">{{ message }}</em>
   </div>
-  <mdb-icon
-    *ngIf="!usernameEdit"
-    (click)="usernameEdit = true"
-    fas
-    icon="edit"
-    class="icon"
-  ></mdb-icon>
-  <button *ngIf="usernameEdit" [disabled]="username.invalid" type="submit">
-    <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
-  </button>
-</form>
-
-<form
-[formGroup]="number"
-(ngSubmit)="sendData(number.value)"
-class="list-group-item bob waves-light"
->
-<span class="left" *ngIf="!numberEdit">
-  Phone Number: <strong>{{ data.number }} </strong>
-</span>
-<div *ngIf="numberEdit" class="md-form left">
-  <input
-    mdbInput
-    type="number"
-    id="form1"
-    class="form-control"
-    formControlName="number"
-  />
-  <label for="form1" class="">Phone Number</label>
-  <em
-  *ngIf="
-    number.get('number').hasError('required') &&
-    number.get('number').touched
-  "
-  >Required</em
->
 </div>
-<mdb-icon
-  *ngIf="!numberEdit"
-  (click)="numberEdit = true"
-  fas
-  icon="edit"
-  class="icon"
-></mdb-icon>
-<button *ngIf="numberEdit" type="submit">
-  <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
-</button>
-</form>
-
-<form
-[formGroup]="country"
-(ngSubmit)="sendData(country.value)"
-class="list-group-item bob waves-light"
->
-<span class="left" *ngIf="!CountryEdit">
-  Country: <strong>{{ data.country }} </strong>
-</span>
-<div *ngIf="CountryEdit" class="md-form left">
-  <input
-    mdbInput
-    type="text"
-    id="form1"
-    class="form-control"
-    formControlName="country"
-  />
-  <label for="form1" class="">Country</label>
-  <em
-  *ngIf="
-    country.get('country').hasError('required') &&
-    country.get('country').touched
-  "
-  >Required</em
->
-</div>
-<mdb-icon
-  *ngIf="!CountryEdit"
-  (click)="CountryEdit = true"
-  fas
-  icon="edit"
-  class="icon"
-></mdb-icon>
-<button *ngIf="CountryEdit" type="submit">
-  <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
-</button>
-</form>
-
-<form
-[formGroup]="city"
-(ngSubmit)="sendData(city.value)"
-class="list-group-item bob waves-light"
->
-<span class="left" *ngIf="!CityEdit">
-  City: <strong>{{ data.city }} </strong>
-</span>
-<div *ngIf="CityEdit" class="md-form left">
-  <input
-    mdbInput
-    type="text"
-    id="form1"
-    class="form-control"
-    formControlName="city"
-  />
-  <label for="form1" class="">City</label>
-  <em
-  *ngIf="
-    city.get('city').hasError('required') &&
-    city.get('city').touched
-  "
-  >Required</em
->
-</div>
-<mdb-icon
-  *ngIf="!CityEdit"
-  (click)="CityEdit = true"
-  fas
-  icon="edit"
-  class="icon"
-></mdb-icon>
-<button *ngIf="CityEdit" type="submit">
-  <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
-</button>
-</form>
-
-<form
-[formGroup]="hobby"
-(ngSubmit)="sendData(hobby.value)"
-class="list-group-item bob waves-light"
->
-<span class="left" *ngIf="!hobbyEdit">
-  Hobby : <strong>{{ data.hobby }} </strong>
-</span>
-<div *ngIf="hobbyEdit" class="md-form left">
-  <input
-    mdbInput
-    type="text"
-    id="form1"
-    class="form-control"
-    formControlName="hobby"
-  />
-  <label for="form1" class="">Hobby</label>
-  <em
-  *ngIf="
-    hobby.get('hobby').hasError('required') &&
-    hobby.get('hobby').touched
-  "
-  >Required</em
->
-</div>
-<mdb-icon
-  *ngIf="!hobbyEdit"
-  (click)="hobbyEdit = true"
-  fas
-  icon="edit"
-  class="icon"
-></mdb-icon>
-<button *ngIf="hobbyEdit" type="submit">
-  <mdb-icon far icon="check-circle" class="icon"></mdb-icon>
-</button>
-</form>
-
-

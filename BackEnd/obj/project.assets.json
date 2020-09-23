@@ -7688,19 +7688,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/hoang/.nuget/packages/": {}
+    "C:\\Users\\Kaxuo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/hoang/Downloads/AuthASPNETAngular/BackEnd/BackEnd.csproj",
+      "projectUniqueName": "C:\\Users\\Kaxuo\\OneDrive\\Desktop\\Txt\\C#\\AuthASPNETAngular\\BackEnd\\BackEnd.csproj",
       "projectName": "BackEnd",
-      "projectPath": "/Users/hoang/Downloads/AuthASPNETAngular/BackEnd/BackEnd.csproj",
-      "packagesPath": "/Users/hoang/.nuget/packages/",
-      "outputPath": "/Users/hoang/Downloads/AuthASPNETAngular/BackEnd/obj/",
+      "projectPath": "C:\\Users\\Kaxuo\\OneDrive\\Desktop\\Txt\\C#\\AuthASPNETAngular\\BackEnd\\BackEnd.csproj",
+      "packagesPath": "C:\\Users\\Kaxuo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Kaxuo\\OneDrive\\Desktop\\Txt\\C#\\AuthASPNETAngular\\BackEnd\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/hoang/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Kaxuo\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -7785,7 +7785,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.401/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -39,7 +39,7 @@ export class AuthService {
     return this.webRequest.getOneUser(`api/users`, id)
   }
 
-  editUser(id:number, data:UpdateUser){
+  editUser(id:number, data:Partial<UpdateUser>){
     return this.webRequest.editUser(`api/users/${id}`, data).pipe(
       shareReplay()
     )

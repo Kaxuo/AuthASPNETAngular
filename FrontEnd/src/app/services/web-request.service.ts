@@ -35,7 +35,7 @@ export class WebRequestService {
     });
   }
 
-  editUser(url: string, payload: UpdateUser) {
+  editUser(url: string, payload: Partial<UpdateUser>) {
     return this.http.put(`${this.ROOT_URL}/${url}`, payload);
   }
 
