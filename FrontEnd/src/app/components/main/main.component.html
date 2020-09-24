@@ -1,0 +1,19 @@
+<table class="table"  mdbTable>
+    <thead  class="tablehead">
+      <tr>
+        <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+      </tr>
+    </thead>
+    <tbody class="tablebody">
+      <tr mdbTableCol *ngFor="let el of data; let index = index">
+        <th scope="row">{{index +1}}</th>
+        <td>{{el.firstName}}</td>
+        <td>{{el.lastName}}</td>
+        <td>{{el.username}}</td>
+        <td>{{el.hobby}}</td>
+        <td>{{el.country}}</td>
+        <td>{{el.city}}</td>
+        <td>{{el.number}}</td>
+      </tr>
+    </tbody>
+  </table>

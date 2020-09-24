@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+
+.body {
+  background-color: #1f2426;
+}
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+}
+
+.form2 {
+  width: 40%;
+  background-color: white;
+}
+
+em {
+  color: red;
+  display: flex;
+}
+
+@media only screen and (max-width: 1400px) {
+  .form2 {
+    width: 80%;
+  }
+}
+@media only screen and (max-width: 420px) {
+  .form2 {
+    width: 95%;
+  }
+}
