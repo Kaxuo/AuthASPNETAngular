@@ -155,9 +155,15 @@ namespace BackEnd.Controllers
         [HttpPost("{id}/tasks/add")]
         public IActionResult AddTask(int id, Task task)
         {
-             _repository.AddTask(id, task);
-
+            _repository.AddTask(id, task);
             return Ok("Task Added");
+        }
+
+        [HttpPut("{id}/tasks/{taskId}")]
+        public IActionResult EditTask(int id, int taskId, TaskModel task)
+        {
+            _repository.EditTask(id, taskId, task);
+            return Ok();
         }
 
         [HttpDelete("{id}/tasks/{TaskId}")]

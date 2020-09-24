@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BackEnd.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Data
 {
@@ -56,7 +57,7 @@ namespace BackEnd.Data
         public void Delete(int id)
         {
             var user = _context.Users.Find(id);
-            if (user != null )
+            if (user != null)
             {
                 _context.Users.Remove(user);
                 _context.SaveChanges();
@@ -70,7 +71,8 @@ namespace BackEnd.Data
 
         public User GetUserById(int id)
         {
-            return _context.Users.Find(id);
+            var user = _context.Users.Include(s => s.Tasks).FirstOrDefault(s => s.Id == id);
+            return user;
         }
 
 
@@ -139,6 +141,25 @@ namespace BackEnd.Data
                 _context.Tasks.Remove(task);
                 _context.SaveChanges();
             }
+        }
+
+        public Task EditTask(int id, int taskId, TaskModel newtask)
+        {
+            var user = _context.Users.Include(s => s.Tasks).FirstOrDefault(s => s.Id == id);
+
+            var task = user.Tasks.FirstOrDefault(x => x.TaskId == taskId);
+            if (task == null)
+                throw new AppException("Task do not exist");
+            if (task.Description != newtask.Description)
+                task.Description = newtask.Description;
+            if (task.Completed != newtask.Completed)
+                task.Completed = newtask.Completed;
+            if (task.Importance != newtask.Importance)
+                task.Importance = newtask.Importance;
+
+            _context.Update(task);
+            _context.SaveChanges();
+            return task;
 
         }
         // private helper methods
