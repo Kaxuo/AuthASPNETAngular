@@ -19,8 +19,8 @@ export class WebRequestService {
     return this.http.get(`${this.ROOT_URL}/${url}`);
   }
 
-  getOneUser(url:string,id:number){
-    return this.http.get(`${this.ROOT_URL}/api/users/${id}`)
+  getOneUser(url: string, id: number) {
+    return this.http.get(`${this.ROOT_URL}/api/users/${id}`);
   }
 
   register(payload: UserRegister) {
@@ -40,6 +40,14 @@ export class WebRequestService {
   }
 
   deleteUser(url: string) {
+    return this.http.delete(`${this.ROOT_URL}/${url}`);
+  }
+
+  getAllTasks(url: string) {
+    return this.http.get(`${this.ROOT_URL}/${url}`);
+  }
+
+  DeleteTask(url: string) {
     return this.http.delete(`${this.ROOT_URL}/${url}`);
   }
 }

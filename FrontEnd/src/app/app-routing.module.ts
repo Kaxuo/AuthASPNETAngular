@@ -5,6 +5,8 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { MainComponent } from './components/main/main.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
+import { TasksComponent } from './components/tasks/tasks.component';
+import { AddComponent } from './components/tasks/add/add.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent },
@@ -12,6 +14,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterFormComponent },
   { path: 'profile', component: ProfilePageComponent },
   { path: 'update', component: UpdateProfileComponent },
+  { path: 'tasks', component: TasksComponent },
+  { path: 'tasks/add', component: AddComponent },
 ];
 
 @NgModule({

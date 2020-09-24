@@ -170,7 +170,7 @@ namespace BackEnd.Controllers
         public IActionResult DeleteTask(int id, int TaskId)
         {
             _repository.DeleteTask(id, TaskId);
-            return Ok("Task Deleted");
+            return Ok();
         }
     }
 }

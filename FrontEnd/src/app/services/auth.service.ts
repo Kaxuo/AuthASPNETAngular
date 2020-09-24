@@ -65,6 +65,14 @@ export class AuthService {
     );
   }
 
+  getAllTasks(id:number) {
+    return this.webRequest.getAllTasks(`api/users/${id}/tasks`);
+  }
+
+  DeleteTask(id:number, taskId:number) {
+    return this.webRequest.DeleteTask(`api/users/${id}/tasks/${taskId}`);
+  }
+
   logout() {
     //this.authenticated.next(false);
     this.removeSession();

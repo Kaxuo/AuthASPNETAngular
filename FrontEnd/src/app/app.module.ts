@@ -21,6 +21,8 @@ import { BearerTokenInterceptor } from './services/bearer-token.interceptor';
 import {NgxWebstorageModule} from 'ngx-webstorage';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
+import { TasksComponent } from './components/tasks/tasks.component';
+import { AddComponent } from './components/tasks/add/add.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { UpdateProfileComponent } from './components/update-profile/update-profi
     MainComponent,
     ProfilePageComponent,
     UpdateProfileComponent,
+    TasksComponent,
+    AddComponent,
   ],
   imports: [
     BrowserModule,

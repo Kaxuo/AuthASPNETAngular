@@ -1,0 +1,32 @@
+<table class="table" mdbTable>
+  <thead style="text-align: center" class="tablehead">
+    <tr>
+      <th *ngFor="let head of headElements" scope="col">{{ head }}</th>
+    </tr>
+  </thead>
+  <tbody style="text-align: center" class="tablebody">
+    <tr
+      [ngClass]="{ complete: el.completed, important: el.importance }"
+      mdbTableCol
+      *ngFor="let el of Tasks; let index = index"
+    >
+      <th scope="row">{{ index + 1 }}</th>
+      <td>{{ el.description }}</td>
+      <td style="text-align: center; padding-left: 40px">
+        <mdb-checkbox [checked]="el.completed"></mdb-checkbox>
+      </td>
+      <td style="text-align: center; padding-left: 40px">
+        <mdb-checkbox [checked]="el.importance"></mdb-checkbox>
+      </td>
+      <td>
+        <button>
+          <mdb-icon class="icon" fas icon="edit" class="icon"></mdb-icon>
+        </button>
+      </td>
+      <td>
+        <button (click)="deleteTask(el)"><mdb-icon class="icon" fas icon="trash"></mdb-icon></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
