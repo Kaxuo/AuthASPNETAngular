@@ -141,11 +141,19 @@ namespace BackEnd.Controllers
             return Ok(model);
         }
 
+        [HttpGet("{id}/tasks/{taskId}")]
+        public ActionResult<IEnumerable<Task>> GetOneTask(int id, int taskId)
+        {
+            var tasks = _repository.GetOneTask(id, taskId);
+            var model = _mapper.Map<TaskModel>(tasks);
+            return Ok(model);
+        }
+
         [HttpPost("{id}/tasks/add")]
         public IActionResult AddTask(int id, Task task)
         {
             _repository.AddTask(id, task);
-            return Ok("Task Added");
+            return Ok();
         }
 
         [HttpPut("{id}/tasks/{taskId}")]

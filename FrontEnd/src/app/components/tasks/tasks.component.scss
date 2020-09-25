@@ -1,20 +1,21 @@
 .table {
   background-color: white;
 }
-
 .important {
-  color: red;
+  color:red;
 }
 .complete{
-    opacity: 0.4;
-    color:black;
-}
-
-.icon{
-    
+    .description{
+      text-decoration: line-through;
+    }
+background-color: lightgray;
 }
 button {
     background-color: inherit;
     border:none;
     outline:none;
+}
+
+th::selection{
+  outline:none;
 }

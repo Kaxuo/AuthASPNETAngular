@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { UserReceived } from 'src/app/Models/UsersReceived';
-import jwt_decode from 'jwt-decode';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
@@ -19,7 +18,7 @@ export class ProfilePageComponent implements OnInit {
   propertyEditable: any;
   form: FormGroup;
   message: string;
-  object = this.getDecodedAccessToken(
+  object = this.auth.getDecodedAccessToken(
     this.LocalStorageService.retrieve('token')
   );
 
@@ -51,15 +50,6 @@ export class ProfilePageComponent implements OnInit {
       }
     });
   }
-  getDecodedAccessToken(token: string): any {
-    try {
-      var decoded = jwt_decode(token);
-      return decoded;
-    } catch (Error) {
-      return null;
-    }
-  }
-
 
   sendData(property:string) {
     let updatedUser = {}

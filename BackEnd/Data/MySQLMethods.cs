@@ -15,7 +15,7 @@ namespace BackEnd.Data
         {
             _context = context;
         }
-        
+
         public User Authenticate(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
@@ -105,6 +105,12 @@ namespace BackEnd.Data
         {
             var tasks = _context.Tasks.Where(x => x.UserId == id);
             return tasks;
+        }
+        public Task GetOneTask(int id, int taskId)
+        {
+            var user = _context.Users.Include(s => s.Tasks).FirstOrDefault(s => s.Id == id);
+            var task = user.Tasks.FirstOrDefault(x => x.TaskId == taskId);
+            return task;
         }
         public IEnumerable<Task> AddTask(int id, Task task)
         {

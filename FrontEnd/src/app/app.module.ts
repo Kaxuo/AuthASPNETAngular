@@ -23,6 +23,7 @@ import { ProfilePageComponent } from './components/profile-page/profile-page.com
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { AddComponent } from './components/tasks/add/add.component';
+import { EditComponent } from './components/tasks/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { AddComponent } from './components/tasks/add/add.component';
     UpdateProfileComponent,
     TasksComponent,
     AddComponent,
+    EditComponent,
   ],
   imports: [
     BrowserModule,

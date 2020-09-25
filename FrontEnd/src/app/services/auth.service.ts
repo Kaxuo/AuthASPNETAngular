@@ -6,8 +6,10 @@ import { UserRegister } from '../Models/UserRegister';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { UserAuth } from '../Models/UserAuth';
 import { BehaviorSubject, merge, Observable, of, zip } from 'rxjs';
-import {LocalStorageService} from 'ngx-webstorage';
-import { UpdateUser } from '../Models/UpdateUser'
+import { LocalStorageService } from 'ngx-webstorage';
+import { UpdateUser } from '../Models/UpdateUser';
+import { Task } from '../Models/Tasks';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -21,28 +23,27 @@ export class AuthService {
     private localStorageService: LocalStorageService
   ) {}
 
-// Always observe token and return that value
-// retrieve on refresh and then observe continously
+  // Always observe token and return that value
+  // retrieve on refresh and then observe continously
   isAuthenticated(): Observable<boolean> {
     return merge(
-      of(this.localStorageService.retrieve('token')), 
+      of(this.localStorageService.retrieve('token')),
       this.localStorageService.observe('token')
     ).pipe(map((result) => !!result));
-    
   }
-
+  // User
   getAllUsers() {
     return this.webRequest.getAllUsers('api/users');
   }
 
-  getOne(id:number){
-    return this.webRequest.getOneUser(`api/users`, id)
+  getOne(id: number) {
+    return this.webRequest.getOneUser(`api/users`, id);
   }
 
-  editUser(id:number, data:Partial<UpdateUser>){
-    return this.webRequest.editUser(`api/users/${id}`, data).pipe(
-      shareReplay()
-    )
+  editUser(id: number, data: Partial<UpdateUser>) {
+    return this.webRequest
+      .editUser(`api/users/${id}`, data)
+      .pipe(shareReplay());
   }
 
   register(payload: UserRegister) {
@@ -60,16 +61,31 @@ export class AuthService {
       shareReplay(),
       tap((res: HttpResponse<any>) => {
         //this.authenticated.next(true);
-        this.setSession( res.body.token);
+        this.setSession(res.body.token);
       })
     );
   }
 
-  getAllTasks(id:number) {
+  // Tasks
+  getAllTasks(id: number) {
     return this.webRequest.getAllTasks(`api/users/${id}/tasks`);
   }
 
-  DeleteTask(id:number, taskId:number) {
+  getOneTask(id: number, taskId:number) {
+    return this.webRequest.getOneTask(`api/users/${id}/tasks/${taskId}`);
+  }
+
+  AddTask(id: number, payload : Task) {
+    return this.webRequest.AddTask(`api/users/${id}/tasks/add`, payload);
+  }
+
+  EditTask(id: number, taskId: number, payload: Task) {
+    return this.webRequest
+      .EditTasks(`api/users/${id}/tasks/${taskId}`, payload)
+      .pipe(shareReplay());
+  }
+
+  DeleteTask(id: number, taskId: number) {
     return this.webRequest.DeleteTask(`api/users/${id}/tasks/${taskId}`);
   }
 
@@ -79,11 +95,20 @@ export class AuthService {
     this.router.navigate(['/register']);
   }
 
-  private setSession( accessToken: string) {
-    this.localStorageService.store('token', accessToken)
+  getDecodedAccessToken(token: string): any {
+    try {
+      var decoded = jwt_decode(token);
+      return decoded;
+    } catch (Error) {
+      return null;
+    }
+  }
+
+  private setSession(accessToken: string) {
+    this.localStorageService.store('token', accessToken);
   }
 
   private removeSession() {
-    this.localStorageService.clear('token')
+    this.localStorageService.clear('token');
   }
 }

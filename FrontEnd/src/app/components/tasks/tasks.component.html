@@ -1,7 +1,16 @@
 <table class="table" mdbTable>
   <thead style="text-align: center" class="tablehead">
     <tr>
-      <th *ngFor="let head of headElements" scope="col">{{ head }}</th>
+      <th scope="col">ID</th>
+      <th scope="col">Description</th>
+      <th (click)="sortByCompleted(Tasks)" style="cursor: pointer" scope="col">
+        Status
+      </th>
+      <th (click)="sortByImportance(Tasks)" style="cursor: pointer" scope="col">
+        Importance
+      </th>
+      <th scope="col">Edit</th>
+      <th scope="col">Remove</th>
     </tr>
   </thead>
   <tbody style="text-align: center" class="tablebody">
@@ -11,22 +20,133 @@
       *ngFor="let el of Tasks; let index = index"
     >
       <th scope="row">{{ index + 1 }}</th>
-      <td>{{ el.description }}</td>
+      <td class="description">{{ el.description }}</td>
       <td style="text-align: center; padding-left: 40px">
-        <mdb-checkbox [checked]="el.completed"></mdb-checkbox>
+        <mdb-checkbox
+          (change)="completeFlag(el)"
+          [checked]="el.completed"
+        ></mdb-checkbox>
       </td>
       <td style="text-align: center; padding-left: 40px">
-        <mdb-checkbox [checked]="el.importance"></mdb-checkbox>
+        <mdb-checkbox
+          (change)="importanceFlag(el)"
+          [checked]="el.importance"
+        ></mdb-checkbox>
       </td>
       <td>
         <button>
-          <mdb-icon class="icon" fas icon="edit" class="icon"></mdb-icon>
+          <mdb-icon
+            class="icon"
+            fas
+            icon="edit"
+            class="icon"
+            [routerLink] = "['/tasks', el.taskId, 'edit']"
+          ></mdb-icon>
         </button>
       </td>
       <td>
-        <button (click)="deleteTask(el)"><mdb-icon class="icon" fas icon="trash"></mdb-icon></button>
+        <button (click)="basicModal.show()">
+          <mdb-icon class="icon" fas icon="trash"></mdb-icon>
+        </button>
+        <div
+          mdbModal
+          #basicModal="mdbModal"
+          class="modal fade"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myBasicModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close pull-right"
+                  aria-label="Close"
+                  (click)="basicModal.hide()"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">
+                  Are you sure ?
+                </h4>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  mdbBtn
+                  color="secondary"
+                  class="waves-light"
+                  aria-label="Close"
+                  (click)="basicModal.hide()"
+                  mdbWavesEffect
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  mdbBtn
+                  color="primary"
+                  class="relative waves-light"
+                  mdbWavesEffect
+                  (click)="deleteTask(el)"
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </td>
     </tr>
   </tbody>
 </table>
 
+<div
+  mdbModal
+  #basicModal="mdbModal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myBasicModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close pull-right"
+          aria-label="Close"
+          (click)="basicModal.hide()"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Are you sure ?</h4>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          mdbBtn
+          color="secondary"
+          class="waves-light"
+          aria-label="Close"
+          (click)="basicModal.hide()"
+          mdbWavesEffect
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          mdbBtn
+          color="primary"
+          class="relative waves-light"
+          mdbWavesEffect
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

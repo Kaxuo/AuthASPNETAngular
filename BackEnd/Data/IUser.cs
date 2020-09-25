@@ -9,6 +9,7 @@ namespace BackEnd.Data
         IEnumerable<User> GetAllUsers();
         User GetUserById(int id);
         IEnumerable<Task> GetAllTasks(int id);
+        Task GetOneTask(int id, int taskId);
         IEnumerable<Task> AddTask(int id, Task task);
         Task EditTask(int id, int taskId, TaskModel task);
         void DeleteTask(int id, int TaskId);

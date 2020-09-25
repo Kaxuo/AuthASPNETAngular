@@ -3,7 +3,8 @@ import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { Task } from '../../Models/Tasks';
 import { LocalStorageService } from 'ngx-webstorage';
-import jwt_decode from 'jwt-decode';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -11,37 +12,28 @@ import jwt_decode from 'jwt-decode';
   styleUrls: ['./tasks.component.scss'],
 })
 export class TasksComponent implements OnInit {
+  token: Observable<boolean> = this.auth.isAuthenticated();
   Tasks: Task[];
-  headElements = [
-    'ID',
-    'Description',
-    'Status',
-    'Importance',
-    'Edit',
-    'Remove',
-  ];
-  object = this.getDecodedAccessToken(
+  object = this.auth.getDecodedAccessToken(
     this.LocalStorageService.retrieve('token')
   );
   constructor(
     private auth: AuthService,
-    private LocalStorageService: LocalStorageService
+    private LocalStorageService: LocalStorageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.auth
-      .getAllTasks(this.object.unique_name)
-      .pipe(take(1))
-      .subscribe((res: Task[]) => (this.Tasks = res));
-  }
-
-  getDecodedAccessToken(token: string): any {
-    try {
-      var decoded = jwt_decode(token);
-      return decoded;
-    } catch (Error) {
-      return null;
-    }
+    this.token.subscribe((isAuth) => {
+      if (isAuth) {
+        this.auth
+          .getAllTasks(this.object.unique_name)
+          .pipe(take(1))
+          .subscribe((res: Task[]) => (this.Tasks = res));
+      } else {
+        this.router.navigate(['signin']);
+      }
+    });
   }
 
   deleteTask(value) {
@@ -52,5 +44,41 @@ export class TasksComponent implements OnInit {
         (res) =>
           (this.Tasks = this.Tasks.filter((x) => x.taskId != value.taskId))
       );
+  }
+
+  importanceFlag(task) {
+    task.importance = !task.importance;
+    this.auth
+      .EditTask(this.object.unique_name, task.taskId, task)
+      .pipe(take(1))
+      .subscribe();
+  }
+
+  completeFlag(task) {
+    task.completed = !task.completed;
+    this.auth
+      .EditTask(this.object.unique_name, task.taskId, task)
+      .pipe(take(1))
+      .subscribe();
+  }
+
+  sortByCompleted(table: Task[]) {
+    table = [...this.Tasks];
+    if (!table[0].completed) {
+      table.sort((a, b) => (a.completed > b.completed ? -1 : 1));
+    } else {
+      table.sort((a, b) => (a.completed > b.completed ? 1 : -1));
+    }
+    this.Tasks = table;
+  }
+
+  sortByImportance(table: Task[]) {
+    table = [...this.Tasks];
+    if (!table[0].importance) {
+      table.sort((a, b) => (a.importance > b.importance ? -1 : 1));
+    } else {
+      table.sort((a, b) => (a.importance > b.importance ? 1 : -1));
+    }
+    this.Tasks = table;
   }
 }

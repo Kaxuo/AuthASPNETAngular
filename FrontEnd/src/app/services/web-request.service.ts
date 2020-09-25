@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserRegister } from '../Models/UserRegister';
 import { UserAuth } from '../Models/UserAuth';
-import { SingleUser } from '../Models/SingleUser';
 import { UpdateUser } from '../Models/UpdateUser';
+import { Task } from '../Models/Tasks'
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +45,18 @@ export class WebRequestService {
 
   getAllTasks(url: string) {
     return this.http.get(`${this.ROOT_URL}/${url}`);
+  }
+
+  getOneTask(url: string) {
+    return this.http.get(`${this.ROOT_URL}/${url}`);
+  }
+
+  AddTask(url: string, payload:Task) {
+    return this.http.post(`${this.ROOT_URL}/${url}`, payload);
+  }
+
+  EditTasks(url: string, payload: Task) {
+    return this.http.put(`${this.ROOT_URL}/${url}`, payload);
   }
 
   DeleteTask(url: string) {
