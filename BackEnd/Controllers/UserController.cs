@@ -116,15 +116,12 @@ namespace BackEnd.Controllers
             user.Id = id;
             try
             {
-                // Update User
-
                 _repository.Update(user);
                 return Ok();
             }
             catch (AppException ex)
             {
                 return BadRequest(new { message = ex.Message });
-
             }
         }
 
