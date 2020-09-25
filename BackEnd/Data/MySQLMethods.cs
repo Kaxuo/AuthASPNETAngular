@@ -21,13 +21,10 @@ namespace BackEnd.Data
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
             var user = _context.Users.SingleOrDefault(x => x.Username == username);
-            // check if username exists
             if (user == null)
                 return null;
-            // check if password is correct
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 return null;
-            // authentication successful
             return user;
         }
 
@@ -37,10 +34,8 @@ namespace BackEnd.Data
                 throw new AppException("Password is required");
             if (_context.Users.Any(x => x.Username == user.Username))
                 throw new AppException($"Username {user.Username} is already taken");
-
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             _context.Users.Add(user);
@@ -74,7 +69,6 @@ namespace BackEnd.Data
             var user = _context.Users.Find(userParam.Id);
             if (user == null)
                 throw new AppException("User not found");
-
             // update username if it has changed
             if (!string.IsNullOrWhiteSpace(userParam.Username) && userParam.Username != user.Username)
             {
@@ -135,7 +129,6 @@ namespace BackEnd.Data
         public Task EditTask(int id, int taskId, TaskModel newtask)
         {
             var user = _context.Users.Include(s => s.Tasks).FirstOrDefault(s => s.Id == id);
-
             var task = user.Tasks.FirstOrDefault(x => x.TaskId == taskId);
             if (task == null)
                 throw new AppException("Task do not exist");

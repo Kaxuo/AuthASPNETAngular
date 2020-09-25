@@ -21,7 +21,6 @@ namespace BackEnd.Controllers
         private readonly IUser _repository;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
-
         public UserController(IUser repository, IMapper mapper, IOptions<AppSettings> appSettings)
         {
             _repository = repository;
@@ -41,11 +40,9 @@ namespace BackEnd.Controllers
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterModel model)
         {
-            // map model to entity
             var user = _mapper.Map<User>(model);
             try
             {
-                // create user
                 _repository.CreateUser(user, model.Password);
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -60,7 +57,6 @@ namespace BackEnd.Controllers
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
-
                 return Ok(new
                 {
                     Token = tokenString
@@ -118,7 +114,6 @@ namespace BackEnd.Controllers
             // map model to User and set Id
             var user = _mapper.Map<User>(model);
             user.Id = id;
-
             try
             {
                 // Update User
