@@ -18,7 +18,6 @@ namespace BackEnd.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-
         private readonly IUser _repository;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
@@ -29,6 +28,7 @@ namespace BackEnd.Controllers
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
+
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetAll()
         {
@@ -37,14 +37,12 @@ namespace BackEnd.Controllers
             return Ok(model);
         }
 
-
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterModel model)
         {
             // map model to entity
             var user = _mapper.Map<User>(model);
-
             try
             {
                 // create user
@@ -74,6 +72,7 @@ namespace BackEnd.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateModels model)
@@ -95,7 +94,6 @@ namespace BackEnd.Controllers
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
-
             return Ok(new
             {
                 Id = user.Id,
@@ -143,7 +141,6 @@ namespace BackEnd.Controllers
         }
 
         // TASKS HANDLING // 
-
         [HttpGet("{id}/tasks")]
         public ActionResult<IEnumerable<Task>> GetTasks(int id)
         {

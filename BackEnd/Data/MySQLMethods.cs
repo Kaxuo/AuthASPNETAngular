@@ -11,28 +11,24 @@ namespace BackEnd.Data
     {
 
         protected readonly UserContext _context;
-
         public MySQLMethods(UserContext context)
         {
             _context = context;
         }
+        
         public User Authenticate(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
-
             var user = _context.Users.SingleOrDefault(x => x.Username == username);
-
             // check if username exists
             if (user == null)
                 return null;
             // check if password is correct
-
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 return null;
             // authentication successful
             return user;
-
         }
 
         public User CreateUser(User user, string password)
@@ -49,9 +45,7 @@ namespace BackEnd.Data
             user.PasswordSalt = passwordSalt;
             _context.Users.Add(user);
             _context.SaveChanges();
-
             return user;
-
         }
 
         public void Delete(int id)
@@ -74,8 +68,6 @@ namespace BackEnd.Data
             var user = _context.Users.Include(s => s.Tasks).FirstOrDefault(s => s.Id == id);
             return user;
         }
-
-
 
         public void Update(User userParam)
         {
@@ -114,9 +106,7 @@ namespace BackEnd.Data
             _context.SaveChanges();
         }
 
-
         // Task Handling //
-
         public IEnumerable<Task> GetAllTasks(int id)
         {
             var tasks = _context.Tasks.Where(x => x.UserId == id);
@@ -130,7 +120,6 @@ namespace BackEnd.Data
             _context.SaveChanges();
             return user.Tasks;
         }
-
 
         public void DeleteTask(int id, int TaskId)
         {
@@ -156,14 +145,12 @@ namespace BackEnd.Data
                 task.Completed = newtask.Completed;
             if (task.Importance != newtask.Importance)
                 task.Importance = newtask.Importance;
-
             _context.Update(task);
             _context.SaveChanges();
             return task;
-
         }
-        // private helper methods
 
+        // private helper methods
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
@@ -191,7 +178,6 @@ namespace BackEnd.Data
                     if (computedHash[i] != storedHash[i]) return false;
                 }
             }
-
             return true;
         }
 
