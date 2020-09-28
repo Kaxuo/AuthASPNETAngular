@@ -7,4 +7,12 @@ export interface UserReceived{
     city:string,
     country:string,
     hobby:string,
+    tasks: Tasks[]
+}
+
+interface Tasks {
+    taskId:number;
+    description:string;
+    completed:boolean;
+    important:boolean;
 }

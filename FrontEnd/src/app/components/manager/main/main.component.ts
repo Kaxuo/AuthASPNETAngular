@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserReceived } from '../../Models/UsersReceived';
-import { take } from 'rxjs/operators';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
+import { UserReceived } from '../../../Models/UsersReceived';
+import { take, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-main',
@@ -13,28 +13,26 @@ import { Observable } from 'rxjs';
 })
 export class MainComponent implements OnInit {
   token: Observable<boolean> = this.auth.isAuthenticated();
-  id: any = localStorage.getItem('user-id');
+  id: number = this.auth.getDecodedAccessToken(this.LocalStorageService.retrieve('token')).unique_name;
   data: UserReceived[];
-  headElements = [
-    'ID',
-    'First',
-    'Last',
-    'Username',
-    'Hobby',
-    'Country',
-    'City',
-    'PhoneNumber',
-  ];
 
   constructor(
     private auth: AuthService,
-    private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private LocalStorageService : LocalStorageService
   ) {}
 
   ngOnInit(): void {
+    console.log(this.id)
     this.token.subscribe((isAuth) => {
       if (isAuth) {
+        this.auth.isAdmin().pipe(
+          tap(isAdmin => {
+            if(!isAdmin){
+              this.router.navigate(['tasks']);
+            }
+          })
+        ).subscribe()
         this.auth
           .getAllUsers()
           .pipe(take(1))
@@ -46,5 +44,9 @@ export class MainComponent implements OnInit {
         this.router.navigate(['register']);
       }
     });
+  }
+
+  UserDetail(el){
+    this.router.navigate([`/manage/users/${el.id}`])
   }
 }

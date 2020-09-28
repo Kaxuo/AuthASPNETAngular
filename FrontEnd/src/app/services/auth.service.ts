@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebRequestService } from './web-request.service';
 import { UserRegister } from '../Models/UserRegister';
-import { map, shareReplay, tap } from 'rxjs/operators';
+import { map, shareReplay, tap, timestamp } from 'rxjs/operators';
 import { UserAuth } from '../Models/UserAuth';
-import { BehaviorSubject, merge, Observable, of, zip } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { UpdateUser } from '../Models/UpdateUser';
 import { Task } from '../Models/Tasks';
@@ -15,22 +15,35 @@ import jwt_decode from 'jwt-decode';
   providedIn: 'root',
 })
 export class AuthService {
-  // private authenticated: BehaviorSubject<boolean> = new BehaviorSubject(!!localStorage.getItem('token'));
+  private admin: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private webRequest: WebRequestService,
     private router: Router,
-    private localStorageService: LocalStorageService
+    private LocalStorageService: LocalStorageService
   ) {}
+
+  observeToken(): Observable<string> {
+    return merge(
+      of(this.LocalStorageService.retrieve('token')),
+      this.LocalStorageService.observe('token')
+    )
+  }
 
   // Always observe token and return that value
   // retrieve on refresh and then observe continously
   isAuthenticated(): Observable<boolean> {
-    return merge(
-      of(this.localStorageService.retrieve('token')),
-      this.localStorageService.observe('token')
-    ).pipe(map((result) => !!result));
+    return this.observeToken().pipe(map((result) => !!result));
   }
+
+  isAdmin(): Observable<boolean> {
+    return this.observeToken().pipe(
+      map((result) =>
+        this.getDecodedAccessToken(result)?.role == 'Admin' ? true : false
+      )
+    );
+  }
+
   // User
   getAllUsers() {
     return this.webRequest.getAllUsers('api/users');
@@ -56,6 +69,10 @@ export class AuthService {
     );
   }
 
+  deleteUser(id:number){
+    return this.webRequest.deleteUser(`api/users/${id}`)
+  }
+
   login(payload: UserAuth) {
     return this.webRequest.authenticate(payload).pipe(
       shareReplay(),
@@ -71,11 +88,11 @@ export class AuthService {
     return this.webRequest.getAllTasks(`api/users/${id}/tasks`);
   }
 
-  getOneTask(id: number, taskId:number) {
+  getOneTask(id: number, taskId: number) {
     return this.webRequest.getOneTask(`api/users/${id}/tasks/${taskId}`);
   }
 
-  AddTask(id: number, payload : Task) {
+  AddTask(id: number, payload: Task) {
     return this.webRequest.AddTask(`api/users/${id}/tasks/add`, payload);
   }
 
@@ -91,8 +108,8 @@ export class AuthService {
 
   logout() {
     //this.authenticated.next(false);
-    this.removeSession();
     this.router.navigate(['/register']);
+    this.removeSession();
   }
 
   getDecodedAccessToken(token: string): any {
@@ -105,10 +122,10 @@ export class AuthService {
   }
 
   private setSession(accessToken: string) {
-    this.localStorageService.store('token', accessToken);
+    this.LocalStorageService.store('token', accessToken);
   }
 
   private removeSession() {
-    this.localStorageService.clear('token');
+    this.LocalStorageService.clear('token');
   }
 }

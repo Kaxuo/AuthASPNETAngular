@@ -7,8 +7,8 @@
 .complete{
     .description{
       text-decoration: line-through;
+      color:black;
     }
-background-color: lightgray;
 }
 button {
     background-color: inherit;
@@ -19,3 +19,4 @@ button {
 th::selection{
   outline:none;
 }
+

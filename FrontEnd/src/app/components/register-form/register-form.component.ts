@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { UserRegister } from '../../Models/UserRegister';
 import { Router } from '@angular/router';
-import { take, first } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
@@ -20,7 +20,15 @@ export class RegisterFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.LocalStorageService.retrieve('token')) {
-      this.router.navigate(['/']);
+      this.auth.isAdmin().pipe(
+        tap((isAdmin) => {
+          if (isAdmin) {
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate(['tasks']);
+          }
+        })
+      ).subscribe();
     }
     this.registerForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
@@ -40,8 +48,7 @@ export class RegisterFormComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (res: HttpResponse<any>) => {
-          console.log(res);
-          this.router.navigate(['/']);
+          this.router.navigate(['tasks']);
         },
         (err: HttpErrorResponse) => (this.message = err.error.message)
       );

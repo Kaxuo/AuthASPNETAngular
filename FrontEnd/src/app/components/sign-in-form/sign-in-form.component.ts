@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { UserAuth } from 'src/app/Models/UserAuth';
-import { take } from 'rxjs/operators';
+import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { LocalStorageService } from 'ngx-webstorage';
 import { Router } from '@angular/router';
-import { LocalStorageService } from 'ngx-webstorage'
 
 @Component({
   selector: 'app-sign-in-form',
@@ -14,13 +14,25 @@ import { LocalStorageService } from 'ngx-webstorage'
 })
 export class SignInFormComponent implements OnInit {
   signInForm: FormGroup;
-  message: string; 
+  message: string;
 
-  constructor(private auth: AuthService, private router: Router, private  LocalStorageService: LocalStorageService) {}
+  constructor(
+    private auth: AuthService,
+    private LocalStorageService: LocalStorageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    if (this. LocalStorageService.retrieve('token')) {
-      this.router.navigate(['/']);
+    if (this.LocalStorageService.retrieve('token')) {
+      this.auth.isAdmin().pipe(
+        tap((isAdmin) => {
+          if (isAdmin) {
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate(['tasks']);
+          }
+        })
+      ).subscribe();
     }
     this.signInForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
@@ -29,17 +41,26 @@ export class SignInFormComponent implements OnInit {
   }
 
   sendData(values: UserAuth) {
-    values.username = values.username.trim()
+    values.username = values.username.trim();
     this.auth
       .login(values)
-      .pipe(take(1))
-      .subscribe(
-        (res: HttpResponse<any>) => {
-          if (res.status === 200) {
-            this.router.navigate(['/']);
-          }
-        },
-        (err: HttpErrorResponse) => this.message = err.error.message
-      );
+      .pipe(
+        take(1),
+        switchMap(() => {
+          return this.auth.isAdmin().pipe(
+            tap((isAdmin) => {
+              if (isAdmin) {
+                this.router.navigate(['/']);
+              } else {
+                this.router.navigate(['tasks']);
+              }
+            })
+          );
+        }),
+        catchError(
+          (err: HttpErrorResponse) => (this.message = err.error.message)
+        )
+      )
+      .subscribe();
   }
 }

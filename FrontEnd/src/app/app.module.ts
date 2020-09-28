@@ -15,7 +15,7 @@ import {
   TableModule,
   CollapseModule
 } from 'angular-bootstrap-md';
-import { MainComponent } from './components/main/main.component';
+import { MainComponent } from './components/Manager/main/main.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BearerTokenInterceptor } from './services/bearer-token.interceptor';
 import {NgxWebstorageModule} from 'ngx-webstorage';
@@ -24,6 +24,9 @@ import { UpdateProfileComponent } from './components/update-profile/update-profi
 import { TasksComponent } from './components/tasks/tasks.component';
 import { AddComponent } from './components/tasks/add/add.component';
 import { EditComponent } from './components/tasks/edit/edit.component';
+import { UserDetailsComponent } from './components/manager/user-details/user-details.component';
+import { AddTasksComponent } from './components/manager/add-tasks/add-tasks.component';
+import { UserTasksComponent } from './components/manager/user-tasks/user-tasks.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { EditComponent } from './components/tasks/edit/edit.component';
     TasksComponent,
     AddComponent,
     EditComponent,
+    UserDetailsComponent,
+    AddTasksComponent,
+    UserTasksComponent,
   ],
   imports: [
     BrowserModule,

@@ -16,19 +16,16 @@ a {
   flex-grow: 1; 
 }
 
-
 .icon{
   font-size: 25px;
   cursor: pointer;
 }
-
 
 button{
   border:none;
   background-color: inherit;
   outline:none;
 }
-
 
 @media only screen and (max-width: 1000px) {
   .list-group {

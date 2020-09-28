@@ -1,0 +1,135 @@
+<div class="form">
+  <div *ngIf="User" class="list-group title">
+    <a
+      style="text-align: center"
+      class="list-group-item active waves-light"
+      mdbWavesEffect
+    >
+      <strong class="info">{{ User.firstName }}'s Information </strong>
+    </a>
+    <div>
+      <div class="list-group-item bob waves-light">
+        <span>
+          First Name: <strong>{{ User.firstName }}</strong>
+        </span>
+      </div>
+      <div class="list-group-item bob waves-light">
+        <span>
+          Last Name: <strong>{{ User.lastName }}</strong>
+        </span>
+      </div>
+      <div class="list-group-item bob waves-light">
+        <span>
+          UserName: <strong>{{ User.username }}</strong>
+        </span>
+      </div>
+      <div class="list-group-item bob waves-light">
+        <span>
+          Number: <strong>{{ User.number }}</strong>
+        </span>
+      </div>
+      <div class="list-group-item bob waves-light">
+        <span>
+          Country: <strong>{{ User.country }}</strong>
+        </span>
+      </div>
+      <div class="list-group-item bob waves-light">
+        <span>
+          City: <strong>{{ User.city }}</strong>
+        </span>
+      </div>
+      <div class="list-group-item bob waves-light">
+        <span class="custom">
+          <strong>{{ User.role }} Privileges</strong>
+          <strong> Tasks: {{ User.tasks.length }}</strong>
+          <strong> Incomplete: {{ tasksComplete }}</strong>
+        </span>
+      </div>
+      <div class="list-group-item bob waves-light">
+        <button
+          style="width: 100%"
+          mdbBtn
+          type="button"
+          color="default"
+          mdbWavesEffect
+          routerLink="tasks"
+        >
+          Check Task
+        </button>
+      </div>
+      <div *ngIf="User.role == 'User'" class="list-group-item bob waves-light">
+        <button
+          style="width: 100%"
+          mdbBtn
+          type="button"
+          color="primary"
+          mdbWavesEffect
+          routerLink="add"
+        >
+          Add Task
+        </button>
+      </div>
+      <div *ngIf="User.role == 'User'" class="list-group-item bob waves-light">
+        <button
+          style="width: 100%"
+          mdbBtn
+          type="button"
+          color="danger"
+          mdbWavesEffect
+          (click)="basicModal.show()"
+        >
+          Delete User
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  mdbModal
+  #basicModal="mdbModal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myBasicModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close pull-right"
+          aria-label="Close"
+          (click)="basicModal.hide()"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Are you sure ?</h4>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          mdbBtn
+          color="secondary"
+          class="waves-light"
+          aria-label="Close"
+          (click)="basicModal.hide()"
+          mdbWavesEffect
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          mdbBtn
+          color="primary"
+          class="relative waves-light"
+          mdbWavesEffect
+          (click)="deleteUser(User)"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

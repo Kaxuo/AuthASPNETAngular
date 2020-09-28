@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { LocalStorageService } from 'ngx-webstorage';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -10,15 +12,13 @@ import { Observable } from 'rxjs';
 })
 export class NavbarComponent implements OnInit {
   authenticated: Observable<boolean> = this.auth.isAuthenticated();
-  isAuth: boolean;
+  isAdminObs: Observable<boolean> = this.auth.isAdmin();
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+  ) {}
 
-  ngOnInit(): void {
-    this.authenticated.subscribe((result) => {
-      this.isAuth = result
-    });
-  } 
+  ngOnInit(): void {}
 
   logout() {
     this.auth.logout();

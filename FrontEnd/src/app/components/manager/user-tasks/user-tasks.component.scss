@@ -1,0 +1,17 @@
+.table {
+  background-color: white;
+}
+
+th::selection {
+  outline: none;
+}
+
+.important {
+  color: red;
+}
+.complete {
+  .description {
+    text-decoration: line-through;
+    color: black;
+  }
+}

@@ -5,45 +5,50 @@
   [containerInside]="false"
 >
   <!-- Navbar brand -->
-  <mdb-navbar-brand
-    ><a class="navbar-brand" routerLink="/">Users</a></mdb-navbar-brand
+
+  <mdb-navbar-brand><a class="navbar-brand" style="color:white; cursor: default;">Management</a></mdb-navbar-brand>
+  <mdb-navbar-brand 
+    ><a class="navbar-brand" *ngIf="isAdminObs | async" routerLink="/">Users</a></mdb-navbar-brand
   >
-
   <mdb-navbar-brand
-  ><a class="navbar-brand task" style="color: white;" routerLink="/tasks/add" *ngIf="isAuth" >Add Tasks</a></mdb-navbar-brand
->
-  
-
+    ><a
+      class="navbar-brand task"
+      style="color: white"
+      routerLink="/tasks/add"
+      *ngIf="authenticated | async"
+      >Add Tasks</a
+    ></mdb-navbar-brand
+  >
   <!-- Collapsible content -->
   <links>
     <!-- Links -->
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item" routerLinkActive="active" *ngIf="!isAuth">
+      <li class="nav-item" routerLinkActive="active" *ngIf="!(authenticated | async)">
         <a class="nav-link waves-light" routerLink="signin" mdbWavesEffect
           >Sign In<span class="sr-only">(current)</span></a
         >
       </li>
-      <li class="nav-item" routerLinkActive="active" *ngIf="!isAuth">
+      <li class="nav-item" routerLinkActive="active" *ngIf="!(authenticated | async)">
         <a class="nav-link waves-light" routerLink="register" mdbWavesEffect
           >Register<span class="sr-only">(current)</span></a
         >
       </li>
-      <li class="nav-item" routerLinkActive="active" *ngIf="isAuth">
+      <li class="nav-item" routerLinkActive="active" *ngIf="(authenticated | async)">
         <a class="nav-link waves-light" routerLink="tasks" mdbWavesEffect
           >Tasks<span class="sr-only">(current)</span></a
         >
       </li>
-      <li class="nav-item" routerLinkActive="active" *ngIf="isAuth">
+      <li class="nav-item" routerLinkActive="active" *ngIf="(authenticated | async)">
         <a class="nav-link waves-light" routerLink="profile" mdbWavesEffect
           >Profile<span class="sr-only">(current)</span></a
         >
       </li>
-      <li class="nav-item" routerLinkActive="active" *ngIf="isAuth">
+      <li class="nav-item" routerLinkActive="active" *ngIf="(authenticated | async)">
         <a class="nav-link waves-light" routerLink="update" mdbWavesEffect
           >Update<span class="sr-only">(current)</span></a
         >
       </li>
-      <li class="nav-item" *ngIf="isAuth">
+      <li class="nav-item" *ngIf="(authenticated | async)">
         <a class="nav-link waves-light" (click)="logout()" mdbWavesEffect
           >Log Out</a
         >
