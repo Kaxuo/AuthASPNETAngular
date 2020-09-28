@@ -16,5 +16,7 @@ namespace BackEnd.Models
         public string City { get; set; }
         public string Hobby { get; set; }
         public string Country { get; set; }
+        public string Role { get; set; } = "User";
+
     }
 }
