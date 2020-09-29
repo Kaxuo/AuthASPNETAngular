@@ -25,11 +25,11 @@ export class AdminPrivileges implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.auth.getDecodedAccessToken(this.LocalStorageService.retrieve('token')).role != "Admin") {
+    if (this.auth.getDecodedAccessToken(this.LocalStorageService.retrieve('token'))?.role != "Admin") {
       this.router.navigate(['NoPrivileges']);
       return false;
     }
-    if (this.auth.getDecodedAccessToken(this.LocalStorageService.retrieve('token')).role == "Admin") {
+    if (this.auth.getDecodedAccessToken(this.LocalStorageService.retrieve('token'))?.role == "Admin") {
       return true;
     }
   }

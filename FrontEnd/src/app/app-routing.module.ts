@@ -19,7 +19,8 @@ import { ServerDownComponent } from './components/errorsPages/server-down/server
 import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no-privileges.component';
 
 const routes: Routes = [
-  { path: '', component: MainComponent, canActivate:[AdminPrivileges] },
+  { path: '', redirectTo:"signin" , pathMatch:"full" },
+  { path: 'users', component: MainComponent, canActivate:[AdminPrivileges] },
   { path: 'signin', component: SignInFormComponent },
   { path: 'register', component: RegisterFormComponent },
   { path: 'profile', component: ProfilePageComponent },

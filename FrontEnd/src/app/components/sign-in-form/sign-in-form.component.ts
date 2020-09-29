@@ -27,7 +27,7 @@ export class SignInFormComponent implements OnInit {
       this.auth.isAdmin().pipe(
         tap((isAdmin) => {
           if (isAdmin) {
-            this.router.navigate(['/']);
+            this.router.navigate(['users']);
           } else {
             this.router.navigate(['tasks']);
           }
@@ -50,7 +50,7 @@ export class SignInFormComponent implements OnInit {
           return this.auth.isAdmin().pipe(
             tap((isAdmin) => {
               if (isAdmin) {
-                this.router.navigate(['/']);
+                this.router.navigate(['users']);
               } else {
                 this.router.navigate(['tasks']);
               }

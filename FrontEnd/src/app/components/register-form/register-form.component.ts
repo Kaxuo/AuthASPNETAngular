@@ -22,10 +22,10 @@ export class RegisterFormComponent implements OnInit {
     if (this.LocalStorageService.retrieve('token')) {
       this.auth.isAdmin().pipe(
         tap((isAdmin) => {
-          if (isAdmin) {
-            this.router.navigate(['/']);
-          } else {
+          if (!isAdmin) {
             this.router.navigate(['tasks']);
+          } else {
+            this.router.navigate(['users']);
           }
         })
       ).subscribe();

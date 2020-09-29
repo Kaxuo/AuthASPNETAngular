@@ -13,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  token: Observable<boolean> = this.auth.isAuthenticated();
+  token: Observable<boolean> = this.auth.isAdmin();
   id: number = this.auth.getDecodedAccessToken(
     this.LocalStorageService.retrieve('token')
   ).unique_name;
@@ -26,8 +26,8 @@ export class MainComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.token.subscribe((isAuth) => {
-      if (isAuth) {
+    this.token.subscribe((isAdmin) => {
+      if (isAdmin) {
         this.auth
           .getAllUsers()
           .pipe(take(1))

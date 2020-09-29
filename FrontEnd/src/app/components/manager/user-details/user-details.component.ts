@@ -17,7 +17,6 @@ export class UserDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     let id = this.route.snapshot.params.id;
-    console.log(id);
     this.auth
       .getOne(id)
       .pipe(take(1))
@@ -31,13 +30,9 @@ export class UserDetailsComponent implements OnInit {
       });
   }
 
-  addTask(value){
-    console.log(value)
-  }
-
   deleteUser(value) {
     this.auth.deleteUser(value.id).subscribe(res => {
-      this.router.navigate(['/'])
+      this.router.navigate(['users'])
     })
   }
 }
