@@ -26,7 +26,7 @@ export class AdminPrivileges implements CanActivate {
     | boolean
     | UrlTree {
     if (this.auth.getDecodedAccessToken(this.LocalStorageService.retrieve('token')).role != "Admin") {
-      this.router.navigate(['tasks']);
+      this.router.navigate(['NoPrivileges']);
       return false;
     }
     if (this.auth.getDecodedAccessToken(this.LocalStorageService.retrieve('token')).role == "Admin") {

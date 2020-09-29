@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common'; 
 
 @Component({
   selector: 'app-not-found',
@@ -7,11 +7,11 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./not-found.component.scss'],
 })
 export class NotFoundComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private _location: Location) {}
 
   ngOnInit(): void {}
 
   goBack(){
-    this.router.navigate(['..'], { relativeTo:this.route})
+    this._location.back()
   }
 }

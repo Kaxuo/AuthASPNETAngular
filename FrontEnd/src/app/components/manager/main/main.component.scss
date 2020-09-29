@@ -9,3 +9,21 @@ mdb-icon {
 .admin{
   background-color: lightgray;
 }
+
+@media only screen and (max-width: 1000px) {
+  .id,.country,.city {
+    display:none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .hobby {
+    display:none;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .number {
+    display:none;
+  }
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common'; 
 
 @Component({
   selector: 'app-server-down',
@@ -7,10 +7,10 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./server-down.component.scss'],
 })
 export class ServerDownComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private _location: Location) {}
 
   ngOnInit(): void {}
   goBack() {
-    this.router.navigate(['..'], { relativeTo: this.route });
+    this._location.back()
   }
 }

@@ -107,7 +107,6 @@ export class AuthService {
   }
 
   logout() {
-    //this.authenticated.next(false);
     this.router.navigate(['/register']);
     this.removeSession();
   }

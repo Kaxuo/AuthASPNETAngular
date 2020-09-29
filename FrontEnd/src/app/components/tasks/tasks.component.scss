@@ -20,3 +20,8 @@ th::selection{
   outline:none;
 }
 
+@media only screen and (max-width: 1000px) {
+  .id {
+    display:none;
+  }
+}

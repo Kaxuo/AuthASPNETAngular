@@ -35,7 +35,7 @@ export class MainComponent implements OnInit {
             this.data = res;
           });
       } else {
-        this.router.navigate(['register']);
+        this.router.navigate(['signin']);
       }
     });
   }

@@ -1,7 +1,7 @@
 <table class="table" mdbTable>
   <thead style="text-align: center" class="tablehead">
     <tr>
-      <th scope="col">ID</th>
+      <th class="id" scope="col">ID</th>
       <th scope="col">Description</th>
       <th (click)="sortByCompleted(Tasks)" style="cursor: pointer" scope="col">
         Status
@@ -19,7 +19,7 @@
       mdbTableCol
       *ngFor="let el of Tasks; let index = index"
     >
-      <th scope="row">{{ index + 1 }}</th>
+      <th class="id" scope="row">{{ index + 1 }}</th>
       <td class="description">{{ el.description }}</td>
       <td style="text-align: center; padding-left: 40px">
         <mdb-checkbox

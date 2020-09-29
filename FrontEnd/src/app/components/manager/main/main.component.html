@@ -1,28 +1,40 @@
 <table class="table" mdbTable>
   <thead class="tablehead">
     <tr>
-      <th scope="col">ID</th>
+      <th class="id" scope="col">ID</th>
       <th scope="col">Firstname</th>
       <th scope="col">Lastname</th>
       <th scope="col">Username</th>
-      <th scope="col">Hobby</th>
-      <th scope="col">Country</th>
-      <th scope="col">City</th>
-      <th scope="col">PhoneNumber</th>
+      <th class="hobby" scope="col">Hobby</th>
+      <th class="country" scope="col">Country</th>
+      <th class="city" scope="col">City</th>
+      <th class="number" scope="col">PhoneNumber</th>
       <th scope="col">Details</th>
     </tr>
   </thead>
   <tbody class="tablebody">
-    <tr [ngClass]="{admin: el.role =='Admin'}" mdbTableCol *ngFor="let el of data; let index = index">
-      <th scope="row">{{ index + 1 }}</th>
+    <tr
+      [ngClass]="{ admin: el.role == 'Admin' }"
+      mdbTableCol
+      *ngFor="let el of data; let index = index"
+    >
+      <th class="id" scope="row">{{ index + 1 }}</th>
       <td>{{ el.firstName }}</td>
       <td>{{ el.lastName }}</td>
       <td>{{ el.username }}</td>
-      <td>{{ el.hobby }}</td>
-      <td>{{ el.country }}</td>
-      <td>{{ el.city }}</td>
-      <td>{{ el.number }}</td>
-      <td ><mdb-icon *ngIf="id != this.el.id" (click)="UserDetail(el)" fas size="lg" icon="caret-square-right"></mdb-icon></td>
+      <td class="hobby">{{ el.hobby }}</td>
+      <td class="country">{{ el.country }}</td>
+      <td class="city">{{ el.city }}</td>
+      <td class="number">{{ el.number }}</td>
+      <td>
+        <mdb-icon
+          *ngIf="id != this.el.id"
+          (click)="UserDetail(el)"
+          fas
+          size="lg"
+          icon="caret-square-right"
+        ></mdb-icon>
+      </td>
     </tr>
   </tbody>
 </table>

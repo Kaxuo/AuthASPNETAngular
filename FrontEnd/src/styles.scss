@@ -3,6 +3,11 @@
 .body {
   background-color: #1f2426;
 }
+
+html {
+  width: 100%;
+}
+
 .form {
   display: flex;
   justify-content: center;
@@ -25,18 +30,28 @@ em {
     width: 80%;
   }
 }
+
 @media only screen and (max-width: 420px) {
   .form2 {
     width: 95%;
   }
+  html {
+    width: 105%;
+  }
 }
 
-.errorimg{
+@media only screen and (max-width: 400px) {
+  html {
+    width:140%;
+  }
+}
+
+.errorimg {
   width: 25%;
 }
 
-.errorBody{
-  display:flex;
+.errorBody {
+  display: flex;
   flex-direction: column;
   justify-self: center;
   align-items: center;

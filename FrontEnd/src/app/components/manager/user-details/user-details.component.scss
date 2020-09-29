@@ -3,7 +3,7 @@ a {
 }
 
 .list-group {
-  width: 40%;
+  width: 50%;
 }
 
 .info {
@@ -24,3 +24,14 @@ strong {
   align-items: center;
 }
 
+@media only screen and (max-width: 1100px) {
+  .list-group {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .list-group {
+    width: 95%;
+  }
+}

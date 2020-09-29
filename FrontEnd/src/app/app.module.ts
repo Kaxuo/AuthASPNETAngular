@@ -30,6 +30,7 @@ import { NotFoundComponent } from './components/errorsPages/not-found/not-found.
 import { UsersNotFoundComponent } from './components/errorsPages/users-not-found/users-not-found.component';
 import { TaskNotFoundComponent } from './components/errorsPages/task-not-found/task-not-found.component';
 import { ServerDownComponent } from './components/errorsPages/server-down/server-down.component';
+import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no-privileges.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ServerDownComponent } from './components/errorsPages/server-down/server
     UsersNotFoundComponent,
     TaskNotFoundComponent,
     ServerDownComponent,
+    NoPrivilegesComponent,
   ],
   imports: [
     BrowserModule,
