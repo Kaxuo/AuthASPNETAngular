@@ -3,23 +3,38 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { AuthService } from './auth.service'
-import {LocalStorageService} from 'ngx-webstorage';
+import { Observable, throwError } from 'rxjs';
+import { LocalStorageService } from 'ngx-webstorage';
+import { catchError, retry } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class BearerTokenInterceptor implements HttpInterceptor {
+  constructor(
+    private localStorageService: LocalStorageService,
+    private router: Router
+  ) {}
 
-  constructor(private localStorageService : LocalStorageService) {}
-
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
     request = request.clone({
       setHeaders: {
-        Authorization : `Bearer ${this.localStorageService.retrieve('token')}`
-      }
-    })
-    return next.handle(request)
+        Authorization: `Bearer ${this.localStorageService.retrieve('token')}`,
+      },
+    });
+    return next.handle(request).pipe(
+      retry(1),
+      catchError((err: HttpErrorResponse) => {
+        if (err.status == 0) {
+          this.router.navigate(['DeadServer']);
+        }
+        return throwError(err);
+      })
+    );
   }
 }

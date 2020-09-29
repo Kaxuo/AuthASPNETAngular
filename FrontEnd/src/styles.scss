@@ -30,3 +30,14 @@ em {
     width: 95%;
   }
 }
+
+.errorimg{
+  width: 25%;
+}
+
+.errorBody{
+  display:flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+}

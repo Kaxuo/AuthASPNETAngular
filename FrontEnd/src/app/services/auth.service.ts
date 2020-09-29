@@ -1,11 +1,11 @@
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebRequestService } from './web-request.service';
 import { UserRegister } from '../Models/UserRegister';
 import { map, shareReplay, tap, timestamp } from 'rxjs/operators';
 import { UserAuth } from '../Models/UserAuth';
-import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of, throwError } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { UpdateUser } from '../Models/UpdateUser';
 import { Task } from '../Models/Tasks';

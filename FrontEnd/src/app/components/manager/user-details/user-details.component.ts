@@ -22,7 +22,9 @@ export class UserDetailsComponent implements OnInit {
       .getOne(id)
       .pipe(take(1))
       .subscribe((user: UserReceived) => {
-        console.log(user)
+        if (user == null){
+          this.router.navigate(['404'])
+        }
         this.User = user;
         let tasks = this.User.tasks.filter(tasks => !tasks.completed)
         this.tasksComplete = tasks.length

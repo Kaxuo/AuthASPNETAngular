@@ -7,6 +7,7 @@ export interface UserReceived{
     city:string,
     country:string,
     hobby:string,
+    role:string,
     tasks: Tasks[]
 }
 

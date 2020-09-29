@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { LocalStorageService } from 'ngx-webstorage';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, take } from 'rxjs/operators';
 import { Task } from 'src/app/Models/Tasks';
 
 @Component({
@@ -34,15 +34,20 @@ export class EditComponent implements OnInit {
             this.object.unique_name,
             this.route.snapshot.params.taskId
           )
-          .pipe(take(1))
+          .pipe(
+            take(1)
+          )
           .subscribe((response: Task) => {
+            if (response == null){
+              this.router.navigate(['NoTask'])
+            }
             this.EditTask = new FormGroup({
               description: new FormControl(response.description, [
                 Validators.required,
                 Validators.maxLength(20),
               ]),
             });
-          });
+          })
       } else {
         this.router.navigate(['register']);
       }
@@ -57,8 +62,8 @@ export class EditComponent implements OnInit {
         task
       )
       .pipe(take(1))
-      .subscribe(res => {
-        this.router.navigate(['/tasks'])
+      .subscribe((res) => {
+        this.router.navigate(['/tasks']);
       });
   }
 }

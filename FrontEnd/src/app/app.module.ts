@@ -13,7 +13,6 @@ import {
   WavesModule,
   ButtonsModule,
   TableModule,
-  CollapseModule
 } from 'angular-bootstrap-md';
 import { MainComponent } from './components/Manager/main/main.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -27,6 +26,10 @@ import { EditComponent } from './components/tasks/edit/edit.component';
 import { UserDetailsComponent } from './components/manager/user-details/user-details.component';
 import { AddTasksComponent } from './components/manager/add-tasks/add-tasks.component';
 import { UserTasksComponent } from './components/manager/user-tasks/user-tasks.component';
+import { NotFoundComponent } from './components/errorsPages/not-found/not-found.component';
+import { UsersNotFoundComponent } from './components/errorsPages/users-not-found/users-not-found.component';
+import { TaskNotFoundComponent } from './components/errorsPages/task-not-found/task-not-found.component';
+import { ServerDownComponent } from './components/errorsPages/server-down/server-down.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,10 @@ import { UserTasksComponent } from './components/manager/user-tasks/user-tasks.c
     UserDetailsComponent,
     AddTasksComponent,
     UserTasksComponent,
+    NotFoundComponent,
+    UsersNotFoundComponent,
+    TaskNotFoundComponent,
+    ServerDownComponent,
   ],
   imports: [
     BrowserModule,
