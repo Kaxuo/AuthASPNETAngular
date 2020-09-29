@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common'; 
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-users-not-found',
@@ -7,10 +7,10 @@ import { Location } from '@angular/common';
   styleUrls: ['./users-not-found.component.scss'],
 })
 export class UsersNotFoundComponent implements OnInit {
-  constructor(private _location: Location) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {}
   goBack() {
-    this._location.back()
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 }

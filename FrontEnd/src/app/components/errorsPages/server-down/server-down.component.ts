@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common'; 
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-server-down',
@@ -7,10 +7,10 @@ import { Location } from '@angular/common';
   styleUrls: ['./server-down.component.scss'],
 })
 export class ServerDownComponent implements OnInit {
-  constructor(private _location: Location) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {}
   goBack() {
-    this._location.back()
+    this.router.navigate(['signin']);
   }
 }
