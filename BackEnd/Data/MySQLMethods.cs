@@ -55,7 +55,7 @@ namespace BackEnd.Data
 
         public IEnumerable<User> GetAllUsers()
         {
-            return _context.Users;
+            return _context.Users.Include(s => s.Tasks);
         }
 
         public User GetUserById(int id)
