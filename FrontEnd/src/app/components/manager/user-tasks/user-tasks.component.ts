@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { Task } from 'src/app/Models/Tasks';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -10,11 +11,22 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class UserTasksComponent implements OnInit {
   Tasks: Task[];
+  
   constructor(private auth: AuthService, private router: ActivatedRoute) {}
 
   ngOnInit(): void {
     let id = this.router.snapshot.params.id;
     this.auth.getAllTasks(id).subscribe((data: Task[]) => (this.Tasks = data));
+  }
+
+  deleteTask(value) {
+    this.auth
+      .DeleteTask(value.userId, value.taskId)
+      .pipe(take(1))
+      .subscribe(
+        (res) =>
+          (this.Tasks = this.Tasks.filter((x) => x.taskId != value.taskId))
+      );
   }
 
   sortByCompleted(table: Task[]) {

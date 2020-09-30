@@ -38,7 +38,7 @@ export class TasksComponent implements OnInit {
 
   deleteTask(value) {
     this.auth
-      .DeleteTask(this.object.unique_name, value.taskId)
+      .DeleteTask(value.userId, value.taskId)
       .pipe(take(1))
       .subscribe(
         (res) =>
