@@ -15,10 +15,8 @@ import { Task } from 'src/app/Models/Tasks';
 export class EditComponent implements OnInit {
   token: Observable<boolean> = this.auth.isAuthenticated();
   EditTask: FormGroup;
-  object = this.auth.getDecodedAccessToken(
-    this.LocalStorageService.retrieve('token')
-  );
-
+  object = this.auth.decryptedAndDecodedToken();
+  
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -34,12 +32,10 @@ export class EditComponent implements OnInit {
             this.object.unique_name,
             this.route.snapshot.params.taskId
           )
-          .pipe(
-            take(1)
-          )
+          .pipe(take(1))
           .subscribe((response: Task) => {
-            if (response == null){
-              this.router.navigate(['NoTask'])
+            if (response == null) {
+              this.router.navigate(['NoTask']);
             }
             this.EditTask = new FormGroup({
               description: new FormControl(response.description, [
@@ -47,7 +43,7 @@ export class EditComponent implements OnInit {
                 Validators.maxLength(20),
               ]),
             });
-          })
+          });
       } else {
         this.router.navigate(['register']);
       }

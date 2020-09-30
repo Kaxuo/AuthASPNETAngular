@@ -1,4 +1,32 @@
-<table class="table" mdbTable>
+<div *ngIf="Tasks.length == 0 && loading == false" class="form">
+  <mdb-card>
+    <mdb-card-header class="info-color white-text text-center py-4">
+      <h5>
+        <strong>No Task !</strong>
+      </h5>
+    </mdb-card-header>
+
+    <mdb-card-body class="px-lg-5 pt-0 errorBody">
+      <h3 style="padding: 20px">This user has nothing to do</h3>
+      <h4 style="padding: 20px">You should make him do something</h4>
+      <img class="errorimg" src="../../../../assets/thumbup.png" />
+      <button
+        style="margin-top: 30px"
+        type="button"
+        mdbBtn
+        mdbWavesEffect
+        color="primary"
+        routerLink="../add"
+      >
+        <a class="nav-link waves-light" style="color: white" mdbWavesEffect
+          >Add Task<span class="sr-only">(current)</span></a
+        >
+      </button>
+    </mdb-card-body>
+  </mdb-card>
+</div>
+
+<table *ngIf="Tasks.length != 0 && loading == false" class="table" mdbTable>
   <thead style="text-align: center" class="tablehead">
     <tr>
       <th scope="col">ID</th>

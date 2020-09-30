@@ -10,13 +10,19 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./user-tasks.component.scss'],
 })
 export class UserTasksComponent implements OnInit {
-  Tasks: Task[];
-  
+  Tasks: Task[] = [];
+  loading: boolean = false;
+
   constructor(private auth: AuthService, private router: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.loading = true;
     let id = this.router.snapshot.params.id;
-    this.auth.getAllTasks(id).subscribe((data: Task[]) => (this.Tasks = data));
+    this.auth.getAllTasks(id).subscribe((data: Task[]) => 
+    {
+      this.Tasks = data
+      this.loading = false;
+    });
   }
 
   deleteTask(value) {

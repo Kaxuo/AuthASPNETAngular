@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebRequestService } from './web-request.service';
@@ -10,12 +10,15 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { UpdateUser } from '../Models/UpdateUser';
 import { Task } from '../Models/Tasks';
 import jwt_decode from 'jwt-decode';
+import * as CryptoJS from 'crypto-js';
+import { secret } from "./keys"
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private admin: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private secret:string = secret
 
   constructor(
     private webRequest: WebRequestService,
@@ -27,7 +30,7 @@ export class AuthService {
     return merge(
       of(this.LocalStorageService.retrieve('token')),
       this.LocalStorageService.observe('token')
-    )
+    );
   }
 
   // Always observe token and return that value
@@ -39,7 +42,10 @@ export class AuthService {
   isAdmin(): Observable<boolean> {
     return this.observeToken().pipe(
       map((result) =>
-        this.getDecodedAccessToken(result)?.role == 'Admin' ? true : false
+        result &&
+        this.getDecodedAccessToken(this.decrypt(result))?.role == 'Admin'
+          ? true
+          : false
       )
     );
   }
@@ -69,8 +75,8 @@ export class AuthService {
     );
   }
 
-  deleteUser(id:number){
-    return this.webRequest.deleteUser(`api/users/${id}`)
+  deleteUser(id: number) {
+    return this.webRequest.deleteUser(`api/users/${id}`);
   }
 
   login(payload: UserAuth) {
@@ -120,8 +126,30 @@ export class AuthService {
     }
   }
 
+  decrypt(token: string): string {
+    if (token) {
+      var bytes = CryptoJS.AES.decrypt(token, secret);
+      var originalText = bytes.toString(CryptoJS.enc.Utf8);
+      return originalText;
+    }
+  }
+
+  decryptedAndDecodedToken() {
+    var bytes = CryptoJS.AES.decrypt(
+      this.LocalStorageService.retrieve('token'),
+      secret
+    );
+    var originaltoken = bytes.toString(CryptoJS.enc.Utf8);
+    let decoded = this.getDecodedAccessToken(originaltoken);
+    return decoded;
+  }
+
   private setSession(accessToken: string) {
-    this.LocalStorageService.store('token', accessToken);
+    var ciphertext = CryptoJS.AES.encrypt(
+      accessToken,
+      secret
+    ).toString();
+    this.LocalStorageService.store('token', ciphertext);
   }
 
   private removeSession() {

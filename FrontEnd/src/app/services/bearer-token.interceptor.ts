@@ -10,12 +10,14 @@ import { Observable, throwError } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { catchError, retry } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class BearerTokenInterceptor implements HttpInterceptor {
   constructor(
     private localStorageService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private auth:AuthService
   ) {}
 
   intercept(
@@ -24,7 +26,7 @@ export class BearerTokenInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     request = request.clone({
       setHeaders: {
-        Authorization: `Bearer ${this.localStorageService.retrieve('token')}`,
+        Authorization: `Bearer ${this.auth.decrypt(this.localStorageService.retrieve('token'))}`,
       },
     });
     return next.handle(request).pipe(

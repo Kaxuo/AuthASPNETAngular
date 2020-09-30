@@ -17,7 +17,7 @@ import {
 import { MainComponent } from './components/Manager/main/main.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BearerTokenInterceptor } from './services/bearer-token.interceptor';
-import {NgxWebstorageModule} from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
 import { TasksComponent } from './components/tasks/tasks.component';
@@ -63,7 +63,7 @@ import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no
     ReactiveFormsModule,
     HttpClientModule,
     TableModule,
-    NgxWebstorageModule.forRoot(),
+    NgxWebstorageModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

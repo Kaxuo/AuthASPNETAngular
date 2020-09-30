@@ -50,12 +50,12 @@
               />
               <label for="materialRegisterFormLastName">Last name</label>
               <em
-              *ngIf="
-                registerForm.get('lastName').hasError('required') &&
-                registerForm.get('lastName').touched
-              "
-              >Required</em
-            >
+                *ngIf="
+                  registerForm.get('lastName').hasError('required') &&
+                  registerForm.get('lastName').touched
+                "
+                >Required</em
+              >
             </div>
           </div>
         </div>
@@ -71,21 +71,20 @@
           />
           <label for="materialSubscriptionFormUsername">UserName</label>
           <em
-          *ngIf="
-            registerForm.get('username').hasError('required') &&
-            registerForm.get('username').touched
-          "
-          >Required</em
-        >
-        <em
-        *ngIf="
-          registerForm.get('username').hasError('pattern') &&
-          registerForm.get('username').touched
-        "
-        >No Spaces Please !</em
-      >
+            *ngIf="
+              registerForm.get('username').hasError('required') &&
+              registerForm.get('username').touched
+            "
+            >Required</em
+          >
+          <em
+            *ngIf="
+              registerForm.get('username').hasError('pattern') &&
+              registerForm.get('username').touched
+            "
+            >No Spaces Please !</em
+          >
         </div>
-        
 
         <!-- Password -->
         <div class="md-form">
@@ -99,12 +98,12 @@
           />
           <label for="materialRegisterFormPassword">Password</label>
           <em
-          *ngIf="
-            registerForm.get('password').hasError('required') &&
-            registerForm.get('password').touched
-          "
-          >Required</em
-        >
+            *ngIf="
+              registerForm.get('password').hasError('required') &&
+              registerForm.get('password').touched
+            "
+            >Required</em
+          >
           <small
             id="materialRegisterFormPasswordHelpBlock"
             class="form-text text-muted mb-4"
@@ -125,12 +124,12 @@
           />
           <label for="materialRegisterFormPhone">Phone number</label>
           <em
-          *ngIf="
-            registerForm.get('number').hasError('required') &&
-            registerForm.get('number').touched
-          "
-          >Required</em
-        >
+            *ngIf="
+              registerForm.get('number').hasError('required') &&
+              registerForm.get('number').touched
+            "
+            >Required</em
+          >
         </div>
 
         <!-- City -->
@@ -144,12 +143,12 @@
           />
           <label for="materialSubscriptionFormCity">City</label>
           <em
-          *ngIf="
-            registerForm.get('city').hasError('required') &&
-            registerForm.get('city').touched
-          "
-          >Required</em
-        >
+            *ngIf="
+              registerForm.get('city').hasError('required') &&
+              registerForm.get('city').touched
+            "
+            >Required</em
+          >
         </div>
 
         <!-- Country -->
@@ -163,12 +162,12 @@
           />
           <label for="materialSubscriptionFormCountryCity">Country</label>
           <em
-          *ngIf="
-            registerForm.get('country').hasError('required') &&
-            registerForm.get('country').touched
-          "
-          >Required</em
-        >
+            *ngIf="
+              registerForm.get('country').hasError('required') &&
+              registerForm.get('country').touched
+            "
+            >Required</em
+          >
         </div>
 
         <!-- Name -->
@@ -182,17 +181,17 @@
           />
           <label for="materialSubscriptionFormHobby">Hobby</label>
           <em
-          *ngIf="
-            registerForm.get('hobby').hasError('required') &&
-            registerForm.get('hobby').touched
-          "
-          >Required</em
-        >
+            *ngIf="
+              registerForm.get('hobby').hasError('required') &&
+              registerForm.get('hobby').touched
+            "
+            >Required</em
+          >
         </div>
-        <em *ngIf="message">{{message}}</em>
+        <em *ngIf="message">{{ message }}</em>
         <!-- Sign up button -->
         <button
-        [disabled] = "registerForm.invalid"
+          [disabled]="registerForm.invalid || clicked"
           mdbBtn
           color="info"
           outline="true"

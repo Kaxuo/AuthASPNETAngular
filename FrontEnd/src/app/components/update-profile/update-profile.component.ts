@@ -18,7 +18,7 @@ export class UpdateProfileComponent implements OnInit {
   single: UserReceived;
   registerForm: FormGroup;
   message: string;
-  object: any;
+  object = this.auth.decryptedAndDecodedToken()
 
   constructor(
     private auth: AuthService,
@@ -27,9 +27,6 @@ export class UpdateProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.object = this.getDecodedAccessToken(
-      this.LocalStorageService.retrieve('token')
-    );
     if (!this.LocalStorageService.retrieve('token')) {
       this.router.navigate(['register']);
     }

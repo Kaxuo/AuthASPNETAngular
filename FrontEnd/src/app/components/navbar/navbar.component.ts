@@ -11,9 +11,7 @@ export class NavbarComponent implements OnInit {
   authenticated: Observable<boolean> = this.auth.isAuthenticated();
   isAdminObs: Observable<boolean> = this.auth.isAdmin();
 
-  constructor(
-    private auth: AuthService,
-  ) {}
+  constructor(private auth: AuthService) {}
 
   ngOnInit(): void {}
 

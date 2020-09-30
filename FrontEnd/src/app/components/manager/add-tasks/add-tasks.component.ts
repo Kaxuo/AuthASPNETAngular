@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AddTasksComponent implements OnInit {
   AddTask: FormGroup;
   id : number;
+  clicked:boolean = false;
   constructor(private auth:AuthService, private router:Router, private route:ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -21,6 +22,7 @@ export class AddTasksComponent implements OnInit {
   }
 
   sendTask(task) {
+    this.clicked = true;
     let id = this.route.snapshot.params.id
     this.auth.AddTask(id,task).subscribe((res) => {
       this.router.navigate(['..'], { relativeTo:this.route });

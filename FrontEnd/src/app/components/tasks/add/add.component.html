@@ -52,7 +52,7 @@
           class="my-4 waves-effect z-depth-0"
           mdbWavesEffect
           type="submit"
-          [disabled]="AddTask.invalid"
+          [disabled]="AddTask.invalid || clicked" 
         >
           Add Task
         </button>

@@ -15,6 +15,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 export class RegisterFormComponent implements OnInit {
   registerForm: FormGroup;
   message:string;
+  clicked:boolean=false;
 
   constructor(private auth: AuthService, private router: Router, private LocalStorageService: LocalStorageService) {}
 
@@ -43,12 +44,13 @@ export class RegisterFormComponent implements OnInit {
   }
 
   sendData(values: UserRegister) {
+    this.clicked = true;
     this.auth
       .register(values)
       .pipe(first())
       .subscribe(
         (res: HttpResponse<any>) => {
-          this.router.navigate(['tasks']);
+          this.router.navigate(['profile']);
         },
         (err: HttpErrorResponse) => (this.message = err.error.message)
       );

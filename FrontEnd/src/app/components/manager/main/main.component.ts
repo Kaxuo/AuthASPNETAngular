@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserReceived } from '../../../Models/UsersReceived';
-import { catchError, take, tap } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
-import { LocalStorageService } from 'ngx-webstorage';
-import { HttpErrorResponse } from '@angular/common/http';
+import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -14,15 +12,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class MainComponent implements OnInit {
   token: Observable<boolean> = this.auth.isAdmin();
-  id: number = this.auth.getDecodedAccessToken(
-    this.LocalStorageService.retrieve('token')
-  ).unique_name;
+  id: number = this.auth.decryptedAndDecodedToken().unique_name;
   data: UserReceived[];
 
   constructor(
     private auth: AuthService,
     private router: Router,
-    private LocalStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {

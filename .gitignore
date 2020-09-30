@@ -49,6 +49,7 @@ Thumbs.db
 
 # Test
 .env.development.*
+keys.ts.*
 
 # Build results
 [Dd]ebug/

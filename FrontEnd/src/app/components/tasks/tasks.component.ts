@@ -13,23 +13,22 @@ import { Router } from '@angular/router';
 })
 export class TasksComponent implements OnInit {
   token: Observable<boolean> = this.auth.isAuthenticated();
-  Tasks: Task[];
-  object = this.auth.getDecodedAccessToken(
-    this.LocalStorageService.retrieve('token')
-  );
-  constructor(
-    private auth: AuthService,
-    private LocalStorageService: LocalStorageService,
-    private router: Router
-  ) {}
+  loading: boolean = false;
+  Tasks: Task[] = [];
+  object = this.auth.decryptedAndDecodedToken();
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.token.subscribe((isAuth) => {
       if (isAuth) {
         this.auth
           .getAllTasks(this.object.unique_name)
           .pipe(take(1))
-          .subscribe((res: Task[]) => (this.Tasks = res));
+          .subscribe((res: Task[]) => {
+            this.Tasks = res;
+            this.loading = false;
+          });
       } else {
         this.router.navigate(['signin']);
       }
@@ -38,7 +37,7 @@ export class TasksComponent implements OnInit {
 
   deleteTask(value) {
     this.auth
-      .DeleteTask(value.userId, value.taskId)
+      .DeleteTask(this.object.unique_name, value.taskId)
       .pipe(take(1))
       .subscribe(
         (res) =>

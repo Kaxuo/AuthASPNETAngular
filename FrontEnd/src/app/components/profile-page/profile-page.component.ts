@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { LocalStorageService } from 'ngx-webstorage';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -18,13 +17,10 @@ export class ProfilePageComponent implements OnInit {
   propertyEditable: any;
   form: FormGroup;
   message: string;
-  object = this.auth.getDecodedAccessToken(
-    this.LocalStorageService.retrieve('token')
-  );
+  object = this.auth.decryptedAndDecodedToken()
 
   constructor(
     private auth: AuthService,
-    private LocalStorageService: LocalStorageService,
     private router: Router
   ) {}
 
