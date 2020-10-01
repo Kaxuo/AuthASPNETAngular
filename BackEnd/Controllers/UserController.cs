@@ -12,7 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace BackEnd.Controllers
-{
+{   
+    [RequireHttps]
     [Authorize]
     [Route("api/users")]
     [ApiController]

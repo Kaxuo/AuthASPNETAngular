@@ -35,7 +35,9 @@ namespace BackEnd
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
-            services.AddCors();
+            services.AddCors(options => options.AddPolicy("AllowAnyone", builder =>  builder.AllowAnyOrigin()
+                                                                                            .AllowAnyMethod()
+                                                                                            .AllowAnyHeader()));
             services.AddControllers();
             services.AddMvc();
             services.AddDbContext<UserContext>(options => options.UseMySQL(
@@ -87,7 +89,9 @@ namespace BackEnd
             {
                 hstsOpts.IncludeSubDomains = true;
                 hstsOpts.MaxAge = TimeSpan.FromMinutes(5);
+                hstsOpts.ExcludedHosts.Clear();
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,13 +100,11 @@ namespace BackEnd
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseHsts();
             }
-            app.UseHsts();
+
             // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            app.UseCors("AllowAnyone");
 
             app.UseHttpsRedirection();
 
