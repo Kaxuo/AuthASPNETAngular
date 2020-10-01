@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserDetailsComponent implements OnInit {
   User: UserReceived;
   tasksComplete: number;
+  loading:boolean;
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private router:Router) {}
 
@@ -27,6 +28,7 @@ export class UserDetailsComponent implements OnInit {
         this.User = user;
         let tasks = this.User.tasks.filter(tasks => !tasks.completed)
         this.tasksComplete = tasks.length
+        this.loading = false;
       });
   }
 

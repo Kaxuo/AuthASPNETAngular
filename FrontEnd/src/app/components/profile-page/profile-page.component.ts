@@ -14,15 +14,13 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 })
 export class ProfilePageComponent implements OnInit {
   token: Observable<boolean> = this.auth.isAuthenticated();
+  loading: boolean;
   propertyEditable: any;
   form: FormGroup;
   message: string;
-  object = this.auth.decryptedAndDecodedToken()
+  object = this.auth.decryptedAndDecodedToken();
 
-  constructor(
-    private auth: AuthService,
-    private router: Router
-  ) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.token.subscribe((isAuth) => {
@@ -31,15 +29,19 @@ export class ProfilePageComponent implements OnInit {
           .getOne(this.object.unique_name)
           .pipe(take(1))
           .subscribe((res: UserReceived) => {
-            this.form = new FormGroup({})
+            this.form = new FormGroup({});
             // Instance of this.data
             this.propertyEditable = {};
-            Object.keys(res).map(key => {
-              // Create a edit property 
-              this.propertyEditable[key] = false
+            Object.keys(res).map((key) => {
+              // Create a edit property
+              this.propertyEditable[key] = false;
               // Add each controller to the form
-              this.form.addControl(key,  new FormControl(res[key], [Validators.required]))
-            })
+              this.form.addControl(
+                key,
+                new FormControl(res[key], [Validators.required])
+              );
+              this.loading = false;
+            });
           });
       } else {
         this.router.navigate(['register']);
@@ -47,16 +49,16 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
-  sendData(property:string) {
-    let updatedUser = {}
-    updatedUser[property] = this.form.get(property).value
+  sendData(property: string) {
+    let updatedUser = {};
+    updatedUser[property] = this.form.get(property).value;
     this.auth
       .editUser(this.object.unique_name, updatedUser)
       .pipe(take(1))
       .subscribe(
         (res: HttpResponse<any>) => {
-          this.propertyEditable[property] = false
-          this.message = ""
+          this.propertyEditable[property] = false;
+          this.message = '';
           this.router.navigate(['profile']);
         },
         (err: HttpErrorResponse) => (this.message = err.error.message)

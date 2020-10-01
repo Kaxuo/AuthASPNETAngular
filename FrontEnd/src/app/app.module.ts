@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,6 +32,8 @@ import { UsersNotFoundComponent } from './components/errorsPages/users-not-found
 import { TaskNotFoundComponent } from './components/errorsPages/task-not-found/task-not-found.component';
 import { ServerDownComponent } from './components/errorsPages/server-down/server-down.component';
 import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no-privileges.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -52,6 +55,7 @@ import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no
     TaskNotFoundComponent,
     ServerDownComponent,
     NoPrivilegesComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +67,8 @@ import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no
     ReactiveFormsModule,
     HttpClientModule,
     TableModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule,
     NgxWebstorageModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

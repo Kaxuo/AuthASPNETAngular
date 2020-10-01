@@ -18,7 +18,8 @@ export class UpdateProfileComponent implements OnInit {
   single: UserReceived;
   registerForm: FormGroup;
   message: string;
-  object = this.auth.decryptedAndDecodedToken()
+  object = this.auth.decryptedAndDecodedToken();
+  loading: boolean;
 
   constructor(
     private auth: AuthService,
@@ -33,24 +34,16 @@ export class UpdateProfileComponent implements OnInit {
     this.auth
       .getOne(this.object.unique_name)
       .subscribe((data: UserReceived) => {
-        this.single = data;
         this.registerForm = new FormGroup({
-          firstName: new FormControl(this.single.firstName, [
-            Validators.required,
-          ]),
-          lastName: new FormControl(this.single.lastName, [
-            Validators.required,
-          ]),
-          username: new FormControl(this.single.username, [
-            Validators.required,
-          ]),
-          number: new FormControl(this.single.number, [Validators.required]),
-          city: new FormControl(this.single.city, [Validators.required]),
-          country: new FormControl(this.single.country, [
-            Validators.required,
-          ]),
-          hobby: new FormControl(this.single.hobby, [Validators.required]),
+          firstName: new FormControl(data.firstName, [Validators.required]),
+          lastName: new FormControl(data.lastName, [Validators.required]),
+          username: new FormControl(data.username, [Validators.required]),
+          number: new FormControl(data.number, [Validators.required]),
+          city: new FormControl(data.city, [Validators.required]),
+          country: new FormControl(data.country, [Validators.required]),
+          hobby: new FormControl(data.hobby, [Validators.required]),
         });
+        this.loading = false;
       });
   }
 

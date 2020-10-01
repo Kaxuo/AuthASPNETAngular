@@ -14,6 +14,7 @@ export class MainComponent implements OnInit {
   token: Observable<boolean> = this.auth.isAdmin();
   id: number = this.auth.decryptedAndDecodedToken().unique_name;
   data: UserReceived[];
+  loading:boolean;
 
   constructor(
     private auth: AuthService,
@@ -28,6 +29,7 @@ export class MainComponent implements OnInit {
           .pipe(take(1))
           .subscribe((res: UserReceived[]) => {
             this.data = res;
+            this.loading = false;
           });
       } else {
         this.router.navigate(['signin']);

@@ -83,7 +83,11 @@ namespace BackEnd
                     ValidateAudience = false
                 };
             });
-
+            services.AddHsts(hstsOpts =>
+            {
+                hstsOpts.IncludeSubDomains = true;
+                hstsOpts.MaxAge = TimeSpan.FromMinutes(5);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,7 +97,7 @@ namespace BackEnd
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseHsts();
             // global cors policy
             app.UseCors(x => x
                 .AllowAnyOrigin()

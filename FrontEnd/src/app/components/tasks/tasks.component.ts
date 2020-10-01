@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { Task } from '../../Models/Tasks';
-import { LocalStorageService } from 'ngx-webstorage';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -13,13 +12,12 @@ import { Router } from '@angular/router';
 })
 export class TasksComponent implements OnInit {
   token: Observable<boolean> = this.auth.isAuthenticated();
-  loading: boolean = false;
+  loading: boolean;
   Tasks: Task[] = [];
   object = this.auth.decryptedAndDecodedToken();
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loading = true;
     this.token.subscribe((isAuth) => {
       if (isAuth) {
         this.auth
@@ -35,7 +33,7 @@ export class TasksComponent implements OnInit {
     });
   }
 
-  deleteTask(value) {
+  deleteTask(value: Task) {
     this.auth
       .DeleteTask(this.object.unique_name, value.taskId)
       .pipe(take(1))
@@ -45,7 +43,7 @@ export class TasksComponent implements OnInit {
       );
   }
 
-  importanceFlag(task) {
+  importanceFlag(task: Task) {
     task.importance = !task.importance;
     this.auth
       .EditTask(this.object.unique_name, task.taskId, task)
@@ -53,7 +51,7 @@ export class TasksComponent implements OnInit {
       .subscribe();
   }
 
-  completeFlag(task) {
+  completeFlag(task: Task) {
     task.completed = !task.completed;
     this.auth
       .EditTask(this.object.unique_name, task.taskId, task)
