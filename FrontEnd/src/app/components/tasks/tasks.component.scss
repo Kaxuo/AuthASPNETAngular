@@ -2,26 +2,42 @@
   background-color: white;
 }
 .important {
-  color:red;
+  color: red;
 }
-.complete{
-    .description{
-      text-decoration: line-through;
-      color:black;
-    }
+.complete {
+  .description {
+    text-decoration: line-through;
+    color: black;
+  }
 }
 button {
-    background-color: inherit;
-    border:none;
-    outline:none;
+  background-color: inherit;
+  border: none;
+  outline: none;
 }
 
-th::selection{
-  outline:none;
+th::selection {
+  outline: none;
 }
 
 @media only screen and (max-width: 1000px) {
   .id {
-    display:none;
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  table.table td,
+  table.table th {
+    padding: 0.75rem;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  table.table td,
+  table.table th {
+    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 }
