@@ -34,6 +34,7 @@ import { ServerDownComponent } from './components/errorsPages/server-down/server
 import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no-privileges.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { BackgroundComponent } from './components/background/background.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     ServerDownComponent,
     NoPrivilegesComponent,
     SpinnerComponent,
+    BackgroundComponent,
   ],
   imports: [
     BrowserModule,
