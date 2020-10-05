@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace BackEnd.Controllers
-{   
+{
     [RequireHttps]
     [Authorize]
     [Route("api/users")]
@@ -172,6 +172,13 @@ namespace BackEnd.Controllers
         {
             _repository.DeleteTask(id, TaskId);
             return Ok();
+        }
+        [AllowAnonymous]
+        [HttpGet("special")]
+        public ActionResult<IEnumerable<TasksPerUsers>> GetTasksPerUsers()
+        {
+            var users = _repository.GetAll();
+            return Ok(users);
         }
     }
 }

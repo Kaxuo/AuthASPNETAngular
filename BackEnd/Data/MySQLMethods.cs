@@ -179,6 +179,11 @@ namespace BackEnd.Data
             return true;
         }
 
+        public IEnumerable<TasksPerUsers> GetAll()
+        {
+            var tasks = _context.TasksPerUsers;
+            return tasks;
+        }
     }
 }
 
