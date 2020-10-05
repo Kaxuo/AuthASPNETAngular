@@ -23,7 +23,6 @@ namespace BackEnd.Data
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
         }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Project> Projects { get; set; }
