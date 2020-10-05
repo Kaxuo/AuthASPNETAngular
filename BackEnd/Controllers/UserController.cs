@@ -136,6 +136,10 @@ namespace BackEnd.Controllers
             return Ok();
         }
 
+        // Projects Handling //
+
+        
+
         // TASKS HANDLING // 
         [HttpGet("{id}/tasks")]
         public ActionResult<IEnumerable<Task>> GetTasks(int id)
@@ -172,13 +176,6 @@ namespace BackEnd.Controllers
         {
             _repository.DeleteTask(id, TaskId);
             return Ok();
-        }
-        [AllowAnonymous]
-        [HttpGet("special")]
-        public ActionResult<IEnumerable<TasksPerUsers>> GetTasksPerUsers()
-        {
-            var users = _repository.GetAll();
-            return Ok(users);
         }
     }
 }

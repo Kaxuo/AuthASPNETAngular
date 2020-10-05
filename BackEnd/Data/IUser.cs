@@ -16,7 +16,5 @@ namespace BackEnd.Data
         User CreateUser(User user, string password);
         void Update(User user);
         void Delete(int id);
-        IEnumerable<TasksPerUsers> GetAll();
-
     }
 }

@@ -7,5 +7,6 @@ namespace BackEnd.Models
         public bool Completed { get; set; }
         public bool Importance { get; set; }
         public int UserId { get; set; }
+        public int ProjectId { get; set; }
     }
 }
