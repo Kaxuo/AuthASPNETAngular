@@ -3,14 +3,16 @@ using System;
 using BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(UserContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20201006095956_check1")]
+    partial class check1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,9 +24,6 @@ namespace BackEnd.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -43,8 +42,8 @@ namespace BackEnd.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime");
+                    b.Property<bool>("Completed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -54,9 +53,6 @@ namespace BackEnd.Migrations
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -68,38 +64,6 @@ namespace BackEnd.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Tasks");
-                });
-
-            modelBuilder.Entity("BackEnd.Models.TasksPerUsers", b =>
-                {
-                    b.Property<int>("TaskId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Importance")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("text");
-
-                    b.HasKey("TaskId");
-
-                    b.ToTable("TasksPerUsers");
                 });
 
             modelBuilder.Entity("BackEnd.Models.User", b =>

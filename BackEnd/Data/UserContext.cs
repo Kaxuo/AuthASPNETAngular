@@ -15,7 +15,7 @@ namespace BackEnd.Data
                 .HasMany<Task>(s => s.Tasks)
                 .WithOne(e => e.User)
                 .HasForeignKey(s => s.UserId);
-                
+
             modelBuilder.Entity<Project>()
                 .HasMany<Task>(s => s.Tasks)
                 .WithOne(e => e.Project)
@@ -26,5 +26,6 @@ namespace BackEnd.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<TasksPerUsers> TasksPerUsers { get; set; }
     }
 }

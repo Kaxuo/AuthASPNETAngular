@@ -15,7 +15,7 @@ namespace BackEnd.Controllers
 {
     [RequireHttps]
     [Authorize]
-    [Route("api")]
+    [Route("api/users")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -30,7 +30,7 @@ namespace BackEnd.Controllers
         }
 
         [Authorize(Roles = Role.Admin)]
-        [HttpGet("users")]
+        [HttpGet]
         public ActionResult<IEnumerable<User>> GetAll()
         {
             var users = _repository.GetAllUsers();
@@ -39,7 +39,7 @@ namespace BackEnd.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("users/register")]
+        [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterModel model)
         {
             var user = _mapper.Map<User>(model);
@@ -73,7 +73,7 @@ namespace BackEnd.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("users/authenticate")]
+        [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateModels model)
         {
             var user = _repository.Authenticate(model.Username, model.Password);
@@ -104,7 +104,7 @@ namespace BackEnd.Controllers
             });
         }
 
-        [HttpGet("users/{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var user = _repository.GetUserById(id);
@@ -112,7 +112,7 @@ namespace BackEnd.Controllers
             return Ok(model);
         }
 
-        [HttpPut("users/{id}")]
+        [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UserModel model)
         {
             // map model to User and set Id
@@ -129,96 +129,18 @@ namespace BackEnd.Controllers
             }
         }
         [Authorize(Roles = Role.Admin)]
-        [HttpDelete("users/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _repository.Delete(id);
             return Ok();
         }
 
-        [HttpGet("users/{id}/tasks")]
+        [HttpGet("{id}/tasks")]
         public ActionResult<IEnumerable<Task>> GetTasksPerUsers(int id)
         {
-            var tasks = _repository.GetAllTasks(id);
-            var model = _mapper.Map<IList<TaskModel>>(tasks);
-            return Ok(model);
-        }
-
-        // Projects Handling //
-        [HttpGet("projects")]
-        public ActionResult<IEnumerable<Project>> GetProjects()
-        {
-            var projects = _repository.GetAllProjects();
-            return Ok(projects);
-        }
-
-        [HttpGet("projects/{id}")]
-        public ActionResult<IEnumerable<Task>> GetOneTask(int id)
-        {
-            var project = _repository.GetOneProject(id);
-            return Ok(project);
-        }
-
-        [Authorize(Roles = Role.Admin)]
-        [HttpPost("projects/add")]
-        public ActionResult<IEnumerable<Task>> AddProject(Project project)
-        {
-            var projectAdded = _repository.AddProject(project);
-            return Ok(project);
-        }
-
-        [Authorize(Roles = Role.Admin)]
-        [HttpPut("projects/{id}")]
-        public ActionResult<IEnumerable<Task>> EditProject(int id, Project project)
-        {
-            var projectAdded = _repository.EditProject(id, project);
-            return Ok(project);
-        }
-
-        [Authorize(Roles = Role.Admin)]
-        [HttpDelete("projects/{id}")]
-        public IActionResult DeleteProject(int id)
-        {
-            _repository.DeleteProject(id);
-            return Ok();
-        }
-
-        // TASKS HANDLING // 
-        [HttpGet("projects/{projectId}/tasks")]
-        public ActionResult<IEnumerable<Task>> GetTasks(int projectId)
-        {
-            var tasks = _repository.GetAllTasks(projectId);
-            var model = _mapper.Map<IList<TaskModel>>(tasks);
-            return Ok(model);
-        }
-
-        [HttpGet("projects/{projectId}/tasks/{taskId}")]
-        public ActionResult<IEnumerable<Task>> GetOneTask(int projectId, int taskId)
-        {
-            var tasks = _repository.GetOneTask(projectId, taskId);
-            var model = _mapper.Map<TaskModel>(tasks);
-            return Ok(model);
-        }
-
-        [HttpPost("projects/{projectId}/tasks/add")]
-        public IActionResult AddTask(int projectId, Task task)
-        {
-            _repository.AddTask(projectId, task);
-            return Ok();
-        }
-
-        [HttpPut("projects/{projectId}/tasks/{taskId}")]
-        public IActionResult EditTask(int projectId, int taskId, TaskModel task)
-        {
-            _repository.EditTask(projectId, taskId, task);
-            return Ok();
-        }
-
-        [HttpDelete("projects/{projectId}/tasks/{TaskId}")]
-        public IActionResult DeleteTask(int projectId, int TaskId)
-        {
-            _repository.DeleteTask(projectId, TaskId);
-            return Ok();
+            var tasks = _repository.TasksPerUsers(id);
+            return Ok(tasks);
         }
     }
 }

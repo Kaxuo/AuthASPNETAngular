@@ -4,7 +4,7 @@ using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace BackEnd.Migrations
 {
-    public partial class checkpoint : Migration
+    public partial class check1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

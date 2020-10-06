@@ -9,7 +9,6 @@ namespace BackEnd.Data
 {
     public class MySQLMethods : IUser
     {
-
         protected readonly UserContext _context;
         public MySQLMethods(UserContext context)
         {
@@ -100,16 +99,9 @@ namespace BackEnd.Data
             _context.SaveChanges();
         }
 
-        public IEnumerable<TaskModel> TasksPerUsers(int id)
+        public IEnumerable<object> TasksPerUsers(int id)
         {
-            var tasks = _context.Tasks.Where(x => x.UserId == id).Select(x => new TaskModel
-            {
-                TaskId = x.TaskId,
-                Description = x.Description,
-                Completed = x.Completed,
-                Importance = x.Importance,
-                ProjectId = x.ProjectId
-            });
+            var tasks = _context.TasksPerUsers.Where(x => x.UserId == id);
             return tasks;
         }
 
@@ -126,7 +118,7 @@ namespace BackEnd.Data
                 {
                     TaskId = s.TaskId,
                     Description = s.Description,
-                    Completed = s.Completed,
+                    Status = s.Status,
                     Importance = s.Importance,
                     ProjectId = s.ProjectId,
                     UserId = s.UserId ?? default(int)
@@ -147,7 +139,7 @@ namespace BackEnd.Data
                 {
                     TaskId = s.TaskId,
                     Description = s.Description,
-                    Completed = s.Completed,
+                    Status = s.Status,
                     Importance = s.Importance,
                     UserId = s.UserId ?? default(int),
                     ProjectId = s.ProjectId
@@ -170,7 +162,7 @@ namespace BackEnd.Data
                 {
                     TaskId = s.TaskId,
                     Description = s.Description,
-                    Completed = s.Completed,
+                    Status = s.Status,
                     Importance = s.Importance,
                     ProjectId = s.ProjectId
                 })
@@ -246,8 +238,8 @@ namespace BackEnd.Data
                 throw new AppException("Task do not exist");
             if (!string.IsNullOrWhiteSpace(newtask.Description))
                 task.Description = newtask.Description;
-            if (task.Completed != newtask.Completed)
-                task.Completed = newtask.Completed;
+            if (task.Status != newtask.Status)
+                task.Status = newtask.Status;
             if (task.Importance != newtask.Importance)
                 task.Importance = newtask.Importance;
             if (newtask.UserId != 0)

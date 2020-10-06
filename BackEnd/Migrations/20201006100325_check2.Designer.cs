@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20201005105259_checkpoint")]
-    partial class checkpoint
+    [Migration("20201006100325_check2")]
+    partial class check2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,9 +42,6 @@ namespace BackEnd.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -53,6 +50,9 @@ namespace BackEnd.Migrations
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("text");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");

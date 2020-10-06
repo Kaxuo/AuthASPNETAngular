@@ -11,7 +11,7 @@ namespace BackEnd.Data
         User CreateUser(User user, string password);
         void Update(User user);
         void Delete(int id);
-        IEnumerable<TaskModel> TasksPerUsers(int id);
+        IEnumerable<object> TasksPerUsers(int id);
         IEnumerable<ProjectModel> GetAllProjects();
         ProjectModel GetOneProject(int id);
         IEnumerable<ProjectModel> AddProject(Project project);
