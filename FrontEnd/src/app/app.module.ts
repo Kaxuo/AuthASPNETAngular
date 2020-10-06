@@ -5,9 +5,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { SignInFormComponent } from './components/sign-in-form/sign-in-form.component';
-import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { NavbarComponent } from './components/global/navbar/navbar.component';
+import { SignInFormComponent } from './components/authentication/sign-in-form/sign-in-form.component';
+import { RegisterFormComponent } from './components/authentication/register-form/register-form.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {
   NavbarModule,
@@ -19,11 +19,11 @@ import { MainComponent } from './components/Manager/main/main.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BearerTokenInterceptor } from './services/bearer-token.interceptor';
 import { NgxWebstorageModule } from 'ngx-webstorage';
-import { ProfilePageComponent } from './components/profile-page/profile-page.component';
-import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
-import { TasksComponent } from './components/tasks/tasks.component';
-import { AddComponent } from './components/tasks/add/add.component';
-import { EditComponent } from './components/tasks/edit/edit.component';
+import { ProfilePageComponent } from './components/users/profile-page/profile-page.component';
+import { UpdateProfileComponent } from './components/users/update-profile/update-profile.component';
+import { TasksComponent } from './components/users/tasks/tasks.component';
+import { AddComponent } from './components/users/tasks/add/add.component';
+import { EditComponent } from './components/users/tasks/edit/edit.component';
 import { UserDetailsComponent } from './components/manager/user-details/user-details.component';
 import { AddTasksComponent } from './components/manager/add-tasks/add-tasks.component';
 import { UserTasksComponent } from './components/manager/user-tasks/user-tasks.component';
@@ -32,9 +32,10 @@ import { UsersNotFoundComponent } from './components/errorsPages/users-not-found
 import { TaskNotFoundComponent } from './components/errorsPages/task-not-found/task-not-found.component';
 import { ServerDownComponent } from './components/errorsPages/server-down/server-down.component';
 import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no-privileges.component';
-import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SpinnerComponent } from './components/global/spinner/spinner.component';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { BackgroundComponent } from './components/background/background.component';
+import { BackgroundComponent } from './components/global/background/background.component';
+import { ProjectsComponent } from './components/manager/projects/projects.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { BackgroundComponent } from './components/background/background.componen
     NoPrivilegesComponent,
     SpinnerComponent,
     BackgroundComponent,
+    ProjectsComponent,
   ],
   imports: [
     BrowserModule,

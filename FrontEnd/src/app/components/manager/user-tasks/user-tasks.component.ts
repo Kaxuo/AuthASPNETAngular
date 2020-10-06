@@ -35,15 +35,6 @@ export class UserTasksComponent implements OnInit {
       );
   }
 
-  sortByCompleted(table: Task[]) {
-    table = [...this.Tasks];
-    if (!table[0].completed) {
-      table.sort((a, b) => (a.completed > b.completed ? -1 : 1));
-    } else {
-      table.sort((a, b) => (a.completed > b.completed ? 1 : -1));
-    }
-    this.Tasks = table;
-  }
 
   sortByImportance(table: Task[]) {
     table = [...this.Tasks];

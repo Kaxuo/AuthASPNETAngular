@@ -1,6 +1,8 @@
 export interface Task{
+    projectId:number,
     taskId : number,
+    createdOn:Date,
     description: string,
-    completed:boolean,
+    status:string,
     importance:boolean,
 }

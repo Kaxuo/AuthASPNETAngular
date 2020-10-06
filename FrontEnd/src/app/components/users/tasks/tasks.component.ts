@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
-import { Task } from '../../Models/Tasks';
+import { Task } from '../../../Models/Tasks';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -26,6 +26,7 @@ export class TasksComponent implements OnInit {
           .subscribe((res: Task[]) => {
             this.Tasks = res;
             this.loading = false;
+            console.log(res)
           });
       } else {
         this.router.navigate(['signin']);
@@ -51,20 +52,12 @@ export class TasksComponent implements OnInit {
       .subscribe();
   }
 
-  completeFlag(task: Task) {
-    task.completed = !task.completed;
-    this.auth
-      .EditTask(this.object.unique_name, task.taskId, task)
-      .pipe(take(1))
-      .subscribe();
-  }
-
-  sortByCompleted(table: Task[]) {
+  sortByStatus(table: Task[]) {
     table = [...this.Tasks];
-    if (!table[0].completed) {
-      table.sort((a, b) => (a.completed > b.completed ? -1 : 1));
+    if (!table[0].status) {
+      table.sort((a, b) => (a.status > b.status ? -1 : 1));
     } else {
-      table.sort((a, b) => (a.completed > b.completed ? 1 : -1));
+      table.sort((a, b) => (a.status > b.status ? 1 : -1));
     }
     this.Tasks = table;
   }

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SignInFormComponent } from './components/sign-in-form/sign-in-form.component';
-import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { SignInFormComponent } from './components/authentication/sign-in-form/sign-in-form.component';
+import { RegisterFormComponent } from './components/authentication/register-form/register-form.component';
 import { MainComponent } from './components/Manager/main/main.component';
-import { ProfilePageComponent } from './components/profile-page/profile-page.component';
-import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
-import { TasksComponent } from './components/tasks/tasks.component';
-import { AddComponent } from './components/tasks/add/add.component';
-import { EditComponent } from './components/tasks/edit/edit.component';
+import { ProfilePageComponent } from './components/users/profile-page/profile-page.component';
+import { UpdateProfileComponent } from './components/users/update-profile/update-profile.component';
+import { TasksComponent } from './components/users/tasks/tasks.component';
+import { AddComponent } from './components/users/tasks/add/add.component';
+import { EditComponent } from './components/users/tasks/edit/edit.component';
 import { UserDetailsComponent } from './components/manager/user-details/user-details.component';
 import { AddTasksComponent } from './components/manager/add-tasks/add-tasks.component';
 import { UserTasksComponent } from './components/manager/user-tasks/user-tasks.component';
@@ -17,6 +17,7 @@ import { UsersNotFoundComponent } from './components/errorsPages/users-not-found
 import { TaskNotFoundComponent } from './components/errorsPages/task-not-found/task-not-found.component';
 import { ServerDownComponent } from './components/errorsPages/server-down/server-down.component';
 import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no-privileges.component';
+import { ProjectsComponent } from './components/manager/projects/projects.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterFormComponent },
   { path: 'profile', component: ProfilePageComponent },
   { path: 'update', component: UpdateProfileComponent },
+  { path: 'projects', component: ProjectsComponent },
   { path: 'tasks', component: TasksComponent },
   { path: 'tasks/add', component: AddComponent },
   { path: 'tasks/:taskId/edit', component: EditComponent },

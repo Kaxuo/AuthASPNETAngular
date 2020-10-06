@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { UserAuth } from 'src/app/Models/UserAuth';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
