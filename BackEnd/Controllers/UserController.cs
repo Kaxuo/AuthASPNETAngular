@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using BackEnd.Exceptions;
 
 namespace BackEnd.Controllers
 {
@@ -67,7 +68,10 @@ namespace BackEnd.Controllers
             }
             catch (AppException ex)
             {
-                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(new { message = ex.Message });
             }
         }
@@ -107,9 +111,20 @@ namespace BackEnd.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var user = _repository.GetUserById(id);
-            var model = _mapper.Map<UserModel>(user);
-            return Ok(model);
+            try
+            {
+                var user = _repository.GetUserById(id);
+                var model = _mapper.Map<UserModel>(user);
+                return Ok(model);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
@@ -127,20 +142,50 @@ namespace BackEnd.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
         [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _repository.Delete(id);
-            return Ok();
+            try
+            {
+                _repository.Delete(id);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("{id}/tasks")]
         public ActionResult<IEnumerable<Task>> GetTasksPerUsers(int id)
         {
-            var tasks = _repository.TasksPerUsers(id);
-            return Ok(tasks);
+            try
+            {
+                var tasks = _repository.TasksPerUsers(id);
+                return Ok(tasks);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }
