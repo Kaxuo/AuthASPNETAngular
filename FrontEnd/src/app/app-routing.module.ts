@@ -17,7 +17,9 @@ import { UsersNotFoundComponent } from './components/errorsPages/users-not-found
 import { TaskNotFoundComponent } from './components/errorsPages/task-not-found/task-not-found.component';
 import { ServerDownComponent } from './components/errorsPages/server-down/server-down.component';
 import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no-privileges.component';
-import { ProjectsComponent } from './components/manager/projects/projects.component';
+import { ProjectsComponent } from './components/manager/projects/allProjects/projects.component';
+import { ProjectDetailsComponent } from './components/manager/projects/project-details/project-details.component';
+import { AddProjectComponent } from './components/manager/projects/add-project/add-project.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -27,6 +29,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfilePageComponent },
   { path: 'update', component: UpdateProfileComponent },
   { path: 'projects', component: ProjectsComponent },
+  { path: 'projects/add', component: AddProjectComponent },
+  { path: 'projects/:id', component: ProjectDetailsComponent },
   { path: 'tasks', component: TasksComponent },
   { path: 'tasks/add', component: AddComponent },
   { path: 'tasks/:taskId/edit', component: EditComponent },

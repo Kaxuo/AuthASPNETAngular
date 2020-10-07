@@ -28,7 +28,6 @@ export class AddComponent implements OnInit {
     this.clicked = true
     this.auth.AddTask(this.object.unique_name, task).subscribe((res) => {
       this.router.navigate(['/tasks']);
- 
     });
   }
 }

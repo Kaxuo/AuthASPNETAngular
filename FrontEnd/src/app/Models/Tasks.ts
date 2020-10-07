@@ -5,4 +5,5 @@ export interface Task{
     description: string,
     status:string,
     importance:boolean,
+    userId:number
 }

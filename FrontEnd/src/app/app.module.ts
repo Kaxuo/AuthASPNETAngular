@@ -35,7 +35,9 @@ import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no
 import { SpinnerComponent } from './components/global/spinner/spinner.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { BackgroundComponent } from './components/global/background/background.component';
-import { ProjectsComponent } from './components/manager/projects/projects.component';
+import { ProjectsComponent } from './components/manager/projects/allProjects/projects.component';
+import { ProjectDetailsComponent } from './components/manager/projects/project-details/project-details.component';
+import { AddProjectComponent } from './components/manager/projects/add-project/add-project.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { ProjectsComponent } from './components/manager/projects/projects.compon
     SpinnerComponent,
     BackgroundComponent,
     ProjectsComponent,
+    ProjectDetailsComponent,
+    AddProjectComponent,
   ],
   imports: [
     BrowserModule,

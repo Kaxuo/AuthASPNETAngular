@@ -16,7 +16,11 @@ import { LocalStorageService } from 'ngx-webstorage';
 export class AdminPrivileges implements CanActivate {
   isAdminObs: Observable<boolean> = this.auth.isAdmin();
 
-  constructor(private auth: AuthService, private router: Router,private LocalStorageService:LocalStorageService) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private LocalStorageService: LocalStorageService
+  ) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -25,11 +29,11 @@ export class AdminPrivileges implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.auth.decryptedAndDecodedToken().role != "Admin") {
+    if (this.auth.decryptedAndDecodedToken().role != 'Admin') {
       this.router.navigate(['NoPrivileges']);
       return false;
     }
-    if (this.auth.decryptedAndDecodedToken()?.role == "Admin") {
+    if (this.auth.decryptedAndDecodedToken()?.role == 'Admin') {
       return true;
     }
   }

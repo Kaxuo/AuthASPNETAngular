@@ -1,0 +1,104 @@
+<app-spinner *ngIf="loading != false"></app-spinner>
+
+<table mdbTable>
+  <thead>
+    <tr style="text-align: center">
+      <th class="id">ID</th>
+      <th>Title</th>
+      <th>Tasks</th>
+      <th>Check</th>
+      <th>Add Task</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody style="text-align: center">
+    <tr mdbTableCol *ngFor="let el of projects; let index = index">
+      <td class="id" scope="row">{{ index + 1 }}</td>
+      <td>{{ el.title }}</td>
+      <td>{{ el.tasks.length }}</td>
+      <td>
+        <button [routerLink]="[el.id]">
+          <mdb-icon class="icon" fas icon="share"></mdb-icon>
+        </button>
+      </td>
+      <td>
+        <button>
+          <mdb-icon class="icon" fas icon="plus-square"></mdb-icon>
+        </button>
+      </td>
+      <td>
+        <button (click)="basicModal.show()">
+          <mdb-icon class="icon" fas icon="trash"></mdb-icon>
+        </button>
+        <div
+          mdbModal
+          #basicModal="mdbModal"
+          class="modal fade"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myBasicModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close pull-right"
+                  aria-label="Close"
+                  (click)="basicModal.hide()"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4
+                  style="color: black"
+                  class="modal-title w-100"
+                  id="myModalLabel"
+                >
+                  Are you sure ?
+                </h4>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  mdbBtn
+                  color="secondary"
+                  class="waves-light"
+                  aria-label="Close"
+                  (click)="basicModal.hide()"
+                  mdbWavesEffect
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  mdbBtn
+                  color="primary"
+                  class="relative waves-light"
+                  mdbWavesEffect
+                  (click)="deleteProject(el)"
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div style="text-align: center">
+  <button
+    class="special"
+    mdbBtn
+    type="button"
+    color="secondary"
+    rounded="true"
+    mdbWavesEffect
+    routerLink="add"
+  >
+    Add Project
+  </button>
+</div>

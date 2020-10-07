@@ -26,7 +26,6 @@ export class TasksComponent implements OnInit {
           .subscribe((res: Task[]) => {
             this.Tasks = res;
             this.loading = false;
-            console.log(res)
           });
       } else {
         this.router.navigate(['signin']);
