@@ -12,7 +12,7 @@ namespace BackEnd.Models
         public Status Status { get; set; }
         public bool Importance { get; set; }
         public int? UserId { get; set; }
-        public virtual User User { get; set; }
+        public User User { get; set; }
         public Project Project { get; set; }
         public int ProjectId { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;

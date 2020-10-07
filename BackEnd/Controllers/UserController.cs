@@ -20,12 +20,12 @@ namespace BackEnd.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUser _repository;
+        private readonly IUser _userRepository;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
         public UserController(IUser repository, IMapper mapper, IOptions<AppSettings> appSettings)
         {
-            _repository = repository;
+            _userRepository = repository;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
@@ -34,7 +34,7 @@ namespace BackEnd.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetAll()
         {
-            var users = _repository.GetAllUsers();
+            var users = _userRepository.GetAllUsers();
             var model = _mapper.Map<IList<UserModel>>(users);
             return Ok(model);
         }
@@ -46,7 +46,7 @@ namespace BackEnd.Controllers
             var user = _mapper.Map<User>(model);
             try
             {
-                _repository.CreateUser(user, model.Password);
+                _userRepository.CreateUser(user, model.Password);
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
                 var tokenDescriptor = new SecurityTokenDescriptor
@@ -80,7 +80,7 @@ namespace BackEnd.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateModels model)
         {
-            var user = _repository.Authenticate(model.Username, model.Password);
+            var user = _userRepository.Authenticate(model.Username, model.Password);
             if (user == null)
                 return BadRequest(new { message = " Username or password is incorrect" });
 
@@ -113,7 +113,7 @@ namespace BackEnd.Controllers
         {
             try
             {
-                var user = _repository.GetUserById(id);
+                var user = _userRepository.GetUserById(id);
                 var model = _mapper.Map<UserModel>(user);
                 return Ok(model);
             }
@@ -135,7 +135,7 @@ namespace BackEnd.Controllers
             user.Id = id;
             try
             {
-                _repository.Update(user);
+                _userRepository.Update(user);
                 return Ok();
             }
             catch (AppException ex)
@@ -157,7 +157,7 @@ namespace BackEnd.Controllers
         {
             try
             {
-                _repository.Delete(id);
+                _userRepository.Delete(id);
                 return Ok();
             }
             catch (NotFoundException ex)
@@ -175,7 +175,7 @@ namespace BackEnd.Controllers
         {
             try
             {
-                var tasks = _repository.TasksPerUsers(id);
+                var tasks = _userRepository.TasksPerUsers(id);
                 return Ok(tasks);
             }
             catch (NotFoundException ex)

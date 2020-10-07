@@ -19,12 +19,12 @@ namespace BackEnd.Controllers
     public class ProjectController : ControllerBase
     {
 
-        private readonly IProjects _repository;
+        private readonly IProjects _projectRepository;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
         public ProjectController(IProjects repository, IMapper mapper, IOptions<AppSettings> appSettings)
         {
-            _repository = repository;
+            _projectRepository = repository;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
@@ -33,7 +33,7 @@ namespace BackEnd.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Project>> GetProjects()
         {
-            var projects = _repository.GetAllProjects();
+            var projects = _projectRepository.GetAllProjects();
             return Ok(projects);
         }
 
@@ -42,7 +42,7 @@ namespace BackEnd.Controllers
         {
             try
             {
-                var project = _repository.GetOneProject(id);
+                var project = _projectRepository.GetOneProject(id);
                 return Ok(project);
             }
             catch (NotFoundException ex)
@@ -59,7 +59,7 @@ namespace BackEnd.Controllers
         [HttpPost("add")]
         public ActionResult<IEnumerable<Task>> AddProject(Project project)
         {
-            var projectAdded = _repository.AddProject(project);
+            var projectAdded = _projectRepository.AddProject(project);
             return Ok(project);
         }
 
@@ -69,7 +69,7 @@ namespace BackEnd.Controllers
         {
             try
             {
-                var projectAdded = _repository.EditProject(id, project);
+                var projectAdded = _projectRepository.EditProject(id, project);
                 return Ok(project);
             }
             catch (NotFoundException ex)
@@ -88,7 +88,7 @@ namespace BackEnd.Controllers
         {
             try
             {
-                _repository.DeleteProject(id);
+                _projectRepository.DeleteProject(id);
                 return Ok();
             }
             catch (NotFoundException ex)
@@ -107,7 +107,7 @@ namespace BackEnd.Controllers
         {
             try
             {
-                var tasks = _repository.GetAllTasks(projectId);
+                var tasks = _projectRepository.GetAllTasks(projectId);
                 var model = _mapper.Map<IList<TaskModel>>(tasks);
                 return Ok(model);
             }
@@ -126,7 +126,7 @@ namespace BackEnd.Controllers
         {
             try
             {
-                var tasks = _repository.GetOneTask(projectId, taskId);
+                var tasks = _projectRepository.GetOneTask(projectId, taskId);
                 var model = _mapper.Map<TaskModel>(tasks);
                 return Ok(model);
             }
@@ -151,7 +151,7 @@ namespace BackEnd.Controllers
         {
             try
             {
-                _repository.AddTask(projectId, task);
+                _projectRepository.AddTask(projectId, task);
                 return Ok();
             }
             catch (NotFoundException ex)
@@ -169,7 +169,7 @@ namespace BackEnd.Controllers
         {
             try
             {
-                _repository.EditTask(projectId, taskId, task);
+                _projectRepository.EditTask(projectId, taskId, task);
                 return Ok();
             }
             catch (AppException ex)
@@ -191,7 +191,7 @@ namespace BackEnd.Controllers
         {
             try
             {
-                _repository.DeleteTask(projectId, TaskId);
+                _projectRepository.DeleteTask(projectId, TaskId);
                 return Ok();
             }
             catch (AppException ex)
