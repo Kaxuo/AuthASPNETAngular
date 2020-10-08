@@ -27,7 +27,7 @@ export class SignInFormComponent implements OnInit {
       this.auth.isAdmin().pipe(
         tap((isAdmin) => {
           if (isAdmin) {
-            this.router.navigate(['users']);
+            this.router.navigate(['projects']);
           } else {
             this.router.navigate(['tasks']);
           }

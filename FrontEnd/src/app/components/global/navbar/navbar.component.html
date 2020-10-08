@@ -12,8 +12,8 @@
     ></mdb-navbar-brand
   >
   <mdb-navbar-brand
-    ><a class="navbar-brand" *ngIf="isAdminObs | async" routerLink="/users"
-      >Users</a
+    ><a class="navbar-brand" *ngIf="isAdminObs | async" routerLink="/projects"
+      >Projects</a
     ></mdb-navbar-brand
   >
   <!-- Collapsible content -->
@@ -44,8 +44,8 @@
         *ngIf="authenticated | async"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        <a class="nav-link waves-light" routerLink="projects" mdbWavesEffect
-          >Projects<span class="sr-only">(current)</span></a
+        <a class="nav-link waves-light" routerLink="/users" mdbWavesEffect
+          >Users<span class="sr-only">(current)</span></a
         >
       </li>
       <li

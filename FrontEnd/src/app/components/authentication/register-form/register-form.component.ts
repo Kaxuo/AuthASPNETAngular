@@ -26,7 +26,7 @@ export class RegisterFormComponent implements OnInit {
           if (!isAdmin) {
             this.router.navigate(['tasks']);
           } else {
-            this.router.navigate(['users']);
+            this.router.navigate(['projects']);
           }
         })
       ).subscribe();

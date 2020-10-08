@@ -1,29 +1,27 @@
-.table {
-  background-color: white;
-}
-
 mdb-icon {
   cursor: pointer;
 }
 
-.admin{
+.admin {
   background-color: lightgray;
 }
 
 @media only screen and (max-width: 1000px) {
-  .id,.country,.city {
-    display:none;
+  .id,
+  .country,
+  .city {
+    display: none;
   }
 }
 
 @media only screen and (max-width: 600px) {
   .hobby {
-    display:none;
+    display: none;
   }
 }
 
 @media only screen and (max-width: 400px) {
   .lastName {
-    display:none;
+    display: none;
   }
 }

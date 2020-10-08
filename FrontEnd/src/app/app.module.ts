@@ -22,10 +22,8 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { ProfilePageComponent } from './components/users/profile-page/profile-page.component';
 import { UpdateProfileComponent } from './components/users/update-profile/update-profile.component';
 import { TasksComponent } from './components/users/tasks/tasks.component';
-import { AddComponent } from './components/users/tasks/add/add.component';
 import { EditComponent } from './components/users/tasks/edit/edit.component';
 import { UserDetailsComponent } from './components/manager/user-details/user-details.component';
-import { AddTasksComponent } from './components/manager/add-tasks/add-tasks.component';
 import { UserTasksComponent } from './components/manager/user-tasks/user-tasks.component';
 import { NotFoundComponent } from './components/errorsPages/not-found/not-found.component';
 import { UsersNotFoundComponent } from './components/errorsPages/users-not-found/users-not-found.component';
@@ -38,6 +36,9 @@ import { BackgroundComponent } from './components/global/background/background.c
 import { ProjectsComponent } from './components/manager/projects/allProjects/projects.component';
 import { ProjectDetailsComponent } from './components/manager/projects/project-details/project-details.component';
 import { AddProjectComponent } from './components/manager/projects/add-project/add-project.component';
+import { AddTaskComponent } from './components/manager/projects/add-task/add-task.component';
+import { AssignUserComponent } from './components/manager/projects/assign-user/assign-user.component';
+import { SearchUserPipe } from './pipe/search-user.pipe';
 
 @NgModule({
   declarations: [
@@ -49,10 +50,8 @@ import { AddProjectComponent } from './components/manager/projects/add-project/a
     ProfilePageComponent,
     UpdateProfileComponent,
     TasksComponent,
-    AddComponent,
     EditComponent,
     UserDetailsComponent,
-    AddTasksComponent,
     UserTasksComponent,
     NotFoundComponent,
     UsersNotFoundComponent,
@@ -64,6 +63,9 @@ import { AddProjectComponent } from './components/manager/projects/add-project/a
     ProjectsComponent,
     ProjectDetailsComponent,
     AddProjectComponent,
+    AddTaskComponent,
+    AssignUserComponent,
+    SearchUserPipe,
   ],
   imports: [
     BrowserModule,

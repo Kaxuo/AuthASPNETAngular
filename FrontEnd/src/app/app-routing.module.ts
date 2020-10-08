@@ -6,10 +6,8 @@ import { MainComponent } from './components/Manager/main/main.component';
 import { ProfilePageComponent } from './components/users/profile-page/profile-page.component';
 import { UpdateProfileComponent } from './components/users/update-profile/update-profile.component';
 import { TasksComponent } from './components/users/tasks/tasks.component';
-import { AddComponent } from './components/users/tasks/add/add.component';
 import { EditComponent } from './components/users/tasks/edit/edit.component';
 import { UserDetailsComponent } from './components/manager/user-details/user-details.component';
-import { AddTasksComponent } from './components/manager/add-tasks/add-tasks.component';
 import { UserTasksComponent } from './components/manager/user-tasks/user-tasks.component';
 import { AdminPrivileges } from './services/can-activate.guard';
 import { NotFoundComponent } from './components/errorsPages/not-found/not-found.component';
@@ -20,6 +18,8 @@ import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no
 import { ProjectsComponent } from './components/manager/projects/allProjects/projects.component';
 import { ProjectDetailsComponent } from './components/manager/projects/project-details/project-details.component';
 import { AddProjectComponent } from './components/manager/projects/add-project/add-project.component';
+import { AddTaskComponent } from './components/manager/projects/add-task/add-task.component';
+import { AssignUserComponent } from './components/manager/projects/assign-user/assign-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -31,17 +31,13 @@ const routes: Routes = [
   { path: 'projects', component: ProjectsComponent },
   { path: 'projects/add', component: AddProjectComponent },
   { path: 'projects/:id', component: ProjectDetailsComponent },
+  { path: 'projects/:id/add', component: AddTaskComponent },
+  { path: 'projects/:id/tasks/:taskId', component: AssignUserComponent },
   { path: 'tasks', component: TasksComponent },
-  { path: 'tasks/add', component: AddComponent },
   { path: 'tasks/:taskId/edit', component: EditComponent },
   {
     path: 'manage/users/:id',
     component: UserDetailsComponent,
-    canActivate: [AdminPrivileges],
-  },
-  {
-    path: 'manage/users/:id/add',
-    component: AddTasksComponent,
     canActivate: [AdminPrivileges],
   },
   {

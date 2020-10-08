@@ -23,7 +23,12 @@
       </td>
       <td>
         <button>
-          <mdb-icon class="icon" fas icon="plus-square"></mdb-icon>
+          <mdb-icon
+            [routerLink]="[el.id,'add']"
+            class="icon"
+            fas
+            icon="plus-square"
+          ></mdb-icon>
         </button>
       </td>
       <td>

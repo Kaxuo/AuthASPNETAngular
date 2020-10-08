@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Project } from '../Models/Project';
+import { Task } from '../Models/Tasks';
 import { WebRequestService } from './web-request.service';
 
 @Injectable({
@@ -13,11 +14,27 @@ export class ProjectService {
     return this.webRequest.getAllProjects('api/projects');
   }
 
-  addProject(payload: Project){
-    return this.webRequest.AddProject('api/projects/add', payload)
+  getOneProject(id: number) {
+    return this.webRequest.getOneProject(`api/projects`, id);
   }
 
-  deleteProject(id){
-    return this.webRequest.DeleteProject(`api/projects/${id}`)
+  addProject(payload: Project) {
+    return this.webRequest.AddProject('api/projects/add', payload);
+  }
+
+  deleteProject(id:number) {
+    return this.webRequest.DeleteProject(`api/projects/${id}`);
+  }
+
+  addTask(id: number, payload: Task) {
+    return this.webRequest.AddTask(`api/projects/${id}/tasks/add`, payload);
+  }
+
+  editTask(projectId:number, taskId:number, payload : Task){
+    this.webRequest.EditTasks(`api/projects/${projectId}/tasks/${taskId}`, payload)
+  }
+
+  deleteTask(projectId:number, taskId:number){
+    return this.webRequest.DeleteTask(`api/projects/${projectId}/tasks/${taskId}`)
   }
 }

@@ -12,6 +12,7 @@ import { Task } from '../Models/Tasks';
 import jwt_decode from 'jwt-decode';
 import * as CryptoJS from 'crypto-js';
 import { secret } from "../../secrets/keys"
+import { SingleUser } from '../Models/SingleUser';
 
 @Injectable({
   providedIn: 'root',
@@ -98,9 +99,6 @@ export class AuthService {
     return this.webRequest.getOneTask(`api/users/${id}/tasks/${taskId}`);
   }
 
-  AddTask(id: number, payload: Task) {
-    return this.webRequest.AddTask(`api/users/${id}/tasks/add`, payload);
-  }
 
   EditTask(id: number, taskId: number, payload: Task) {
     return this.webRequest
@@ -116,6 +114,16 @@ export class AuthService {
     this.router.navigate(['/register']);
     this.removeSession();
   }
+
+  //Helper Method //
+
+  // searchUsers(term:string):Observable<SingleUser[]>{
+  //   if(!term.trim()){
+  //     return of ([])
+  //   }
+  //   return this.getAllUsers()
+  // }
+
 
   getDecodedAccessToken(token: string): any {
     try {

@@ -32,10 +32,10 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Description</th>
-      <th (click)="sortByCompleted(Tasks)" style="cursor: pointer" scope="col">
+      <th  style="cursor: pointer" scope="col">
         Status
       </th>
-      <th (click)="sortByImportance(Tasks)" style="cursor: pointer" scope="col">
+      <th  style="cursor: pointer" scope="col">
         Importance
       </th>
       <th scope="col">Remove</th>
@@ -43,14 +43,14 @@
   </thead>
   <tbody style="text-align: center" class="tablebody">
     <tr
-      [ngClass]="{ complete: el.completed, important: el.importance }"
+      [ngClass]="{ important: el.importance }"
       mdbTableCol
       *ngFor="let el of Tasks; let index = index"
     >
       <th scope="row">{{ index + 1 }}</th>
       <td class="description">{{ el.description }}</td>
       <td style="text-align: center; padding-left: 40px">
-        <mdb-checkbox [disabled]="true" [checked]="el.completed"></mdb-checkbox>
+        <mdb-checkbox [disabled]="true" ></mdb-checkbox>
       </td>
       <td style="text-align: center; padding-left: 40px">
         <mdb-checkbox

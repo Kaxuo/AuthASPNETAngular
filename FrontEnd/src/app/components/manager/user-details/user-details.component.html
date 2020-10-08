@@ -63,18 +63,6 @@
           style="width: 100%"
           mdbBtn
           type="button"
-          color="primary"
-          mdbWavesEffect
-          routerLink="add"
-        >
-          Add Task
-        </button>
-      </div>
-      <div *ngIf="User.role == 'User'" class="list-group-item bob waves-light">
-        <button
-          style="width: 100%"
-          mdbBtn
-          type="button"
           color="danger"
           mdbWavesEffect
           (click)="basicModal.show()"

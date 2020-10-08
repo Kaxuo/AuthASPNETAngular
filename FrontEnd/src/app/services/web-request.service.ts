@@ -57,7 +57,7 @@ export class WebRequestService {
   }
 
   getOneProject(url: string, id: number) {
-    return this.http.get(`${this.ROOT_URL},${id}`);
+    return this.http.get(`${this.ROOT_URL}/${url}/${id}`);
   }
 
   AddProject(url: string, payload: Project) {

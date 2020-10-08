@@ -10,6 +10,8 @@
 # dependencies
 /node_modules
 node_modules/
+Migrations/
+/Migrations
 
 
 # profiling files
