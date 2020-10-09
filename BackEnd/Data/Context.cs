@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Data
 {
-    public class UserContext : DbContext
+    public class Context : DbContext
     {
-        public UserContext(DbContextOptions<UserContext> opt) : base(opt)
+        public Context(DbContextOptions<Context> opt) : base(opt)
         {
         }
 

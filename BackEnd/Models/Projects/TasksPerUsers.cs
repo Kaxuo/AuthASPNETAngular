@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using static BackEnd.Models.StatusEnumeration;
+using static BackEnd.Models.StatusEnumeration.StatusEnumeration;
 
 namespace BackEnd.Models
 {
@@ -16,5 +16,4 @@ namespace BackEnd.Models
         public int UserId { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
     }
-
 }

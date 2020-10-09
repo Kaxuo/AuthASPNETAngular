@@ -1,5 +1,5 @@
 using System;
-using static BackEnd.Models.StatusEnumeration;
+using static BackEnd.Models.StatusEnumeration.StatusEnumeration;
 
 namespace BackEnd.Models
 {
@@ -13,5 +13,5 @@ namespace BackEnd.Models
         public int ProjectId { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
     }
-    
+
 }

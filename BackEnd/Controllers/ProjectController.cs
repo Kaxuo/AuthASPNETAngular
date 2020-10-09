@@ -1,15 +1,13 @@
 using System;
-using System.Text;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
 using BackEnd.Data;
 using BackEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
+using BackEnd.Exceptions;
+using BackEnd.Data.Interface;
 
 namespace BackEnd.Controllers
 {
@@ -21,12 +19,12 @@ namespace BackEnd.Controllers
     public class ProjectController : ControllerBase
     {
 
-        private readonly IUser _repository;
+        private readonly IProjects _projectRepository;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
-        public ProjectController(IUser repository, IMapper mapper, IOptions<AppSettings> appSettings)
+        public ProjectController(IProjects repository, IMapper mapper, IOptions<AppSettings> appSettings)
         {
-            _repository = repository;
+            _projectRepository = repository;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
@@ -35,22 +33,33 @@ namespace BackEnd.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Project>> GetProjects()
         {
-            var projects = _repository.GetAllProjects();
+            var projects = _projectRepository.GetAllProjects();
             return Ok(projects);
         }
 
         [HttpGet("{id}")]
         public ActionResult<IEnumerable<Task>> GetOneProject(int id)
         {
-            var project = _repository.GetOneProject(id);
-            return Ok(project);
+            try
+            {
+                var project = _projectRepository.GetOneProject(id);
+                return Ok(project);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost("add")]
         public ActionResult<IEnumerable<Task>> AddProject(Project project)
         {
-            var projectAdded = _repository.AddProject(project);
+            var projectAdded = _projectRepository.AddProject(project);
             return Ok(project);
         }
 
@@ -58,55 +67,145 @@ namespace BackEnd.Controllers
         [HttpPut("{id}")]
         public ActionResult<IEnumerable<Task>> EditProject(int id, Project project)
         {
-            var projectAdded = _repository.EditProject(id, project);
-            return Ok(project);
+            try
+            {
+                var projectAdded = _projectRepository.EditProject(id, project);
+                return Ok(project);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id}")]
         public IActionResult DeleteProject(int id)
         {
-            _repository.DeleteProject(id);
-            return Ok();
+            try
+            {
+                _projectRepository.DeleteProject(id);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         // TASKS HANDLING // 
         [HttpGet("{projectId}/tasks")]
         public ActionResult<IEnumerable<Task>> GetTasks(int projectId)
         {
-            var tasks = _repository.GetAllTasks(projectId);
-            var model = _mapper.Map<IList<TaskModel>>(tasks);
-            return Ok(model);
+            try
+            {
+                var tasks = _projectRepository.GetAllTasks(projectId);
+                var model = _mapper.Map<IList<TaskModel>>(tasks);
+                return Ok(model);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("{projectId}/tasks/{taskId}")]
         public ActionResult<IEnumerable<Task>> GetOneTask(int projectId, int taskId)
         {
-            var tasks = _repository.GetOneTask(projectId, taskId);
-            var model = _mapper.Map<TaskModel>(tasks);
-            return Ok(model);
+            try
+            {
+                var tasks = _projectRepository.GetOneTask(projectId, taskId);
+                var model = _mapper.Map<TaskModel>(tasks);
+                return Ok(model);
+            }
+            catch (AppException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost("{projectId}/tasks/add")]
         public IActionResult AddTask(int projectId, Task task)
         {
-            _repository.AddTask(projectId, task);
-            return Ok();
+            try
+            {
+                _projectRepository.AddTask(projectId, task);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPut("{projectId}/tasks/{taskId}")]
         public IActionResult EditTask(int projectId, int taskId, TaskModel task)
         {
-            _repository.EditTask(projectId, taskId, task);
-            return Ok();
+            try
+            {
+                _projectRepository.EditTask(projectId, taskId, task);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpDelete("{projectId}/tasks/{TaskId}")]
         public IActionResult DeleteTask(int projectId, int TaskId)
         {
-            _repository.DeleteTask(projectId, TaskId);
-            return Ok();
+            try
+            {
+                _projectRepository.DeleteTask(projectId, TaskId);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }
