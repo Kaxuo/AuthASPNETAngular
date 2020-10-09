@@ -24,6 +24,4 @@ namespace BackEnd.Models
         public string Role { get; set; }
         public List<Task> Tasks { get; set; }
     }
-
-
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using BackEnd.Exceptions;
 
 namespace BackEnd.Controllers
 {
@@ -19,12 +20,12 @@ namespace BackEnd.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUser _repository;
+        private readonly IUser _userRepository;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
         public UserController(IUser repository, IMapper mapper, IOptions<AppSettings> appSettings)
         {
-            _repository = repository;
+            _userRepository = repository;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
@@ -33,7 +34,7 @@ namespace BackEnd.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetAll()
         {
-            var users = _repository.GetAllUsers();
+            var users = _userRepository.GetAllUsers();
             var model = _mapper.Map<IList<UserModel>>(users);
             return Ok(model);
         }
@@ -45,7 +46,7 @@ namespace BackEnd.Controllers
             var user = _mapper.Map<User>(model);
             try
             {
-                _repository.CreateUser(user, model.Password);
+                _userRepository.CreateUser(user, model.Password);
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
                 var tokenDescriptor = new SecurityTokenDescriptor
@@ -67,7 +68,10 @@ namespace BackEnd.Controllers
             }
             catch (AppException ex)
             {
-                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(new { message = ex.Message });
             }
         }
@@ -76,7 +80,7 @@ namespace BackEnd.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateModels model)
         {
-            var user = _repository.Authenticate(model.Username, model.Password);
+            var user = _userRepository.Authenticate(model.Username, model.Password);
             if (user == null)
                 return BadRequest(new { message = " Username or password is incorrect" });
 
@@ -107,9 +111,20 @@ namespace BackEnd.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var user = _repository.GetUserById(id);
-            var model = _mapper.Map<UserModel>(user);
-            return Ok(model);
+            try
+            {
+                var user = _userRepository.GetUserById(id);
+                var model = _mapper.Map<UserModel>(user);
+                return Ok(model);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
@@ -120,65 +135,57 @@ namespace BackEnd.Controllers
             user.Id = id;
             try
             {
-                _repository.Update(user);
+                _userRepository.Update(user);
                 return Ok();
             }
             catch (AppException ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
-
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _repository.Delete(id);
-            return Ok();
+            try
+            {
+                _userRepository.Delete(id);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
-        // TASKS HANDLING // 
         [HttpGet("{id}/tasks")]
-        public ActionResult<IEnumerable<Task>> GetTasks(int id)
+        public ActionResult<IEnumerable<Task>> GetTasksPerUsers(int id)
         {
-            var tasks = _repository.GetAllTasks(id);
-            var model = _mapper.Map<IList<TaskModel>>(tasks);
-            return Ok(model);
-        }
-
-        [HttpGet("{id}/tasks/{taskId}")]
-        public ActionResult<IEnumerable<Task>> GetOneTask(int id, int taskId)
-        {
-            var tasks = _repository.GetOneTask(id, taskId);
-            var model = _mapper.Map<TaskModel>(tasks);
-            return Ok(model);
-        }
-
-        [HttpPost("{id}/tasks/add")]
-        public IActionResult AddTask(int id, Task task)
-        {
-            _repository.AddTask(id, task);
-            return Ok();
-        }
-
-        [HttpPut("{id}/tasks/{taskId}")]
-        public IActionResult EditTask(int id, int taskId, TaskModel task)
-        {
-            _repository.EditTask(id, taskId, task);
-            return Ok();
-        }
-
-        [HttpDelete("{id}/tasks/{TaskId}")]
-        public IActionResult DeleteTask(int id, int TaskId)
-        {
-            _repository.DeleteTask(id, TaskId);
-            return Ok();
-        }
-        [AllowAnonymous]
-        [HttpGet("special")]
-        public ActionResult<IEnumerable<TasksPerUsers>> GetTasksPerUsers()
-        {
-            var users = _repository.GetAll();
-            return Ok(users);
+            try
+            {
+                var tasks = _userRepository.TasksPerUsers(id);
+                return Ok(tasks);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

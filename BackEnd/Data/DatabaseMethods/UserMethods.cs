@@ -1,17 +1,16 @@
-using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
+using BackEnd.Exceptions;
 
 namespace BackEnd.Data
 {
-    public class MySQLMethods : IUser
+    public class UserMethods : IUser
     {
-
-        protected readonly UserContext _context;
-        public MySQLMethods(UserContext context)
+        protected readonly Context _context;
+        public UserMethods(Context context)
         {
             _context = context;
         }
@@ -46,6 +45,8 @@ namespace BackEnd.Data
         public void Delete(int id)
         {
             var user = _context.Users.Find(id);
+            if (user == null)
+                throw new NotFoundException("User not found");
             if (user != null)
             {
                 _context.Users.Remove(user);
@@ -61,6 +62,8 @@ namespace BackEnd.Data
         public User GetUserById(int id)
         {
             var user = _context.Users.Include(s => s.Tasks).FirstOrDefault(s => s.Id == id);
+            if (user == null)
+                throw new NotFoundException("User not found");
             return user;
         }
 
@@ -100,54 +103,15 @@ namespace BackEnd.Data
             _context.SaveChanges();
         }
 
-        // Task Handling //
-        public IEnumerable<Task> GetAllTasks(int id)
+        public IEnumerable<object> TasksPerUsers(int id)
         {
-            var tasks = _context.Tasks.Where(x => x.UserId == id);
+            var user = _context.Users.Find(id);
+            if (user == null)
+                throw new AppException("User not found");
+            var tasks = _context.TasksPerUsers.Where(x => x.UserId == id);
             return tasks;
         }
-        public Task GetOneTask(int id, int taskId)
-        {
-            var user = _context.Users.Include(s => s.Tasks).FirstOrDefault(s => s.Id == id);
-            var task = user.Tasks.FirstOrDefault(x => x.TaskId == taskId);
-            return task;
-        }
-        public IEnumerable<Task> AddTask(int id, Task task)
-        {
-            var user = _context.Users.Find(id);
-            user.Tasks.Add(task);
-            _context.Update(user);
-            _context.SaveChanges();
-            return user.Tasks;
-        }
 
-        public void DeleteTask(int id, int TaskId)
-        {
-            var user = _context.Users.Find(id);
-            var task = _context.Tasks.Find(TaskId);
-            if (task != null && user.Id == task.UserId)
-            {
-                _context.Tasks.Remove(task);
-                _context.SaveChanges();
-            }
-        }
-
-        public Task EditTask(int id, int taskId, TaskModel newtask)
-        {
-            var user = _context.Users.Include(s => s.Tasks).FirstOrDefault(s => s.Id == id);
-            var task = user.Tasks.FirstOrDefault(x => x.TaskId == taskId);
-            if (task == null)
-                throw new AppException("Task do not exist");
-            if (task.Description != newtask.Description)
-                task.Description = newtask.Description;
-            if (task.Completed != newtask.Completed)
-                task.Completed = newtask.Completed;
-            if (task.Importance != newtask.Importance)
-                task.Importance = newtask.Importance;
-            _context.Update(task);
-            _context.SaveChanges();
-            return task;
-        }
 
         // private helper methods
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
@@ -177,12 +141,6 @@ namespace BackEnd.Data
                 }
             }
             return true;
-        }
-
-        public IEnumerable<TasksPerUsers> GetAll()
-        {
-            var tasks = _context.TasksPerUsers;
-            return tasks;
         }
     }
 }

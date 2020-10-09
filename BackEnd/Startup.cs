@@ -17,6 +17,8 @@ using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using BackEnd.Data.Interface;
+using BackEnd.Data.DatabaseMethods;
 
 namespace BackEnd
 {
@@ -35,15 +37,16 @@ namespace BackEnd
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
-            services.AddCors(options => options.AddPolicy("AllowAnyone", builder =>  builder.AllowAnyOrigin()
+            services.AddCors(options => options.AddPolicy("AllowAnyone", builder => builder.AllowAnyOrigin()
                                                                                             .AllowAnyMethod()
                                                                                             .AllowAnyHeader()));
             services.AddControllers();
             services.AddMvc();
-            services.AddDbContext<UserContext>(options => options.UseMySQL(
+            services.AddDbContext<Context>(options => options.UseMySQL(
             Configuration.GetConnectionString("DefaultConnection")
         ));
-            services.AddScoped<IUser, MySQLMethods>();
+            services.AddScoped<IUser, UserMethods>();
+            services.AddScoped<IProjects, ProjectMethods>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // configure strongly typed settings objects
