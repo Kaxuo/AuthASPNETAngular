@@ -28,9 +28,6 @@ export class UpdateProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (!this.LocalStorageService.retrieve('token')) {
-      this.router.navigate(['register']);
-    }
     this.auth
       .getOne(this.object.unique_name)
       .subscribe((data: UserReceived) => {

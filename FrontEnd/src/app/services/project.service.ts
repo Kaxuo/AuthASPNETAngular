@@ -31,7 +31,7 @@ export class ProjectService {
   }
 
   editTask(projectId:number, taskId:number, payload : Task){
-    this.webRequest.EditTasks(`api/projects/${projectId}/tasks/${taskId}`, payload)
+    return this.webRequest.EditTasks(`api/projects/${projectId}/tasks/${taskId}`, payload)
   }
 
   deleteTask(projectId:number, taskId:number){

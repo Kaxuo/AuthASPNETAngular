@@ -22,7 +22,6 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { ProfilePageComponent } from './components/users/profile-page/profile-page.component';
 import { UpdateProfileComponent } from './components/users/update-profile/update-profile.component';
 import { TasksComponent } from './components/users/tasks/tasks.component';
-import { EditComponent } from './components/users/tasks/edit/edit.component';
 import { UserDetailsComponent } from './components/manager/user-details/user-details.component';
 import { UserTasksComponent } from './components/manager/user-tasks/user-tasks.component';
 import { NotFoundComponent } from './components/errorsPages/not-found/not-found.component';
@@ -38,7 +37,6 @@ import { ProjectDetailsComponent } from './components/manager/projects/project-d
 import { AddProjectComponent } from './components/manager/projects/add-project/add-project.component';
 import { AddTaskComponent } from './components/manager/projects/add-task/add-task.component';
 import { AssignUserComponent } from './components/manager/projects/assign-user/assign-user.component';
-import { SearchUserPipe } from './pipe/search-user.pipe';
 
 @NgModule({
   declarations: [
@@ -50,7 +48,6 @@ import { SearchUserPipe } from './pipe/search-user.pipe';
     ProfilePageComponent,
     UpdateProfileComponent,
     TasksComponent,
-    EditComponent,
     UserDetailsComponent,
     UserTasksComponent,
     NotFoundComponent,
@@ -65,7 +62,6 @@ import { SearchUserPipe } from './pipe/search-user.pipe';
     AddProjectComponent,
     AddTaskComponent,
     AssignUserComponent,
-    SearchUserPipe,
   ],
   imports: [
     BrowserModule,

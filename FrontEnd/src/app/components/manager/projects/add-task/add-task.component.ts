@@ -13,6 +13,7 @@ export class AddTaskComponent implements OnInit {
   AddTask: FormGroup;
   id: number;
   clicked: boolean = false;
+
   constructor(
     private projectService: ProjectService,
     private router: Router,

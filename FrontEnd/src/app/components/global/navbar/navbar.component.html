@@ -11,11 +11,6 @@
       >Management</a
     ></mdb-navbar-brand
   >
-  <mdb-navbar-brand
-    ><a class="navbar-brand" *ngIf="isAdminObs | async" routerLink="/projects"
-      >Projects</a
-    ></mdb-navbar-brand
-  >
   <!-- Collapsible content -->
   <links>
     <!-- Links -->
@@ -36,6 +31,16 @@
       >
         <a class="nav-link waves-light" routerLink="register" mdbWavesEffect
           >Register<span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li
+        class="nav-item"
+        routerLinkActive="active"
+        *ngIf="isAdminObs | async"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link waves-light" routerLink="/projects" mdbWavesEffect
+          >Projects<span class="sr-only">(current)</span></a
         >
       </li>
       <li

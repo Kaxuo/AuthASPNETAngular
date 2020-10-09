@@ -23,30 +23,24 @@ export class ProfilePageComponent implements OnInit {
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.token.subscribe((isAuth) => {
-      if (isAuth) {
-        this.auth
-          .getOne(this.object.unique_name)
-          .pipe(take(1))
-          .subscribe((res: UserReceived) => {
-            this.form = new FormGroup({});
-            // Instance of this.data
-            this.propertyEditable = {};
-            Object.keys(res).map((key) => {
-              // Create a edit property
-              this.propertyEditable[key] = false;
-              // Add each controller to the form
-              this.form.addControl(
-                key,
-                new FormControl(res[key], [Validators.required])
-              );
-              this.loading = false;
-            });
-          });
-      } else {
-        this.router.navigate(['register']);
-      }
-    });
+    this.auth
+      .getOne(this.object.unique_name)
+      .pipe(take(1))
+      .subscribe((res: UserReceived) => {
+        this.form = new FormGroup({});
+        // Instance of this.data
+        this.propertyEditable = {};
+        Object.keys(res).map((key) => {
+          // Create a edit property
+          this.propertyEditable[key] = false;
+          // Add each controller to the form
+          this.form.addControl(
+            key,
+            new FormControl(res[key], [Validators.required])
+          );
+          this.loading = false;
+        });
+      });
   }
 
   sendData(property: string) {

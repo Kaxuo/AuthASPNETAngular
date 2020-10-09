@@ -1,63 +1,61 @@
 <div class="form">
-    <mdb-card>
-      <mdb-card-header class="info-color white-text text-center py-4">
-        <h5>
-          <strong>Add Task</strong>
-        </h5>
-      </mdb-card-header>
-  
-      <mdb-card-body class="px-lg-5 pt-0">
-        <form
-          [formGroup]="AddTask"
-          (ngSubmit)="sendTask(AddTask.value)"
-          class="text-center"
-          style="color: #757575"
+  <mdb-card>
+    <mdb-card-header class="info-color white-text text-center py-4">
+      <h5>
+        <strong>Add Task</strong>
+      </h5>
+    </mdb-card-header>
+    <mdb-card-body class="px-lg-5 pt-0">
+      <form
+        [formGroup]="AddTask"
+        (ngSubmit)="sendTask(AddTask.value)"
+        class="text-center"
+        style="color: #757575"
+      >
+        <div class="md-form">
+          <input
+            type="email"
+            id="materialLoginFormEmail"
+            class="form-control"
+            mdbInput
+            formControlName="description"
+          />
+          <label for="materialLoginFormEmail">Task</label>
+        </div>
+        <em
+          *ngIf="
+            AddTask.get('description').hasError('required') &&
+            AddTask.get('description').touched
+          "
+          >Required</em
         >
-          <div class="md-form">
-            <input
-              type="email"
-              id="materialLoginFormEmail"
-              class="form-control"
-              mdbInput
-              formControlName="description"
-            />
-            <label for="materialLoginFormEmail">Task</label>
+        <em
+          *ngIf="
+            AddTask.get('description').hasError('maxlength') &&
+            AddTask.get('description').touched
+          "
+          >Too Long !
+        </em>
+        <div class="d-flex justify-content-around">
+          <div>
+            <mdb-checkbox formControlName="importance">Important</mdb-checkbox>
           </div>
-          <em
-            *ngIf="
-              AddTask.get('description').hasError('required') &&
-              AddTask.get('description').touched
-            "
-            >Required</em
-          >
-          <em
-            *ngIf="
-              AddTask.get('description').hasError('maxlength') &&
-              AddTask.get('description').touched
-            "
-            >Too Long !
-          </em>
-          <div class="d-flex justify-content-around">
-            <div>
-              <mdb-checkbox formControlName="importance">Important</mdb-checkbox>
-            </div>
-          </div>
-  
-          <button
-            mdbBtn
-            color="info"
-            outline="true"
-            rounded="true"
-            block="true"
-            class="my-4 waves-effect z-depth-0"
-            mdbWavesEffect
-            type="submit"
-            [disabled]="AddTask.invalid || clicked"
-          >
-            Add Task
-          </button>
-        </form>
-      </mdb-card-body>
-    </mdb-card>
-  </div>
-  
+        </div>
+
+        <button
+          mdbBtn
+          color="info"
+          outline="true"
+          rounded="true"
+          block="true"
+          class="my-4 waves-effect z-depth-0"
+          mdbWavesEffect
+          type="submit"
+          [disabled]="AddTask.invalid || clicked"
+        >
+          Add Task
+        </button>
+      </form>
+    </mdb-card-body>
+  </mdb-card>
+</div>

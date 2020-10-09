@@ -1,8 +1,8 @@
 <app-spinner *ngIf="loading != false"></app-spinner>
 
 <div class="container" *ngIf="project">
-  <h3 class="title list-group-item active waves-light">{{ project.title }}</h3>
-  <h4>Description</h4>
+  <h3 class="title">{{ project.title }}</h3>
+  <h4 style="text-decoration: underline;padding-bottom: 3%;">Description</h4>
   <p style="text-align: center">
     {{ project.description }}{{ project.description }}{{ project.description
     }}{{ project.description }} {{ project.description }}{{ project.description
@@ -41,13 +41,15 @@
         <span *ngSwitchDefault>Pending ...</span>
       </td>
       <td class="importance" style="text-align: center; padding-left: 40px">
-        <mdb-checkbox [checked]="el.importance"></mdb-checkbox>
+        <mdb-checkbox
+          (change)="importanceFlag(el)"
+          [checked]="el.importance"
+        ></mdb-checkbox>
       </td>
       <td>{{ el.user || "Not Assigned" }}</td>
       <td>
-        <button [routerLink]="['tasks/',el.taskId]">
+        <button [routerLink]="['tasks/', el.taskId]">
           <mdb-icon
-            *ngIf="!el.user"
             class="icon"
             fas
             size="lg"
@@ -117,6 +119,20 @@
     </tr>
   </tbody>
 </table>
+<div *ngIf="project" style="text-align: center">
+  <button
+    *ngIf="project.tasks.length == 0"
+    style="cursor: default"
+    class="special"
+    mdbBtn
+    type="button"
+    gradient="peach"
+    rounded="true"
+    mdbWavesEffect
+  >
+    No Tasks
+  </button>
+</div>
 <div style="text-align: center">
   <button
     class="special"

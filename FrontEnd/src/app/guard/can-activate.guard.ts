@@ -7,19 +7,16 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
-import { LocalStorageService } from 'ngx-webstorage';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminPrivileges implements CanActivate {
-  isAdminObs: Observable<boolean> = this.auth.isAdmin();
 
   constructor(
     private auth: AuthService,
     private router: Router,
-    private LocalStorageService: LocalStorageService
   ) {}
   canActivate(
     next: ActivatedRouteSnapshot,

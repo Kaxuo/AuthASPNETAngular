@@ -18,19 +18,13 @@ export class TasksComponent implements OnInit {
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.token.subscribe((isAuth) => {
-      if (isAuth) {
-        this.auth
-          .getAllTasks(this.object.unique_name)
-          .pipe(take(1))
-          .subscribe((res: Task[]) => {
-            this.Tasks = res;
-            this.loading = false;
-          });
-      } else {
-        this.router.navigate(['signin']);
-      }
-    });
+    this.auth
+      .getAllTasks(this.object.unique_name)
+      .pipe(take(1))
+      .subscribe((res: Task[]) => {
+        this.Tasks = res;
+        this.loading = false;
+      });
   }
 
   deleteTask(value: Task) {

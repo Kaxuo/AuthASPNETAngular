@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { combineLatest, forkJoin, of } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 import { Project } from 'src/app/Models/Project';
 import { AuthService } from 'src/app/services/auth.service';
@@ -30,28 +30,30 @@ export class ProjectDetailsComponent implements OnInit {
       .getOneProject(this.id)
       .pipe(
         switchMap((project: Project) => {
-          if (project == null) {
-            this.router.navigate(['projects']);
+          if (project.tasks.length > 0) {
+            return forkJoin([
+              ...project.tasks.map((item) =>
+                item.userId
+                  ? this.auth.getOne(item.userId).pipe(
+                      map((user: SingleUser) => {
+                        return { ...item, user: user?.username };
+                      })
+                    )
+                  : of({ ...item })
+              ),
+            ]).pipe(
+              map((singleProject) => {
+                return { ...project, tasks: singleProject };
+              })
+            );
+          } else {
+            return of(project);
           }
-          return forkJoin(
-            ...project.tasks.map((item) =>
-              this.auth.getOne(item.userId).pipe(
-                map((user: SingleUser) => {
-                  return { ...item, user: user?.username };
-                })
-              )
-            )
-          ).pipe(
-            map((singleProject) => {
-              return { ...project, tasks: singleProject };
-            })
-          );
         }),
         take(1)
       )
       .subscribe((singleProject: Project) => {
         this.project = singleProject;
-        console.log(this.project);
         this.loading = false;
       });
   }
@@ -61,5 +63,13 @@ export class ProjectDetailsComponent implements OnInit {
     this.project.tasks = this.project.tasks.filter(
       (x) => x.taskId != element.taskId
     );
+  }
+
+  importanceFlag(element) {
+    element.importance = !element.importance;
+    this.projectService
+      .editTask(this.id, element.taskId, element)
+      .pipe(take(1))
+      .subscribe();
   }
 }

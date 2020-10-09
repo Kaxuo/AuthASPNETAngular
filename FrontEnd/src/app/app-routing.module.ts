@@ -6,10 +6,10 @@ import { MainComponent } from './components/Manager/main/main.component';
 import { ProfilePageComponent } from './components/users/profile-page/profile-page.component';
 import { UpdateProfileComponent } from './components/users/update-profile/update-profile.component';
 import { TasksComponent } from './components/users/tasks/tasks.component';
-import { EditComponent } from './components/users/tasks/edit/edit.component';
 import { UserDetailsComponent } from './components/manager/user-details/user-details.component';
 import { UserTasksComponent } from './components/manager/user-tasks/user-tasks.component';
-import { AdminPrivileges } from './services/can-activate.guard';
+import { AdminPrivileges } from './guard/can-activate.guard';
+import { AuthenticationGuard } from './guard/authentication.guard';
 import { NotFoundComponent } from './components/errorsPages/not-found/not-found.component';
 import { UsersNotFoundComponent } from './components/errorsPages/users-not-found/users-not-found.component';
 import { TaskNotFoundComponent } from './components/errorsPages/task-not-found/task-not-found.component';
@@ -26,15 +26,46 @@ const routes: Routes = [
   { path: 'users', component: MainComponent, canActivate: [AdminPrivileges] },
   { path: 'signin', component: SignInFormComponent },
   { path: 'register', component: RegisterFormComponent },
-  { path: 'profile', component: ProfilePageComponent },
-  { path: 'update', component: UpdateProfileComponent },
-  { path: 'projects', component: ProjectsComponent },
-  { path: 'projects/add', component: AddProjectComponent },
-  { path: 'projects/:id', component: ProjectDetailsComponent },
-  { path: 'projects/:id/add', component: AddTaskComponent },
-  { path: 'projects/:id/tasks/:taskId', component: AssignUserComponent },
-  { path: 'tasks', component: TasksComponent },
-  { path: 'tasks/:taskId/edit', component: EditComponent },
+  {
+    path: 'profile',
+    component: ProfilePageComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'update',
+    component: UpdateProfileComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'projects',
+    component: ProjectsComponent,
+    canActivate: [AdminPrivileges],
+  },
+  {
+    path: 'projects/add',
+    component: AddProjectComponent,
+    canActivate: [AdminPrivileges],
+  },
+  {
+    path: 'projects/:id',
+    component: ProjectDetailsComponent,
+    canActivate: [AdminPrivileges],
+  },
+  {
+    path: 'projects/:id/add',
+    component: AddTaskComponent,
+    canActivate: [AdminPrivileges],
+  },
+  {
+    path: 'projects/:id/tasks/:taskId',
+    component: AssignUserComponent,
+    canActivate: [AdminPrivileges],
+  },
+  {
+    path: 'tasks',
+    component: TasksComponent,
+    canActivate: [AuthenticationGuard],
+  },
   {
     path: 'manage/users/:id',
     component: UserDetailsComponent,
