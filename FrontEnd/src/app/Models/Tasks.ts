@@ -4,7 +4,7 @@ export interface Task{
     taskId? : number,
     createdOn?:Date,
     description?: string,
-    status?:string,
+    status?:number,
     importance?:boolean,
     userId?:number
 }

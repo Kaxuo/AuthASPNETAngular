@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { Task } from '../../../Models/Tasks';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-tasks',
@@ -11,10 +11,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./tasks.component.scss'],
 })
 export class TasksComponent implements OnInit {
-  token: Observable<boolean> = this.auth.isAuthenticated();
   loading: boolean;
   Tasks: Task[] = [];
   object = this.auth.decryptedAndDecodedToken();
+  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+
+  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
@@ -27,41 +29,21 @@ export class TasksComponent implements OnInit {
       });
   }
 
-  deleteTask(value: Task) {
-    this.auth
-      .DeleteTask(this.object.unique_name, value.taskId)
-      .pipe(take(1))
-      .subscribe(
-        (res) =>
-          (this.Tasks = this.Tasks.filter((x) => x.taskId != value.taskId))
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event)
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
       );
-  }
-
-  importanceFlag(task: Task) {
-    task.importance = !task.importance;
-    this.auth
-      .EditTask(this.object.unique_name, task.taskId, task)
-      .pipe(take(1))
-      .subscribe();
-  }
-
-  sortByStatus(table: Task[]) {
-    table = [...this.Tasks];
-    if (!table[0].status) {
-      table.sort((a, b) => (a.status > b.status ? -1 : 1));
     } else {
-      table.sort((a, b) => (a.status > b.status ? 1 : -1));
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     }
-    this.Tasks = table;
-  }
-
-  sortByImportance(table: Task[]) {
-    table = [...this.Tasks];
-    if (!table[0].importance) {
-      table.sort((a, b) => (a.importance > b.importance ? -1 : 1));
-    } else {
-      table.sort((a, b) => (a.importance > b.importance ? 1 : -1));
-    }
-    this.Tasks = table;
   }
 }

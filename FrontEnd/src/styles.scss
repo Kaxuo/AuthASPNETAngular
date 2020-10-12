@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
 .body {
-  background-color: #1f2426;
-  font-family: 'Roboto', sans-serif;
+  background: #4e54c8;
+  background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
+  font-family: "Roboto", sans-serif;
 }
 
 html {
@@ -49,6 +50,6 @@ em {
   align-items: center;
 }
 
-table{
+table {
   background-color: white;
 }

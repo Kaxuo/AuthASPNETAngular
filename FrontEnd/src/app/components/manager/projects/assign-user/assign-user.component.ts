@@ -89,7 +89,6 @@ export class AssignUserComponent implements OnInit {
   }
 
   select(user) {
-    console.log(user);
     this.assignUser
       .get('user')
       .setValue(this.capitalizeFirstLetter(user.username.toLowerCase()));

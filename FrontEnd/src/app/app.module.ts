@@ -30,13 +30,15 @@ import { TaskNotFoundComponent } from './components/errorsPages/task-not-found/t
 import { ServerDownComponent } from './components/errorsPages/server-down/server-down.component';
 import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no-privileges.component';
 import { SpinnerComponent } from './components/global/spinner/spinner.component';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { BackgroundComponent } from './components/global/background/background.component';
 import { ProjectsComponent } from './components/manager/projects/allProjects/projects.component';
 import { ProjectDetailsComponent } from './components/manager/projects/project-details/project-details.component';
 import { AddProjectComponent } from './components/manager/projects/add-project/add-project.component';
 import { AddTaskComponent } from './components/manager/projects/add-task/add-task.component';
 import { AssignUserComponent } from './components/manager/projects/assign-user/assign-user.component';
+import { EditProjectComponent } from './components/manager/projects/edit-project/edit-project.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { AssignUserComponent } from './components/manager/projects/assign-user/a
     AddProjectComponent,
     AddTaskComponent,
     AssignUserComponent,
+    EditProjectComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +78,8 @@ import { AssignUserComponent } from './components/manager/projects/assign-user/a
     TableModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
-    NgxWebstorageModule.forRoot()
+    NgxWebstorageModule.forRoot(),
+    DragDropModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

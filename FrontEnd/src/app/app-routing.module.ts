@@ -20,6 +20,7 @@ import { ProjectDetailsComponent } from './components/manager/projects/project-d
 import { AddProjectComponent } from './components/manager/projects/add-project/add-project.component';
 import { AddTaskComponent } from './components/manager/projects/add-task/add-task.component';
 import { AssignUserComponent } from './components/manager/projects/assign-user/assign-user.component';
+import { EditProjectComponent } from './components/manager/projects/edit-project/edit-project.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -49,6 +50,11 @@ const routes: Routes = [
   {
     path: 'projects/:id',
     component: ProjectDetailsComponent,
+    canActivate: [AdminPrivileges],
+  },
+  {
+    path: 'projects/:id/edit',
+    component: EditProjectComponent,
     canActivate: [AdminPrivileges],
   },
   {

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, forkJoin, of } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { combineLatest, forkJoin, of, throwError } from 'rxjs';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { Project } from 'src/app/Models/Project';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { SingleUser } from 'src/app/Models/SingleUser';
+import { Task } from 'src/app/Models/Tasks';
 
 @Component({
   selector: 'app-project-details',
@@ -50,7 +51,11 @@ export class ProjectDetailsComponent implements OnInit {
             return of(project);
           }
         }),
-        take(1)
+        take(1),
+        catchError((err) => {
+          this.router.navigate(['/projects']);
+          return throwError(err);
+        })
       )
       .subscribe((singleProject: Project) => {
         this.project = singleProject;
@@ -71,5 +76,25 @@ export class ProjectDetailsComponent implements OnInit {
       .editTask(this.id, element.taskId, element)
       .pipe(take(1))
       .subscribe();
+  }
+
+  sortByImportance(table: Task[]) {
+    table = [...this.project.tasks];
+    if (!table[0].importance) {
+      table.sort((a, b) => (a.importance > b.importance ? -1 : 1));
+    } else {
+      table.sort((a, b) => (a.importance > b.importance ? 1 : -1));
+    }
+    this.project.tasks = table;
+  }
+
+  sortByStatus(table: Task[]) {
+    table = [...this.project.tasks];
+    if (!table[0].status) {
+      table.sort((a, b) => (a.status > b.status ? -1 : 1));
+    } else {
+      table.sort((a, b) => (a.status > b.status ? 1 : -1));
+    }
+    this.project.tasks = table;
   }
 }

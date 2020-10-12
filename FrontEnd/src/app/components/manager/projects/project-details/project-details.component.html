@@ -2,18 +2,20 @@
 
 <div class="container" *ngIf="project">
   <h3 class="title">{{ project.title }}</h3>
-  <h4 style="text-decoration: underline;padding-bottom: 3%;">Description</h4>
-  <p style="text-align: center">
-    {{ project.description }}{{ project.description }}{{ project.description
-    }}{{ project.description }} {{ project.description }}{{ project.description
-    }}{{ project.description }}{{ project.description }} {{ project.description
-    }}{{ project.description }}{{ project.description
-    }}{{ project.description }} {{ project.description }}{{ project.description
-    }}{{ project.description }}{{ project.description }} {{ project.description
-    }}{{ project.description }}{{ project.description
-    }}{{ project.description }} {{ project.description }}{{ project.description
-    }}{{ project.description }}{{ project.description }}
+  <h4 style="text-decoration: underline; padding-bottom: 3%">Description</h4>
+  <p style="text-align: justify; padding: 1%; white-space: pre-wrap">
+    {{ project.description }}
   </p>
+  <button
+    routerLink="edit"
+    class="edit"
+    type="button"
+    mdbBtn
+    color="primary"
+    mdbWavesEffect
+  >
+    Edit
+  </button>
 </div>
 
 <h3 *ngIf="loading == false" class="tasks">Tasks</h3>
@@ -22,7 +24,7 @@
     <tr>
       <th>Description</th>
       <th>Status</th>
-      <th class="importance">Importance</th>
+      <th (click)="sortByImportance(project.tasks)"class="importance">Importance</th>
       <th>User</th>
       <th>Assign</th>
       <th>Remove</th>

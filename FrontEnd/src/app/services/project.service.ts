@@ -22,6 +22,10 @@ export class ProjectService {
     return this.webRequest.AddProject('api/projects/add', payload);
   }
 
+  editProject(id:number, payload:Project){
+    return this.webRequest.EditProject(`api/projects/${id}`, payload)
+  }
+
   deleteProject(id:number) {
     return this.webRequest.DeleteProject(`api/projects/${id}`);
   }
