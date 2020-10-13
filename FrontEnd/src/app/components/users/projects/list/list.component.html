@@ -1,0 +1,47 @@
+<app-spinner *ngIf="loading != false"></app-spinner>
+
+<ng-container *ngIf="projects">
+  <div *ngFor="let item of projects" class="col-lg-4 col-md-6 container">
+    <!--Card-->
+    <mdb-card cascade="true">
+      <!--Card image-->
+      <div class="view view-cascade gradient-card-header blue-gradient">
+        <h2 class="card-header-title title">{{ item.title }}</h2>
+      </div>
+      <mdb-card-body cascade="true" class="text-center">
+        <mdb-card-text>
+          {{ item.description }}
+        </mdb-card-text>
+
+        <button
+          routerLink="edit"
+          class="edit"
+          type="button"
+          mdbBtn
+          color="primary"
+          mdbWavesEffect
+        >
+          Check
+        </button>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="projects">
+  <div *ngIf="projects.length == 0 && loading == false" class="form">
+    <mdb-card>
+      <mdb-card-header class="info-color white-text text-center py-4">
+        <h5>
+          <strong>No Project !</strong>
+        </h5>
+      </mdb-card-header>
+
+      <mdb-card-body class="px-lg-5 pt-0 errorBody">
+        <h3 style="padding: 20px">Nothing to do ! (for now)</h3>
+        <h4 style="padding: 20px">There's no projects at the moment.</h4>
+        <img class="errorimg" src="../../../assets/thumbup.png" />
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+</ng-container>

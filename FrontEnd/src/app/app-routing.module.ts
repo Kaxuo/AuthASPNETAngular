@@ -21,6 +21,7 @@ import { AddProjectComponent } from './components/manager/projects/add-project/a
 import { AddTaskComponent } from './components/manager/projects/add-task/add-task.component';
 import { AssignUserComponent } from './components/manager/projects/assign-user/assign-user.component';
 import { EditProjectComponent } from './components/manager/projects/edit-project/edit-project.component';
+import { ListComponent } from './components/users/projects/list/list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -66,6 +67,11 @@ const routes: Routes = [
     path: 'projects/:id/tasks/:taskId',
     component: AssignUserComponent,
     canActivate: [AdminPrivileges],
+  },
+  {
+    path: 'assignTasks',
+    component: ListComponent,
+    canActivate: [AuthenticationGuard],
   },
   {
     path: 'tasks',

@@ -1,8 +1,10 @@
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { Task } from 'src/app/Models/Tasks';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-user-tasks',
@@ -10,39 +12,34 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./user-tasks.component.scss'],
 })
 export class UserTasksComponent implements OnInit {
+  loading: boolean;
   Tasks: Task[] = [];
-  loading: boolean = false;
+  PendingTasks: Task[] = [];
+  WorkingTasks: Task[] = [];
+  ReviewingTasks: Task[] = [];
+  CompletedTasks: Task[] = [];
+  object = this.auth.decryptedAndDecodedToken();
 
-  constructor(private auth: AuthService, private router: ActivatedRoute) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private route:ActivatedRoute,
+    private projectService: ProjectService
+  ) {}
 
   ngOnInit(): void {
-    this.loading = true;
-    let id = this.router.snapshot.params.id;
-    this.auth.getAllTasks(id).subscribe((data: Task[]) => 
-    {
-      this.Tasks = data
-      this.loading = false;
-    });
-  }
-
-  deleteTask(value) {
+    let id = this.route.snapshot.params.id
+    console.log(id)
     this.auth
-      .DeleteTask(value.userId, value.taskId)
+      .getAllTasks(id)
       .pipe(take(1))
-      .subscribe(
-        (res) =>
-          (this.Tasks = this.Tasks.filter((x) => x.taskId != value.taskId))
-      );
-  }
-
-
-  sortByImportance(table: Task[]) {
-    table = [...this.Tasks];
-    if (!table[0].importance) {
-      table.sort((a, b) => (a.importance > b.importance ? -1 : 1));
-    } else {
-      table.sort((a, b) => (a.importance > b.importance ? 1 : -1));
-    }
-    this.Tasks = table;
+      .subscribe((res: Task[]) => {
+        this.Tasks = res;
+        this.PendingTasks = res.filter((x) => x.status == 0);
+        this.WorkingTasks = res.filter((x) => x.status == 1);
+        this.ReviewingTasks = res.filter((x) => x.status == 2);
+        this.CompletedTasks = res.filter((x) => x.status == 3);
+        this.loading = false;
+      });
   }
 }

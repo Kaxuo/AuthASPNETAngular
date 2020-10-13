@@ -23,10 +23,11 @@
           </button>
         </td>
         <td>
-          <button>
+          <button style="cursor: default">
             <mdb-icon
               [routerLink]="[el.id, 'add']"
               class="icon"
+              style="cursor: pointer"
               fas
               icon="plus-square"
             ></mdb-icon>
@@ -95,7 +96,7 @@
     </tbody>
   </table>
 
-  <div *ngIf="!projects.length == 0" style="text-align: center">
+  <div *ngIf="projects.length > 0" style="text-align: center">
     <button
       class="special"
       mdbBtn

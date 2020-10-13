@@ -1,21 +1,29 @@
 <app-spinner *ngIf="loading != false"></app-spinner>
 
-<div class="container" *ngIf="project">
-  <h3 class="title">{{ project.title }}</h3>
-  <h4 style="text-decoration: underline; padding-bottom: 3%">Description</h4>
-  <p style="text-align: justify; padding: 1%; white-space: pre-wrap">
-    {{ project.description }}
-  </p>
-  <button
-    routerLink="edit"
-    class="edit"
-    type="button"
-    mdbBtn
-    color="primary"
-    mdbWavesEffect
-  >
-    Edit
-  </button>
+<div *ngIf="project"class="col-lg-4 col-md-6 container">
+  <!--Card-->
+  <mdb-card cascade="true">
+    <!--Card image-->
+    <div class="view view-cascade gradient-card-header blue-gradient">
+      <h2 class="card-header-title title">{{project.title}}</h2>
+    </div>
+    <mdb-card-body cascade="true" class="text-center">
+      <mdb-card-text>
+        {{project.description}}
+      </mdb-card-text>
+
+      <button
+        routerLink="edit"
+        class="edit"
+        type="button"
+        mdbBtn
+        color="primary"
+        mdbWavesEffect
+      >
+        Edit
+      </button>
+    </mdb-card-body>
+  </mdb-card>
 </div>
 
 <h3 *ngIf="loading == false" class="tasks">Tasks</h3>
@@ -24,7 +32,12 @@
     <tr>
       <th>Description</th>
       <th>Status</th>
-      <th (click)="sortByImportance(project.tasks)"class="importance">Importance</th>
+      <th
+        (click)="sortByImportance(project.tasks)"
+        class="importance importanceHead"
+      >
+        Importance
+      </th>
       <th>User</th>
       <th>Assign</th>
       <th>Remove</th>
@@ -36,11 +49,11 @@
         {{ el.description }}
       </td>
       <td [ngSwitch]="el.status">
-        <span *ngSwitchCase="0">Pending ...</span
-        ><span *ngSwitchCase="1">Working...</span
-        ><span *ngSwitchCase="2">Reviewing ...</span
+        <span *ngSwitchCase="0">Pending</span
+        ><span *ngSwitchCase="1">Working</span
+        ><span *ngSwitchCase="2">Reviewing</span
         ><span *ngSwitchCase="3">Completed</span>
-        <span *ngSwitchDefault>Pending ...</span>
+        <span *ngSwitchDefault>Pending</span>
       </td>
       <td class="importance" style="text-align: center; padding-left: 40px">
         <mdb-checkbox

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, forkJoin, of, throwError } from 'rxjs';
+import { forkJoin, of, throwError } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { Project } from 'src/app/Models/Project';
 import { AuthService } from 'src/app/services/auth.service';

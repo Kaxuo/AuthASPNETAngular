@@ -1,7 +1,7 @@
 <!--Navbar-->
 <mdb-navbar
   class="top"
-  SideClass="navbar navbar-expand-lg navbar-dark unique-color sticky-top"
+  SideClass="navbar navbar-expand-lg navbar-dark unique-color "
   [containerInside]="false"
 >
   <!-- Navbar brand -->
@@ -46,13 +46,23 @@
       <li
         class="nav-item"
         routerLinkActive="active"
-        *ngIf="authenticated | async"
+        *ngIf="isAdminObs | async"
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <a class="nav-link waves-light" routerLink="/users" mdbWavesEffect
           >Users<span class="sr-only">(current)</span></a
         >
       </li>
+      <li
+      class="nav-item"
+      routerLinkActive="active"
+      *ngIf="authenticated | async"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a class="nav-link waves-light" routerLink="assignTasks" mdbWavesEffect
+        >Assign<span class="sr-only">(current)</span></a
+      >
+    </li>
       <li
         class="nav-item"
         routerLinkActive="active"

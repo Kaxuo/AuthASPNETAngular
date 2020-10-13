@@ -39,6 +39,7 @@ import { AddTaskComponent } from './components/manager/projects/add-task/add-tas
 import { AssignUserComponent } from './components/manager/projects/assign-user/assign-user.component';
 import { EditProjectComponent } from './components/manager/projects/edit-project/edit-project.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ListComponent } from './components/users/projects/list/list.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     AddTaskComponent,
     AssignUserComponent,
     EditProjectComponent,
+    ListComponent,
   ],
   imports: [
     BrowserModule,
