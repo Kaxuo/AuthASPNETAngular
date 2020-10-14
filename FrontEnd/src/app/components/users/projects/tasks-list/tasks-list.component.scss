@@ -55,11 +55,6 @@ th {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 1000px) {
-  .importance {
-    display: none;
-  }
-}
 @media only screen and (max-width: 700px) {
   .id {
     display: none;

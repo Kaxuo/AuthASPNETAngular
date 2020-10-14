@@ -58,6 +58,18 @@
           Check Task
         </button>
       </div>
+      <div class="list-group-item bob waves-light">
+        <button
+          style="width: 100%"
+          mdbBtn
+          type="button"
+          color="secondary"
+          mdbWavesEffect
+          [routerLink]="['/chart', id]"
+        >
+          Check Chart
+        </button>
+      </div>
       <div *ngIf="User.role == 'User'" class="list-group-item bob waves-light">
         <button
           style="width: 100%"

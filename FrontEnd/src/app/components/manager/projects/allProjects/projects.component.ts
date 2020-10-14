@@ -11,7 +11,6 @@ import { take } from 'rxjs/operators';
 export class ProjectsComponent implements OnInit {
   loading: boolean;
   projects: Project[];
-  completedTasks: number;
 
   constructor(private projectService: ProjectService) {}
 

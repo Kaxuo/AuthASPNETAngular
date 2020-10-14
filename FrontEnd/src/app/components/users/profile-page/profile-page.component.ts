@@ -13,7 +13,6 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./profile-page.component.scss'],
 })
 export class ProfilePageComponent implements OnInit {
-  token: Observable<boolean> = this.auth.isAuthenticated();
   loading: boolean;
   propertyEditable: any;
   form: FormGroup;

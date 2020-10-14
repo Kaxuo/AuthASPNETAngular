@@ -14,7 +14,7 @@
     </thead>
     <tbody style="text-align: center">
       <tr mdbTableCol *ngFor="let el of projects; let index = index">
-        <td class="id" scope="row">{{ index + 1 }}</td>
+        <td class="id" scope="row">{{ el.id }}</td>
         <td>{{ el.title }}</td>
         <td>{{ el.tasks.length }}</td>
         <td>

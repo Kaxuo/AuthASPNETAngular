@@ -22,9 +22,7 @@ export class UserTasksComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private router: Router,
     private route:ActivatedRoute,
-    private projectService: ProjectService
   ) {}
 
   ngOnInit(): void {

@@ -13,13 +13,14 @@ export class UserDetailsComponent implements OnInit {
   User: UserReceived;
   tasksComplete: number;
   loading:boolean;
+  id:number;
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private router:Router) {}
 
   ngOnInit(): void {
-    let id = this.route.snapshot.params.id;
+    this.id = this.route.snapshot.params.id;
     this.auth
-      .getOne(id)
+      .getOne(this.id)
       .pipe(take(1))
       .subscribe((user: UserReceived) => {
         if (user == null){

@@ -22,12 +22,15 @@ import { AddTaskComponent } from './components/manager/projects/add-task/add-tas
 import { AssignUserComponent } from './components/manager/projects/assign-user/assign-user.component';
 import { EditProjectComponent } from './components/manager/projects/edit-project/edit-project.component';
 import { ListComponent } from './components/users/projects/list/list.component';
+import { TasksListComponent } from './components/users/projects/tasks-list/tasks-list.component';
+import { ChartComponent } from './components/users/chart/chart.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'users', component: MainComponent, canActivate: [AdminPrivileges] },
   { path: 'signin', component: SignInFormComponent },
   { path: 'register', component: RegisterFormComponent },
+  { path: 'chart/:id', component: ChartComponent },
   {
     path: 'profile',
     component: ProfilePageComponent,
@@ -71,6 +74,11 @@ const routes: Routes = [
   {
     path: 'assignTasks',
     component: ListComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'assignTasks/:id',
+    component: TasksListComponent,
     canActivate: [AuthenticationGuard],
   },
   {

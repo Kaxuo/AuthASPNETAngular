@@ -4,22 +4,33 @@ button {
   outline: none;
 }
 
-.container {
-  text-align: center;
-  background-color: white;
-  margin-top: 5%;
-  padding: 0;
-  width: 50%;
-
-}
-.title {
-  text-decoration: underline;
-  margin-bottom: 4%;
-  padding: 3%;
-  color: white;
+th {
+  font-weight: bold;
 }
 
 .special {
   width: 100%;
   margin: 0;
+}
+
+@media only screen and (max-width: 1000px) {
+  .id {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  table.table td,
+  table.table th {
+    padding: 0.75rem;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  table.table td,
+  table.table th {
+    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 }
