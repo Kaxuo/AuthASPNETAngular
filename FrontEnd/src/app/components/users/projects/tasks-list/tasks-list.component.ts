@@ -5,7 +5,7 @@ import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { Project } from 'src/app/Models/Project';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
-import { SingleUser } from 'src/app/Models/SingleUser';
+import { UserReceived } from 'src/app/Models/UsersReceived';
 import { Task } from 'src/app/Models/Tasks';
 
 @Component({
@@ -37,7 +37,7 @@ export class TasksListComponent implements OnInit {
               ...project.tasks.map((item) =>
                 item.userId
                   ? this.auth.getOne(item.userId).pipe(
-                      map((user: SingleUser) => {
+                      map((user: UserReceived) => {
                         return { ...item, user: user?.username };
                       })
                     )
@@ -77,7 +77,7 @@ export class TasksListComponent implements OnInit {
         this.auth
           .getOne(this.object.unique_name)
           .pipe(take(1))
-          .subscribe((user: SingleUser) => {
+          .subscribe((user: UserReceived) => {
             el.user = user.username;
           });
       });

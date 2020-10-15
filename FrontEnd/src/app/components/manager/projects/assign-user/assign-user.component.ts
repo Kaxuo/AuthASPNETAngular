@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SingleUser } from 'src/app/Models/SingleUser';
+import { UserReceived } from 'src/app/Models/UsersReceived';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -15,8 +15,8 @@ export class AssignUserComponent implements OnInit {
   projectId: number;
   taskId: number;
   clicked: boolean = false;
-  users: SingleUser[];
-  filteredList: SingleUser[];
+  users: UserReceived[];
+  filteredList: UserReceived[];
   error: boolean = false;
   loading: boolean;
 
@@ -30,7 +30,7 @@ export class AssignUserComponent implements OnInit {
   ngOnInit(): void {
     this.projectId = this.route.snapshot.params.id;
     this.taskId = this.route.snapshot.params.taskId;
-    this.auth.getAllUsers().subscribe((data: SingleUser[]) => {
+    this.auth.getAllUsers().subscribe((data: UserReceived[]) => {
       this.loading = false
       this.users = data;
     });
@@ -62,19 +62,19 @@ export class AssignUserComponent implements OnInit {
     if (valueToSearch != '') {
       setTimeout(() => {
         this.filteredList = this.users
-          .map((user: SingleUser) => ({
+          .map((user: UserReceived) => ({
             ...user,
             username: user.username.toLocaleUpperCase().trim(),
             firstName: user.firstName.toLocaleUpperCase().trim(),
           }))
           .filter(
-            (user: SingleUser) =>
+            (user: UserReceived) =>
               user.username.includes(valueToSearch) ||
               user.firstName.includes(valueToSearch)
           )
           .concat(
             this.users.filter(
-              (user: SingleUser) => user.id.toString() == valueToSearch
+              (user: UserReceived) => user.id.toString() == valueToSearch
             )
           );
       }, 500);
@@ -84,14 +84,10 @@ export class AssignUserComponent implements OnInit {
     this.error = false;
   }
 
-  capitalizeFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   select(user) {
     this.assignUser
       .get('user')
-      .setValue(this.capitalizeFirstLetter(user.username.toLowerCase()));
+      .setValue(this.auth.capitalizeFirstLetter(user.username.toLowerCase()));
     this.filteredList = [];
   
   }

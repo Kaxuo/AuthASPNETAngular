@@ -39,3 +39,16 @@
     </tr>
   </tbody>
 </table>
+<div *ngIf="id && loading == false" style="text-align: center">
+  <button
+    class="special"
+    mdbBtn
+    type="button"
+    color="success"
+    rounded="true"
+    mdbWavesEffect
+    routerLink="charts"
+  >
+    Check Data
+  </button>
+</div>

@@ -74,7 +74,7 @@ export class TasksComponent implements OnInit {
           .pipe(take(1))
           .subscribe();
       }
-      if (event.container.id == 'Review') {
+      if (event.container.id == 'Reviewing') {
         let updatedTask = { ...event.item.data, status: 2 };
         this.projectService
           .editTask(projectId, taskId, updatedTask)

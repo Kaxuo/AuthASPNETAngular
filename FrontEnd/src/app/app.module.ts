@@ -15,15 +15,15 @@ import {
   ButtonsModule,
   TableModule,
 } from 'angular-bootstrap-md';
-import { MainComponent } from './components/Manager/main/main.component';
+import { MainComponent } from './components/manager/users/main/main.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BearerTokenInterceptor } from './services/bearer-token.interceptor';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { ProfilePageComponent } from './components/users/profile-page/profile-page.component';
 import { UpdateProfileComponent } from './components/users/update-profile/update-profile.component';
 import { TasksComponent } from './components/users/tasks/tasks.component';
-import { UserDetailsComponent } from './components/manager/user-details/user-details.component';
-import { UserTasksComponent } from './components/manager/user-tasks/user-tasks.component';
+import { UserDetailsComponent } from './components/manager/users/user-details/user-details.component';
+import { UserTasksComponent } from './components/manager/users/user-tasks/user-tasks.component';
 import { NotFoundComponent } from './components/errorsPages/not-found/not-found.component';
 import { UsersNotFoundComponent } from './components/errorsPages/users-not-found/users-not-found.component';
 import { TaskNotFoundComponent } from './components/errorsPages/task-not-found/task-not-found.component';
@@ -42,6 +42,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ListComponent } from './components/users/projects/list/list.component';
 import { TasksListComponent } from './components/users/projects/tasks-list/tasks-list.component';
 import { ChartComponent } from './components/users/chart/chart.component';
+import { UsersDataComponent } from './components/manager/users/users-data/users-data.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { ChartComponent } from './components/users/chart/chart.component';
     ListComponent,
     TasksListComponent,
     ChartComponent,
+    UsersDataComponent,
   ],
   imports: [
     BrowserModule,

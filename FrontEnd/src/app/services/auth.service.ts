@@ -11,14 +11,14 @@ import { UpdateUser } from '../Models/UpdateUser';
 import { Task } from '../Models/Tasks';
 import jwt_decode from 'jwt-decode';
 import * as CryptoJS from 'crypto-js';
-import { secret } from "../secrets/keys"
+import { secret } from '../secrets/keys';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private admin: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private secret:string = secret
+  private secret: string = secret;
 
   constructor(
     private webRequest: WebRequestService,
@@ -98,7 +98,6 @@ export class AuthService {
     return this.webRequest.getOneTask(`api/users/${id}/tasks/${taskId}`);
   }
 
-
   EditTask(id: number, taskId: number, payload: Task) {
     return this.webRequest
       .EditTasks(`api/users/${id}/tasks/${taskId}`, payload)
@@ -116,13 +115,9 @@ export class AuthService {
 
   //Helper Method //
 
-  // searchUsers(term:string):Observable<SingleUser[]>{
-  //   if(!term.trim()){
-  //     return of ([])
-  //   }
-  //   return this.getAllUsers()
-  // }
-
+  capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   getDecodedAccessToken(token: string): any {
     try {
@@ -152,10 +147,7 @@ export class AuthService {
   }
 
   private setSession(accessToken: string) {
-    var ciphertext = CryptoJS.AES.encrypt(
-      accessToken,
-      secret
-    ).toString();
+    var ciphertext = CryptoJS.AES.encrypt(accessToken, secret).toString();
     this.LocalStorageService.store('token', ciphertext);
   }
 

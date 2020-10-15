@@ -1,3 +1,5 @@
+
+import { Task } from '../Models/Tasks'
 export interface UserReceived{
     id:number;
     firstName:string,
@@ -8,12 +10,5 @@ export interface UserReceived{
     country:string,
     hobby:string,
     role:string,
-    tasks: Tasks[]
-}
-
-interface Tasks {
-    taskId:number;
-    description:string;
-    completed:boolean;
-    important:boolean;
+    tasks: Task[]
 }

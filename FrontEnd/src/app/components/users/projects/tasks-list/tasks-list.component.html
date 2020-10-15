@@ -6,7 +6,7 @@
       src="https://mdbootstrap.com/img/Photos/Others/project4.jpg"
       class="img-fluid"
       alt="Sample project image"
-      style="cursor: default"
+      style="cursor: default; width: 100%"
     />
     <a>
       <div class="mask rgba-white-slight"></div>
@@ -15,7 +15,7 @@
 
   <mdb-card-body class="mt-3">
     <h2 class="card-header-title title">{{ project.title }}</h2>
-    <p class="grey-text" style="white-space: pre-line">
+    <p class="grey-text" style="white-space: pre-line; padding: 5%">
       {{ project.description }}
     </p>
   </mdb-card-body>
@@ -42,7 +42,10 @@
       <td class="id" scope="row">
         {{ index + 1 }}
       </td>
-      <td [ngClass]="{ important: el.importance }" scope="row">
+      <td
+        [ngClass]="{ important: el.importance, complete: el.status == 3 }"
+        scope="row"
+      >
         {{ el.description }}
       </td>
       <td [ngSwitch]="el.status">
