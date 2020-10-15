@@ -22,11 +22,11 @@ export class ProjectService {
     return this.webRequest.AddProject('api/projects/add', payload);
   }
 
-  editProject(id:number, payload:Project){
-    return this.webRequest.EditProject(`api/projects/${id}`, payload)
+  editProject(id: number, payload: Project) {
+    return this.webRequest.EditProject(`api/projects/${id}`, payload);
   }
 
-  deleteProject(id:number) {
+  deleteProject(id: number) {
     return this.webRequest.DeleteProject(`api/projects/${id}`);
   }
 
@@ -34,11 +34,22 @@ export class ProjectService {
     return this.webRequest.AddTask(`api/projects/${id}/tasks/add`, payload);
   }
 
-  editTask(projectId:number, taskId:number, payload : Task){
-    return this.webRequest.EditTasks(`api/projects/${projectId}/tasks/${taskId}`, payload)
+  getOneTask(projectId: number, taskId: number) {
+    return this.webRequest.getOneTask(
+      `api/projects/${projectId}/tasks/${taskId}`
+    );
   }
 
-  deleteTask(projectId:number, taskId:number){
-    return this.webRequest.DeleteTask(`api/projects/${projectId}/tasks/${taskId}`)
+  editTask(projectId: number, taskId: number, payload: Task) {
+    return this.webRequest.EditTasks(
+      `api/projects/${projectId}/tasks/${taskId}`,
+      payload
+    );
+  }
+
+  deleteTask(projectId: number, taskId: number) {
+    return this.webRequest.DeleteTask(
+      `api/projects/${projectId}/tasks/${taskId}`
+    );
   }
 }

@@ -173,9 +173,10 @@ namespace BackEnd.Data.DatabaseMethods
                 task.Status = newtask.Status;
             if (task.Importance != newtask.Importance)
                 task.Importance = newtask.Importance;
-            if (task.UserId != newtask.UserId)
+            if (newtask.UserId != 0)
                 task.UserId = newtask.UserId;
-
+            if (newtask.UserId == 0)
+                task.UserId = null;
             _context.Update(task);
             _context.SaveChanges();
             return task;

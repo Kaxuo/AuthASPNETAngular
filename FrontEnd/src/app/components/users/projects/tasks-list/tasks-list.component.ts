@@ -66,7 +66,7 @@ export class TasksListComponent implements OnInit {
 
   assignTask(el) {
     let updatedTask = {
-      importance: el.importance,
+      ...el,
       userId: this.object.unique_name,
     };
     this.projectService

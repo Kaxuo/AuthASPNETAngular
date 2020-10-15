@@ -54,7 +54,10 @@
       <td class="id" scope="row">
         {{ index + 1 }}
       </td>
-      <td [ngClass]="{ important: el.importance, complete:el.status == 3 }" scope="row">
+      <td
+        [ngClass]="{ important: el.importance, complete: el.status == 3 }"
+        scope="row"
+      >
         {{ el.description }}
       </td>
       <td [ngSwitch]="el.status">
@@ -70,7 +73,7 @@
           [checked]="el.importance"
         ></mdb-checkbox>
       </td>
-      <td>{{ el.user || "Not Assigned" }}</td>
+      <td>{{ el.user || "Not Assigned" | titlecase }}</td>
       <td>
         <button [routerLink]="['tasks/', el.taskId]">
           <mdb-icon

@@ -9,7 +9,7 @@ namespace BackEnd.Models
         public string Description { get; set; }
         public Status Status { get; set; }
         public bool Importance { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public int ProjectId { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
     }

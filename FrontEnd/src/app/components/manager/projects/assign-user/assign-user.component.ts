@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs/operators';
+import { Task } from 'src/app/Models/Tasks';
 import { UserReceived } from 'src/app/Models/UsersReceived';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
@@ -14,6 +16,7 @@ export class AssignUserComponent implements OnInit {
   assignUser: FormGroup;
   projectId: number;
   taskId: number;
+  task: Task;
   clicked: boolean = false;
   users: UserReceived[];
   filteredList: UserReceived[];
@@ -31,9 +34,15 @@ export class AssignUserComponent implements OnInit {
     this.projectId = this.route.snapshot.params.id;
     this.taskId = this.route.snapshot.params.taskId;
     this.auth.getAllUsers().subscribe((data: UserReceived[]) => {
-      this.loading = false
+      this.loading = false;
       this.users = data;
     });
+    this.projectService
+      .getOneTask(this.projectId, this.taskId)
+      .pipe(take(1))
+      .subscribe((task: Task) => {
+        this.task = task;
+      });
     this.assignUser = new FormGroup({
       user: new FormControl('', [Validators.required]),
     });
@@ -45,7 +54,7 @@ export class AssignUserComponent implements OnInit {
         element.username.toLocaleLowerCase() == user.user.toLowerCase()
     );
     if (selectedUser) {
-      let updatedTask = { userId: selectedUser.id };
+      let updatedTask = { ...this.task, userId: selectedUser.id };
       this.projectService
         .editTask(this.projectId, this.taskId, updatedTask)
         .subscribe((data) =>
@@ -89,6 +98,5 @@ export class AssignUserComponent implements OnInit {
       .get('user')
       .setValue(this.auth.capitalizeFirstLetter(user.username.toLowerCase()));
     this.filteredList = [];
-  
   }
 }

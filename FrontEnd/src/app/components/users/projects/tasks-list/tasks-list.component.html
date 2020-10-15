@@ -55,7 +55,7 @@
         ><span *ngSwitchCase="3">Completed</span>
         <span *ngSwitchDefault>Pending</span>
       </td>
-      <td>{{ el.user || "Not Assigned" }}</td>
+      <td>{{ el.user || "Not Assigned" | titlecase }}</td>
       <td *ngIf="object.unique_name == el.userId">Yours</td>
       <td
         *ngIf="object.unique_name != el.userId && el.userId != 0"
