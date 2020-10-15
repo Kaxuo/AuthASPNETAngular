@@ -78,23 +78,31 @@ export class ProjectDetailsComponent implements OnInit {
       .subscribe();
   }
 
+  sortByUsers(table: Task[]) {
+    table.sort((a, b) => (a.userId > b.userId ? -1 : 1));
+  }
+
   sortByImportance(table: Task[]) {
-    table = [...this.project.tasks];
     if (!table[0].importance) {
       table.sort((a, b) => (a.importance > b.importance ? -1 : 1));
     } else {
       table.sort((a, b) => (a.importance > b.importance ? 1 : -1));
     }
-    this.project.tasks = table;
   }
 
-  sortByStatus(table: Task[]) {
-    table = [...this.project.tasks];
-    if (!table[0].status) {
-      table.sort((a, b) => (a.status > b.status ? -1 : 1));
+  sortByAssigned(table: Task[]) {
+    if (table[0].userId == 0) {
+      table.sort((a) => (a.userId == 0 ? 1 : -1));
     } else {
-      table.sort((a, b) => (a.status > b.status ? 1 : -1));
+      table.sort((a) => (a.userId == 0 ? -1 : 1));
     }
-    this.project.tasks = table;
+  }
+
+  sortByCompleted(table: Task[]) {
+    if (table[0].status == 0) {
+      table.sort((a) => (a.status == 3 ? -1 : 1));
+    } else {
+      table.sort((a) => (a.status == 3 ? 1 : -1));
+    }
   }
 }

@@ -37,15 +37,21 @@
     <tr>
       <th class="id">ID</th>
       <th>Description</th>
-      <th>Status</th>
+      <th style="cursor: pointer" (click)="sortByCompleted(project.tasks)">
+        Status <mdb-icon fas icon="sort"></mdb-icon>
+      </th>
       <th
         (click)="sortByImportance(project.tasks)"
         class="importance importanceHead"
       >
-        Importance
+        Importance <mdb-icon fas icon="sort"></mdb-icon>
       </th>
-      <th>User</th>
-      <th>Assign</th>
+      <th style="cursor: pointer" (click)="sortByUsers(project.tasks)">
+        User <mdb-icon fas icon="sort"></mdb-icon>
+      </th>
+      <th style="cursor: pointer" (click)="sortByAssigned(project.tasks)">
+        Assign <mdb-icon fas icon="sort"></mdb-icon>
+      </th>
       <th>Remove</th>
     </tr>
   </thead>

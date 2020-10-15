@@ -72,7 +72,7 @@ export class TasksListComponent implements OnInit {
     this.projectService
       .editTask(el.projectId, el.taskId, updatedTask)
       .pipe(take(1))
-      .subscribe((data) => {
+      .subscribe(() => {
         el.userId = this.object.unique_name;
         this.auth
           .getOne(this.object.unique_name)
@@ -83,13 +83,47 @@ export class TasksListComponent implements OnInit {
       });
   }
 
+  removeTask(el) {
+    let updatedTask = {
+      ...el,
+      status: 0,
+      userId: 0,
+    };
+    this.projectService
+      .editTask(el.projectId, el.taskId, updatedTask)
+      .pipe(take(1))
+      .subscribe(() => {
+        el.status = 0;
+        el.userId = 0;
+        el.user = 'Not Assigned';
+      });
+  }
+
   sortByImportance(table: Task[]) {
-    table = [...this.project.tasks];
     if (!table[0].importance) {
       table.sort((a, b) => (a.importance > b.importance ? -1 : 1));
     } else {
       table.sort((a, b) => (a.importance > b.importance ? 1 : -1));
     }
-    this.project.tasks = table;
+  }
+
+  sortByUser(table: Task[]) {
+    table.sort((a) => (a.userId == this.object.unique_name ? -1 : 1));
+  }
+
+  sortByAssigned(table: Task[]) {
+    if (table[0].userId == 0) {
+      table.sort((a) => (a.userId == 0 ? 1 : -1));
+    } else {
+      table.sort((a) => (a.userId == 0 ? -1 : 1));
+    }
+  }
+
+  sortByCompleted(table: Task[]) {
+    if (table[0].status == 0) {
+      table.sort((a) => (a.status == 3 ? -1 : 1));
+    } else {
+      table.sort((a) => (a.status == 3 ? 1 : -1));
+    }
   }
 }
