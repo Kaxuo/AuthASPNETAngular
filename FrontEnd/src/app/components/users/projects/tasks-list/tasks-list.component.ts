@@ -99,31 +99,39 @@ export class TasksListComponent implements OnInit {
       });
   }
 
-  sortByImportance(table: Task[]) {
-    if (!table[0].importance) {
-      table.sort((a, b) => (a.importance > b.importance ? -1 : 1));
-    } else {
-      table.sort((a, b) => (a.importance > b.importance ? 1 : -1));
-    }
+  sortByUser(table: Task[]) {
+    table.sort((a) =>
+      a.userId == this.object.unique_name || a.userId != 0 ? -1 : 1
+    );
+    this.project.tasks = [...table];
   }
 
-  sortByUser(table: Task[]) {
-    table.sort((a) => (a.userId == this.object.unique_name ? -1 : 1));
+  sortByImportance(table: Task[]) {
+    table.sort((a, b) =>
+      a.importance > b.importance || a.importance < b.importance ? -1 : 1
+    );
+    this.project.tasks = [...table];
   }
 
   sortByAssigned(table: Task[]) {
     if (table[0].userId == 0) {
       table.sort((a) => (a.userId == 0 ? 1 : -1));
     } else {
-      table.sort((a) => (a.userId == 0 ? -1 : 1));
+      table.sort((a) => (a.userId != 0 ? 1 : -1));
     }
+    this.project.tasks = [...table];
   }
 
   sortByCompleted(table: Task[]) {
     if (table[0].status == 0) {
-      table.sort((a) => (a.status == 3 ? -1 : 1));
+      table.sort((a, b) => (a.status > b.status ? -1 : 1));
     } else {
-      table.sort((a) => (a.status == 3 ? 1 : -1));
+      table.sort((a, b) => (a.status < b.status ? -1 : 1));
     }
+    this.project.tasks = [...table];
+  }
+
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }

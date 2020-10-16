@@ -18,70 +18,82 @@
     <p class="grey-text" style="white-space: pre-line; padding: 5%">
       {{ project.description }}
     </p>
+    <a
+      (click)="scroll(target)"
+      mdbBtn
+      color="default"
+      size="sm"
+      class="waves-light"
+      mdbWavesEffect
+    >
+      <mdb-icon far icon="clone" class="left"></mdb-icon> Check Tasks</a
+    >
   </mdb-card-body>
 </div>
 
 <h3 *ngIf="loading == false" class="tasks">Tasks</h3>
-<table class="table" *ngIf="project" mdbTable>
-  <thead>
-    <tr>
-      <th class="id">ID</th>
-      <th
-        class="importance importanceHead"
-        (click)="sortByImportance(project.tasks)"
-      >
-        Description <mdb-icon fas icon="sort"></mdb-icon>
-      </th>
-      <th style="cursor: pointer" (click)="sortByCompleted(project.tasks)">
-        Status <mdb-icon fas icon="sort"></mdb-icon>
-      </th>
-      <th style="cursor: pointer" (click)="sortByUser(project.tasks)">
-        User <mdb-icon fas icon="sort"></mdb-icon>
-      </th>
-      <th style="cursor: pointer" (click)="sortByAssigned(project.tasks)">
-        Take <mdb-icon fas icon="sort"></mdb-icon>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr mdbTableCol *ngFor="let el of project.tasks; let index = index">
-      <td class="id" scope="row">
-        {{ index + 1 }}
-      </td>
-      <td
-        [ngClass]="{ important: el.importance, complete: el.status == 3 }"
-        scope="row"
-      >
-        {{ el.description }}
-      </td>
-      <td [ngSwitch]="el.status">
-        <span *ngSwitchCase="0">Pending</span
-        ><span *ngSwitchCase="1">Working</span
-        ><span *ngSwitchCase="2">Reviewing</span
-        ><span *ngSwitchCase="3">Completed</span>
-        <span *ngSwitchDefault>Pending</span>
-      </td>
-      <td>{{ el.user || "Not Assigned" | titlecase }}</td>
-      <td *ngIf="object.unique_name == el.userId">
-        <button (click)="removeTask(el)">
-          <mdb-icon fas icon="user-slash"></mdb-icon>
-        </button>
-      </td>
-      <td
-        *ngIf="object.unique_name != el.userId && el.userId != 0"
-        class="id"
-        scope="row"
-      >
-        Assigned
-      </td>
-      <td *ngIf="el.userId == 0">
-        <button (click)="assignTask(el)">
-          <mdb-icon fas icon="plus"></mdb-icon>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div #target>
+  <table class="table" *ngIf="project" mdbTable>
+    <thead>
+      <tr>
+        <th class="id">ID</th>
+        <th
+          class="importance importanceHead"
+          (click)="sortByImportance(project.tasks)"
+        >
+          Description <mdb-icon fas icon="sort"></mdb-icon>
+        </th>
+        <th style="cursor: pointer" (click)="sortByCompleted(project.tasks)">
+          Status <mdb-icon fas icon="sort"></mdb-icon>
+        </th>
+        <th style="cursor: pointer" (click)="sortByUser(project.tasks)">
+          User <mdb-icon fas icon="sort"></mdb-icon>
+        </th>
+        <th style="cursor: pointer" (click)="sortByAssigned(project.tasks)">
+          Take <mdb-icon fas icon="sort"></mdb-icon>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr mdbTableCol *ngFor="let el of project.tasks; let index = index">
+        <td class="id" scope="row">
+          {{ index + 1 }}
+        </td>
+        <td
+          [ngClass]="{ important: el.importance, complete: el.status == 3 }"
+          scope="row"
+        >
+          {{ el.description }}
+        </td>
+        <td [ngSwitch]="el.status">
+          <span *ngSwitchCase="0">Pending</span
+          ><span *ngSwitchCase="1">Working</span
+          ><span *ngSwitchCase="2">Reviewing</span
+          ><span *ngSwitchCase="3">Completed</span>
+          <span *ngSwitchDefault>Pending</span>
+        </td>
+        <td>{{ el.user || "Not Assigned" | titlecase }}</td>
+        <td *ngIf="object.unique_name == el.userId">
+          <button (click)="removeTask(el)">
+            <mdb-icon fas icon="user-slash"></mdb-icon>
+          </button>
+        </td>
+        <td
+          *ngIf="object.unique_name != el.userId && el.userId != 0"
+          class="id"
+          scope="row"
+        >
+          Assigned
+        </td>
+        <td *ngIf="el.userId == 0">
+          <button (click)="assignTask(el)">
+            <mdb-icon fas icon="plus"></mdb-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <div *ngIf="project" style="text-align: center">
   <button
     *ngIf="project.tasks.length == 0"

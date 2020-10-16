@@ -14,14 +14,14 @@
     </thead>
     <tbody style="text-align: center">
       <tr mdbTableCol *ngFor="let el of projects; let index = index">
-        <td class="id" >{{ el.id }}</td>
+        <td class="id">{{ el.id }}</td>
         <td>{{ el.title }}</td>
         <td>{{ el.tasks.length }}</td>
         <td>
-          {{this.completedTasks[index].length}}
+          {{ this.completedTasks[index].length }}
         </td>
         <td>
-          {{this.notAssignedTasks[index].length}}
+          {{ this.notAssignedTasks[index].length }}
         </td>
         <td>
           <button [routerLink]="[el.id]">
@@ -43,8 +43,20 @@
 
         <mdb-card-body class="px-lg-5 pt-0 errorBody">
           <h3 style="padding: 20px">Nothing to do ! (for now)</h3>
-          <h4 style="padding: 20px">There's no projects at the moment</h4>
+          <h4 style="padding: 20px">There are no projects at the moment</h4>
           <img class="errorimg" src="../../../assets/thumbup.png" />
+          <button
+            style="margin-top: 30px"
+            type="button"
+            mdbBtn
+            mdbWavesEffect
+            color="primary"
+            routerLink="/profile"
+          >
+            <a class="nav-link waves-light" style="color: white" mdbWavesEffect
+              >Go Back<span class="sr-only">(current)</span></a
+            >
+          </button>
         </mdb-card-body>
       </mdb-card>
     </div>

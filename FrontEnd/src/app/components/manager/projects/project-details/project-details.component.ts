@@ -79,30 +79,38 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   sortByUsers(table: Task[]) {
-    table.sort((a, b) => (a.userId > b.userId ? -1 : 1));
+    table.sort((a, b) =>
+      a.userId > b.userId || (a.userId != 0 && a.userId < b.userId) ? -1 : 1
+    );
+    this.project.tasks = [...table];
   }
 
   sortByImportance(table: Task[]) {
-    if (!table[0].importance) {
-      table.sort((a, b) => (a.importance > b.importance ? -1 : 1));
-    } else {
-      table.sort((a, b) => (a.importance > b.importance ? 1 : -1));
-    }
+    table.sort((a, b) =>
+      a.importance > b.importance || a.importance < b.importance ? -1 : 1
+    );
+    this.project.tasks = [...table];
   }
 
   sortByAssigned(table: Task[]) {
     if (table[0].userId == 0) {
       table.sort((a) => (a.userId == 0 ? 1 : -1));
     } else {
-      table.sort((a) => (a.userId == 0 ? -1 : 1));
+      table.sort((a) => (a.userId != 0 ? 1 : -1));
     }
+    this.project.tasks = [...table];
   }
 
   sortByCompleted(table: Task[]) {
     if (table[0].status == 0) {
-      table.sort((a) => (a.status == 3 ? -1 : 1));
+      table.sort((a, b) => (a.status > b.status ? -1 : 1));
     } else {
-      table.sort((a) => (a.status == 3 ? 1 : -1));
+      table.sort((a, b) => (a.status < b.status ? -1 : 1));
     }
+    this.project.tasks = [...table];
+  }
+
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
