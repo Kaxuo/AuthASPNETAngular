@@ -1,0 +1,32 @@
+mdb-icon {
+  cursor: pointer;
+}
+
+.admin {
+  background-color: lightgray;
+}
+
+.special {
+  width: 100%;
+  margin: 0;
+}
+
+@media only screen and (max-width: 1000px) {
+  .id,
+  .country,
+  .city {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .hobby {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .lastName {
+    display: none;
+  }
+}

@@ -1,0 +1,67 @@
+.container {
+  text-align: center;
+  background-color: white;
+  margin-top: 5%;
+  padding: 0;
+  width: 50%;
+  border-radius: 1%;
+}
+
+.title {
+  text-decoration: underline;
+  margin-bottom: 4%;
+  padding: 3%;
+}
+
+.tasks {
+  text-align: center;
+  margin: 3%;
+  color: white;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.table {
+  text-align: center;
+}
+
+button {
+  background-color: inherit;
+  border: none;
+  outline: none;
+}
+
+.important {
+  color: red;
+}
+
+.complete {
+  text-decoration: line-through;
+  color: black;
+}
+
+.special {
+  width: 100%;
+  margin: 0;
+}
+
+th {
+  font-weight: bold;
+  &::selection {
+    outline: none;
+  }
+}
+
+.mt-3 {
+  text-align: center;
+}
+
+.importanceHead {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 700px) {
+  .id {
+    display: none;
+  }
+}

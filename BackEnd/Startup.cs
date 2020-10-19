@@ -42,7 +42,7 @@ namespace BackEnd
                                                                                             .AllowAnyHeader()));
             services.AddControllers();
             services.AddMvc();
-            services.AddDbContext<Context>(options => options.UseMySQL(
+            services.AddDbContext<Context>(options => options.UseSqlServer(
             Configuration.GetConnectionString("DefaultConnection")
         ));
             services.AddScoped<IUser, UserMethods>();

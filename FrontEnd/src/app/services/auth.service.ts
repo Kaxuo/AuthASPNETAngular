@@ -11,14 +11,14 @@ import { UpdateUser } from '../Models/UpdateUser';
 import { Task } from '../Models/Tasks';
 import jwt_decode from 'jwt-decode';
 import * as CryptoJS from 'crypto-js';
-import { secret } from "../../secrets/keys"
+import { secret } from '../../secrets/keys';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private admin: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private secret:string = secret
+  private secret: string = secret;
 
   constructor(
     private webRequest: WebRequestService,
@@ -98,10 +98,6 @@ export class AuthService {
     return this.webRequest.getOneTask(`api/users/${id}/tasks/${taskId}`);
   }
 
-  AddTask(id: number, payload: Task) {
-    return this.webRequest.AddTask(`api/users/${id}/tasks/add`, payload);
-  }
-
   EditTask(id: number, taskId: number, payload: Task) {
     return this.webRequest
       .EditTasks(`api/users/${id}/tasks/${taskId}`, payload)
@@ -113,8 +109,13 @@ export class AuthService {
   }
 
   logout() {
-    this.router.navigate(['/register']);
     this.removeSession();
+  }
+
+  //Helper Method //
+
+  capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   getDecodedAccessToken(token: string): any {
@@ -145,14 +146,12 @@ export class AuthService {
   }
 
   private setSession(accessToken: string) {
-    var ciphertext = CryptoJS.AES.encrypt(
-      accessToken,
-      secret
-    ).toString();
+    var ciphertext = CryptoJS.AES.encrypt(accessToken, secret).toString();
     this.LocalStorageService.store('token', ciphertext);
   }
 
   private removeSession() {
     this.LocalStorageService.clear('token');
+    this.router.navigate(['signin'])
   }
 }

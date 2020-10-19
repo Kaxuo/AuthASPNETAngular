@@ -14,7 +14,9 @@ namespace BackEnd.Data
             modelBuilder.Entity<User>()
                 .HasMany<Task>(s => s.Tasks)
                 .WithOne(e => e.User)
-                .HasForeignKey(s => s.UserId);
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
 
             modelBuilder.Entity<Project>()
                 .HasMany<Task>(s => s.Tasks)

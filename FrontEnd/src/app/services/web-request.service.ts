@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { UserRegister } from '../Models/UserRegister';
 import { UserAuth } from '../Models/UserAuth';
 import { UpdateUser } from '../Models/UpdateUser';
-import { Task } from '../Models/Tasks'
+import { Task } from '../Models/Tasks';
+import { Project } from '../Models/Project';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,11 @@ export class WebRequestService {
   readonly ROOT_URL;
 
   constructor(private http: HttpClient) {
-    this.ROOT_URL = 'http://localhost:5000';
+    this.ROOT_URL = 'https://privateauthbackend.azurewebsites.net';
+    // this.ROOT_URL = 'https://localhost:5001';
   }
+
+  // Users //
 
   getAllUsers(url: string) {
     return this.http.get(`${this.ROOT_URL}/${url}`);
@@ -47,11 +51,35 @@ export class WebRequestService {
     return this.http.get(`${this.ROOT_URL}/${url}`);
   }
 
+  // Projects //
+
+  getAllProjects(url: string) {
+    return this.http.get(`${this.ROOT_URL}/${url}`);
+  }
+
+  getOneProject(url: string, id: number) {
+    return this.http.get(`${this.ROOT_URL}/${url}/${id}`);
+  }
+
+  AddProject(url: string, payload: Project) {
+    return this.http.post(`${this.ROOT_URL}/${url}`, payload);
+  }
+
+  EditProject(url: string, payload: Task) {
+    return this.http.put(`${this.ROOT_URL}/${url}`, payload);
+  }
+
+  DeleteProject(url: string) {
+    return this.http.delete(`${this.ROOT_URL}/${url}`);
+  }
+
+  // Tasks //
+
   getOneTask(url: string) {
     return this.http.get(`${this.ROOT_URL}/${url}`);
   }
 
-  AddTask(url: string, payload:Task) {
+  AddTask(url: string, payload: Task) {
     return this.http.post(`${this.ROOT_URL}/${url}`, payload);
   }
 
