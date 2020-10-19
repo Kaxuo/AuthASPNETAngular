@@ -33,7 +33,6 @@ export class TasksComponent implements OnInit {
   ngOnInit(): void {
     this.auth
       .getAllTasks(this.object.unique_name)
-      .pipe(take(1))
       .subscribe((res: Task[]) => {
         this.Tasks = res;
         this.PendingTasks = res.filter((x) => x.status == 0);

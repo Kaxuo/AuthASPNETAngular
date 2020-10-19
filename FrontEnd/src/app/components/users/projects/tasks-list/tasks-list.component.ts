@@ -100,16 +100,16 @@ export class TasksListComponent implements OnInit {
   }
 
   sortByUser(table: Task[]) {
-    table.sort((a) =>
-      a.userId == this.object.unique_name || a.userId != 0 ? -1 : 1
-    );
+    table.sort((a, b) => (a.userId != 0 && a.userId < b.userId ? -1 : 1));
     this.project.tasks = [...table];
   }
 
   sortByImportance(table: Task[]) {
-    table.sort((a, b) =>
-      a.importance > b.importance || a.importance < b.importance ? -1 : 1
-    );
+    if (table[0].importance) {
+      table.sort((a) => (a.importance ? 1 : -1));
+    } else {
+      table.sort((a) => (a.importance ? -1 : 1));
+    }
     this.project.tasks = [...table];
   }
 

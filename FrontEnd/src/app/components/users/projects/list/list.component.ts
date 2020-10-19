@@ -17,7 +17,6 @@ export class ListComponent implements OnInit {
   constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
-    this.loading = false;
     this.projectService
       .getAllProjects()
       .pipe(take(1))

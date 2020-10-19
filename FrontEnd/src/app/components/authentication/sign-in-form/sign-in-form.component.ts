@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class SignInFormComponent implements OnInit {
   signInForm: FormGroup;
   message: string;
+  loading:boolean= false;
 
   constructor(
     private auth: AuthService,

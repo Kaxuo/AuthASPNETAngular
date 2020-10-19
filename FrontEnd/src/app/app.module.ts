@@ -43,6 +43,7 @@ import { ListComponent } from './components/users/projects/list/list.component';
 import { TasksListComponent } from './components/users/projects/tasks-list/tasks-list.component';
 import { ChartComponent } from './components/users/chart/chart.component';
 import { UsersDataComponent } from './components/manager/users/users-data/users-data.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { UsersDataComponent } from './components/manager/users/users-data/users-
       useClass: BearerTokenInterceptor,
       multi: true,
     },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
   bootstrap: [AppComponent],
 })

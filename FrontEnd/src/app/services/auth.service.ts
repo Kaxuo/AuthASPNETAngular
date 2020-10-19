@@ -109,7 +109,6 @@ export class AuthService {
   }
 
   logout() {
-    this.router.navigate(['/register']);
     this.removeSession();
   }
 
@@ -153,5 +152,6 @@ export class AuthService {
 
   private removeSession() {
     this.LocalStorageService.clear('token');
+    this.router.navigate(['signin'])
   }
 }

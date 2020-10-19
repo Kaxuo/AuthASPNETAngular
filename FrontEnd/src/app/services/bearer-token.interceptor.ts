@@ -35,6 +35,9 @@ export class BearerTokenInterceptor implements HttpInterceptor {
         if (err.status == 0) {
           this.router.navigate(['DeadServer']);
         }
+        if (err.status == 404) {
+          this.router.navigate(['DeadServer']);
+        }
         return throwError(err);
       })
     );

@@ -26,11 +26,11 @@ export class AddProjectComponent implements OnInit {
   }
 
   sendProject(project) {
-    this.clicked = true;
     this.projectService
       .addProject(project)
       .pipe(take(1))
       .subscribe((res) => {
+        this.clicked = true;
         this.router.navigate(['/projects']);
       });
   }

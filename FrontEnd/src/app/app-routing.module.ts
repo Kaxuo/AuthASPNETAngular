@@ -28,10 +28,15 @@ import { UsersDataComponent } from './components/manager/users/users-data/users-
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
-  { path: 'users', component: MainComponent, canActivate: [AdminPrivileges] },
-  { path: 'users/charts', component: UsersDataComponent, canActivate: [AdminPrivileges] },
   { path: 'signin', component: SignInFormComponent },
   { path: 'register', component: RegisterFormComponent },
+  { path: 'users', component: MainComponent, canActivate: [AdminPrivileges] },
+  {
+    path: 'users/charts',
+    component: UsersDataComponent,
+    canActivate: [AdminPrivileges],
+  },
+
   {
     path: 'chart/:id',
     component: ChartComponent,

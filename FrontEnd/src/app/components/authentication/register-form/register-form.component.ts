@@ -44,7 +44,6 @@ export class RegisterFormComponent implements OnInit {
   }
 
   sendData(values: UserRegister) {
-    this.clicked = true;
     this.auth
       .register(values)
       .pipe(first())
