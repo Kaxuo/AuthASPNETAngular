@@ -55,6 +55,13 @@
             "
             >Required</em
           >
+          <em
+          *ngIf="
+            AddProject.get('description').hasError('maxlength') &&
+            AddProject.get('description').touched
+          "
+          >Too Long !</em
+        >
 
           <button
             mdbBtn

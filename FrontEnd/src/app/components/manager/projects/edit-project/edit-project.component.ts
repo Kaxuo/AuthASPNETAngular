@@ -31,6 +31,7 @@ export class EditProjectComponent implements OnInit {
         ]),
         description: new FormControl(project.description, [
           Validators.required,
+          Validators.maxLength(620),
         ]),
       });
     });
