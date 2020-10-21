@@ -1,48 +1,6 @@
 <app-spinner *ngIf="loading != false"></app-spinner>
 
-<div *ngIf="project" class="col-lg-4 col-md-12 mb-4 container">
-  <div class="view overlay rounded z-depth-1 waves-light" mdbWavesEffect>
-    <img
-      src="https://mdbootstrap.com/img/Photos/Others/project4.jpg"
-      class="img-fluid"
-      alt="Sample project image"
-      style="cursor: default; width: 100%"
-    />
-    <a>
-      <div class="mask rgba-white-slight"></div>
-    </a>
-  </div>
-
-  <mdb-card-body class="mt-3">
-    <h2 class="card-header-title title">{{ project.title }}</h2>
-    <p class="grey-text" style="white-space: pre-line; padding: 5%">
-      {{ project.description }}
-    </p>
-    <a
-      routerLink="edit"
-      mdbBtn
-      color="indigo"
-      size="sm"
-      class="waves-light"
-      mdbWavesEffect
-    >
-      <mdb-icon far icon="clone" class="left"></mdb-icon> Edit Project</a
-    >
-    <a
-      (click)="scroll(target)"
-      mdbBtn
-      color="default"
-      size="sm"
-      class="waves-light"
-      mdbWavesEffect
-    >
-      <mdb-icon far icon="clone" class="left"></mdb-icon> Check Tasks</a
-    >
-  </mdb-card-body>
-</div>
-
-<h3 *ngIf="loading == false" class="tasks">Tasks</h3>
-<div #target>
+<div>
   <table class="table" *ngIf="project" mdbTable>
     <thead #target>
       <tr>

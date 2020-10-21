@@ -1,16 +1,3 @@
-.container {
-  text-align: center;
-  background-color: white;
-  margin-top: 5%;
-  padding: 0;
-  width: 50%;
-  border-radius: 1%;
-}
-
-.title {
-  text-decoration: underline;
-}
-
 .tasks {
   text-align: center;
   margin: 3%;
@@ -68,3 +55,8 @@ th {
     display: none;
   }
 }
+
+tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+

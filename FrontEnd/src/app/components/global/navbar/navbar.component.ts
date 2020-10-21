@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
+  animations:[]
 })
 export class NavbarComponent implements OnInit {
   authenticated: Observable<boolean> = this.auth.isAuthenticated();

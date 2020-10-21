@@ -1,3 +1,4 @@
 <app-navbar></app-navbar>
-<router-outlet></router-outlet> 
-
+<main [@routeAnimations]="outlet.isActivated ? outlet.activatedRoute : ''">
+  <router-outlet #outlet="outlet"></router-outlet> 
+</main>

@@ -1,10 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
 .body {
-  background-color: #1D2224;
+  padding-top: 55px;
+  background-color: #1d2224;
   font-family: "Roboto", sans-serif;
 }
-
+::-webkit-scrollbar {
+  display: none;
+}
 html {
   width: 100%;
 }

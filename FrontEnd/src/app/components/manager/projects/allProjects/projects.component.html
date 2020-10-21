@@ -34,8 +34,12 @@
 </ng-container>
 
 <ng-container *ngIf="projects && loading == false">
-  <h1 class="megatitle">Projects</h1>
-  <div class="container center">
+  <div class="flex animation">
+    <h3 class="smalltitle">{{ projects.length }} Projects</h3>
+    <h2 class="megatitle">Projects</h2>
+  </div>
+  <hr class="line" />
+  <div class="container center animation">
     <div *ngFor="let el of projects" class="card">
       <h2>{{ el.title }}</h2>
       <hr />
@@ -55,13 +59,13 @@
         Check
       </button>
       <button
-        [routerLink]="[el.id, 'add']"
+        [routerLink]="[el.id, 'edit']"
         type="button"
         mdbBtn
         color="secondary"
         mdbWavesEffect
       >
-        Add Task
+        Edit Task
       </button>
       <button
         (click)="basicModal.show()"

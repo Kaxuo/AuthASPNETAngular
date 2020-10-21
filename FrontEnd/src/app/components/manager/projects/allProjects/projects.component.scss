@@ -1,5 +1,4 @@
-$black: #282828;
-$point: #001f3f;
+$point: #282828;
 $point-light: lighten($point, 5%);
 
 $ratio: 1.618;
@@ -14,6 +13,10 @@ $card-shadow: -20px -20px 0px 0px $point-light;
 $card-padding-basis: 15px;
 $card_head_padding: 0px 0px $card-padding-basis 0px;
 
+.animation {
+  animation-name: opaci;
+  animation-duration: 1.5s;
+}
 .container {
   width: 100%;
   min-height: 100vh;
@@ -21,12 +24,7 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 5em;
   justify-items: center;
-  margin-top: 3%;
-
-  //height of the rows
-  // grid-auto-rows: 100px;
-  // grid-auto-rows:minmax(100px,auto);
-
+  margin-top: 4%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -46,20 +44,15 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
   transition: box-shadow 0.2s;
   text-align: center;
   border: none;
-
   padding: $card_padding;
   margin: $card_margin;
-
   -webkit-box-shadow: $card-shadow;
-
   box-shadow: $card-shadow;
   border-radius: $card_round;
-
   -webkit-animation-name: shadow-show;
-  -webkit-animation-duration: 1.5s;
+  -webkit-animation-duration: 2s;
   animation-name: shadow-show;
-  animation-duration: 1.5s;
-
+  animation-duration: 2s;
   -webkit-transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
   -o-transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
   transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
@@ -78,7 +71,7 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
   h5 {
     padding: $card_head_padding;
     font-size: 30px;
-    color: $black;
+    color: $point;
   }
 
   hr {
@@ -89,9 +82,9 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
     margin: 0px;
 
     -webkit-animation-name: line-show;
-    -webkit-animation-duration: 0.3s;
+    -webkit-animation-duration: 2s;
     animation-name: line-show;
-    animation-duration: 0.3s;
+    animation-duration: 2s;
     -webkit-transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
     -o-transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
     transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
@@ -103,34 +96,18 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
     line-height: 1.25;
     font-size: 16px;
     word-wrap: pre-wrap;
-    color: $black;
+    color: $point;
     min-height: 370px;
 
     -webkit-animation-name: p-show;
-    -webkit-animation-duration: 1.5s;
+    -webkit-animation-duration: 2s;
     animation-name: p-show;
-    animation-duration: 1.5s;
+    animation-duration: 2s;
 
     @media only screen and (max-width: 760px) {
       min-height: 0;
     }
   }
-
-  // &:nth-child(3n + 1) {
-  //   background: #efefbb;
-  //   background: -webkit-linear-gradient(to bottom, #d4d3dd, #efefbb);
-  //   background: linear-gradient(to bottom, #d4d3dd, #efefbb);
-  // }
-  // &:nth-child(3n + 2) {
-  //   background: #8e9eab;
-  //   background: -webkit-linear-gradient(to bottom, #eef2f3, #8e9eab);
-  //   background: linear-gradient(to bottom, #eef2f3, #8e9eab);
-  // }
-  // &:nth-child(3n + 3) {
-  //   background: #e0eafc;
-  //   background: -webkit-linear-gradient(to bottom, #cfdef3, #e0eafc);
-  //   background: linear-gradient(to bottom, #cfdef3, #e0eafc);
-  // }
 
   &:hover {
     box-shadow: 0px -20px 0px 0px $point-light;
@@ -142,21 +119,38 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
   transition: transform 0.2s;
   &:hover {
     transform: scale(1.1);
+    box-shadow: -20px -20px 0px 0px $point-light !important;
   }
 }
 
+.flex {
+  color: white;
+  display: flex;
+  margin: 3%;
+  margin-bottom: 10px;
+}
+
+.smalltitle {
+  font-size: 20px;
+}
 .megatitle {
-  margin-top: 5%;
-  text-align: center;
-  text-decoration: underline;
-  color: #ffffff;
-  font-family: "Raleway", sans-serif;
-  font-size: 50px;
-  font-weight: 800;
-  line-height: 72px;
-  margin: 0 0 24px;
-  text-align: center;
+  position: relative;
+  margin: auto;
+  right: 50px;
   text-transform: uppercase;
+}
+
+.line {
+  display: block;
+  border: none;
+  height: 5px;
+  background-color: white;
+  margin: 30px 40px;
+
+  -webkit-animation-name: line-show2;
+  -webkit-animation-duration: 2s;
+  animation-name: line-show2;
+  animation-duration: 2s;
 }
 
 @-webkit-keyframes line-show {
@@ -177,12 +171,30 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
   }
 }
 
+@-webkit-keyframes line-show2 {
+  from {
+    margin: 0px 600px;
+  }
+  to {
+    margin: 30px 40px;
+  }
+}
+
+@keyframes line-show2 {
+  from {
+    margin: 0px 600px;
+  }
+  to {
+    margin: 30px 40px;
+  }
+}
+
 @-webkit-keyframes p-show {
   from {
     color: white;
   }
   to {
-    color: $black;
+    color: $point;
   }
 }
 
@@ -191,7 +203,7 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
     color: white;
   }
   to {
-    color: $black;
+    color: $point;
   }
 }
 
@@ -214,5 +226,14 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
   to {
     -webkit-box-shadow: $card-shadow;
     box-shadow: $card-shadow;
+  }
+}
+
+@keyframes opaci {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

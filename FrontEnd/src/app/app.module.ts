@@ -45,6 +45,7 @@ import { ChartComponent } from './components/users/chart/chart.component';
 import { UsersDataComponent } from './components/manager/users/users-data/users-data.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
+
 @NgModule({
   declarations: [
     AppComponent,
