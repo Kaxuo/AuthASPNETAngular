@@ -15,7 +15,7 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
 
 .animation {
   animation-name: opaci;
-  animation-duration: 1.5s;
+  animation-duration: 1s;
 }
 .container {
   width: 100%;
@@ -50,9 +50,9 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
   box-shadow: $card-shadow;
   border-radius: $card_round;
   -webkit-animation-name: shadow-show;
-  -webkit-animation-duration: 2s;
+  -webkit-animation-duration: 1s;
   animation-name: shadow-show;
-  animation-duration: 2s;
+  animation-duration: 1s;
   -webkit-transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
   -o-transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
   transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
@@ -82,9 +82,9 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
     margin: 0px;
 
     -webkit-animation-name: line-show;
-    -webkit-animation-duration: 2s;
+    -webkit-animation-duration: 1s;
     animation-name: line-show;
-    animation-duration: 2s;
+    animation-duration: 1s;
     -webkit-transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
     -o-transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
     transition-timing-function: cubic-bezier(0.795, 0, 0.165, 1);
@@ -148,9 +148,9 @@ $card_head_padding: 0px 0px $card-padding-basis 0px;
   margin: 30px 40px;
 
   -webkit-animation-name: line-show2;
-  -webkit-animation-duration: 2s;
+  -webkit-animation-duration: 1s;
   animation-name: line-show2;
-  animation-duration: 2s;
+  animation-duration: 1s;
 }
 
 @-webkit-keyframes line-show {

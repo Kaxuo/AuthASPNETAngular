@@ -15,7 +15,8 @@ import { Router } from '@angular/router';
 export class SignInFormComponent implements OnInit {
   signInForm: FormGroup;
   message: string;
-  loading:boolean= false;
+  loading: boolean = false;
+  he: boolean = true;
 
   constructor(
     private auth: AuthService,
@@ -25,15 +26,18 @@ export class SignInFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.LocalStorageService.retrieve('token')) {
-      this.auth.isAdmin().pipe(
-        tap((isAdmin) => {
-          if (isAdmin) {
-            this.router.navigate(['projects']);
-          } else {
-            this.router.navigate(['tasks']);
-          }
-        })
-      ).subscribe();
+      this.auth
+        .isAdmin()
+        .pipe(
+          tap((isAdmin) => {
+            if (isAdmin) {
+              this.router.navigate(['projects']);
+            } else {
+              this.router.navigate(['tasks']);
+            }
+          })
+        )
+        .subscribe();
     }
     this.signInForm = new FormGroup({
       username: new FormControl('', [Validators.required]),

@@ -36,7 +36,6 @@ const routes: Routes = [
     component: UsersDataComponent,
     canActivate: [AdminPrivileges],
   },
-
   {
     path: 'chart/:id',
     component: ChartComponent,

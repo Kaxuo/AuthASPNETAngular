@@ -1,6 +1,6 @@
-<app-spinner *ngIf="loading != false"></app-spinner>
+<!-- <app-spinner *ngIf="loading != false"></app-spinner>
 
-<div>
+<div class="contain">
   <table class="table" *ngIf="project" mdbTable>
     <thead #target>
       <tr>
@@ -136,7 +136,7 @@
     No Tasks
   </button>
 </div>
-<div style="text-align: center">
+<div *ngIf="project" style="text-align: center">
   <button
     class="special"
     mdbBtn
@@ -148,4 +148,33 @@
   >
     Add Tasks
   </button>
+</div> -->
+
+<div class="columns">
+  <div class="column">
+    <div class="tasks pending">
+      <h3 class="title" style="flex-grow: 1; margin: 0">Pending Tasks</h3>
+      <button><mdb-icon fas icon="ellipsis-h"></mdb-icon></button>
+    </div>
+
+    <p class="items pendingItems" *ngFor="let el of PendingTasks">
+      {{ el.description }}
+    </p>
+  </div>
+  <div class="column">
+    <h3 class="title">Working Tasks</h3>
+    <p class="items" *ngFor="let el of WorkingTasks">{{ el.description }}</p>
+  </div>
+  <div class="column">
+    <h3 class="title">Reviewing Tasks</h3>
+    <p class="items" *ngFor="let el of ReviewingTasks">
+      {{ el.description }}
+    </p>
+  </div>
+  <div class="column">
+    <h3 class="title">Completed Tasks</h3>
+    <p class="items" *ngFor="let el of CompletedTasks">
+      {{ el.description }}
+    </p>
+  </div>
 </div>
