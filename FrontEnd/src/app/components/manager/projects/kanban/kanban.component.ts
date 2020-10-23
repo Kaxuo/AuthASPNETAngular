@@ -9,14 +9,18 @@ import { UserReceived } from 'src/app/Models/UsersReceived';
 import { Task } from 'src/app/Models/Tasks';
 
 @Component({
-  selector: 'app-project-details',
-  templateUrl: './project-details.component.html',
-  styleUrls: ['./project-details.component.scss'],
+  selector: 'app-kanban',
+  templateUrl: './kanban.component.html',
+  styleUrls: ['./kanban.component.scss'],
 })
-export class ProjectDetailsComponent implements OnInit {
+export class KanbanComponent implements OnInit {
   project: Project;
   loading: boolean;
   id: number;
+  PendingTasks: Task[] = [];
+  WorkingTasks: Task[] = [];
+  ReviewingTasks: Task[] = [];
+  CompletedTasks: Task[] = [];
 
   constructor(
     private projectService: ProjectService,
@@ -59,58 +63,23 @@ export class ProjectDetailsComponent implements OnInit {
       )
       .subscribe((singleProject: Project) => {
         this.project = singleProject;
+        this.PendingTasks = singleProject.tasks.filter((x) => x.status == 0);
+        this.WorkingTasks = singleProject.tasks.filter((x) => x.status == 1);
+        this.ReviewingTasks = singleProject.tasks.filter((x) => x.status == 2);
+        this.CompletedTasks = singleProject.tasks.filter((x) => x.status == 3);
+        console.log(this.CompletedTasks);
         this.loading = false;
       });
   }
 
-  deleteTask(element) {
+  deleteCompleted(element) {
     this.projectService
       .deleteTask(this.id, element.taskId)
       .subscribe(
         () =>
-          (this.project.tasks = this.project.tasks.filter(
+          (this.CompletedTasks = this.CompletedTasks.filter(
             (x) => x.taskId != element.taskId
           ))
       );
-  }
-
-  importanceFlag(element) {
-    element.importance = !element.importance;
-    this.projectService
-      .editTask(this.id, element.taskId, element)
-      .pipe(take(1))
-      .subscribe();
-  }
-
-  sortByUsers(table: Task[]) {
-    table.sort((a, b) => (a.userId != 0 && a.userId < b.userId ? -1 : 1));
-    this.project.tasks = [...table];
-  }
-
-  sortByImportance(table: Task[]) {
-    if (table[0].importance) {
-      table.sort((a) => (a.importance ? 1 : -1));
-    } else {
-      table.sort((a) => (a.importance ? -1 : 1));
-    }
-    this.project.tasks = [...table];
-  }
-
-  sortByAssigned(table: Task[]) {
-    if (table[0].userId == 0) {
-      table.sort((a) => (a.userId == 0 ? 1 : -1));
-    } else {
-      table.sort((a) => (a.userId != 0 ? 1 : -1));
-    }
-    this.project.tasks = [...table];
-  }
-
-  sortByCompleted(table: Task[]) {
-    if (table[0].status == 0) {
-      table.sort((a, b) => (a.status > b.status ? -1 : 1));
-    } else {
-      table.sort((a, b) => (a.status < b.status ? -1 : 1));
-    }
-    this.project.tasks = [...table];
   }
 }

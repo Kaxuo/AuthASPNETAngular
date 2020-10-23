@@ -44,6 +44,7 @@ import { TasksListComponent } from './components/users/projects/tasks-list/tasks
 import { ChartComponent } from './components/users/chart/chart.component';
 import { UsersDataComponent } from './components/manager/users/users-data/users-data.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { KanbanComponent } from './components/manager/projects/kanban/kanban.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     TasksListComponent,
     ChartComponent,
     UsersDataComponent,
+    KanbanComponent,
   ],
   imports: [
     BrowserModule,

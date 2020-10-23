@@ -1,6 +1,20 @@
 <app-spinner *ngIf="loading != false"></app-spinner>
-
+<h4 class="title">Users</h4>
 <div *ngIf="id" class="table-wrapper">
+  <div *ngIf="id && loading == false" style="text-align: center">
+    <button
+      class="special"
+      mdbBtn
+      type="button"
+      color="deep-purple"
+      rounded="true"
+      mdbWavesEffect
+      routerLink="charts"
+    >
+      Check Data
+    </button>
+  </div>
+
   <table class="fl-table">
     <thead>
       <tr>
@@ -42,17 +56,4 @@
 
     <tbody></tbody>
   </table>
-</div>
-<div *ngIf="id && loading == false" style="text-align: center">
-  <button
-    class="special"
-    mdbBtn
-    type="button"
-    color="deep-purple"
-    rounded="true"
-    mdbWavesEffect
-    routerLink="charts"
-  >
-    Check Data
-  </button>
 </div>

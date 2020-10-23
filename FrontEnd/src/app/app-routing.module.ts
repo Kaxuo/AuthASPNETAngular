@@ -25,6 +25,7 @@ import { ListComponent } from './components/users/projects/list/list.component';
 import { TasksListComponent } from './components/users/projects/tasks-list/tasks-list.component';
 import { ChartComponent } from './components/users/chart/chart.component';
 import { UsersDataComponent } from './components/manager/users/users-data/users-data.component';
+import { KanbanComponent } from './components/manager/projects/kanban/kanban.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -64,6 +65,11 @@ const routes: Routes = [
   {
     path: 'projects/:id',
     component: ProjectDetailsComponent,
+    canActivate: [AdminPrivileges],
+  },
+  {
+    path: 'projects/:id/kanban',
+    component: KanbanComponent,
     canActivate: [AdminPrivileges],
   },
   {
