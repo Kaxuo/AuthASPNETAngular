@@ -13,7 +13,6 @@ th {
   margin: 0;
 }
 
-
 @media only screen and (max-width: 1000px) {
   .id {
     display: none;
@@ -33,5 +32,150 @@ th {
     padding: 0;
     padding-top: 20px;
     padding-bottom: 20px;
+  }
+}
+
+.total {
+  min-height: 100vh;
+  display: flex;
+  @media only screen and (max-width: 1000px) {
+    height: 250vh;
+  }
+}
+
+.left {
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  animation-name: left;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-delay: 0.5s;
+}
+
+.right {
+  flex: 1;
+  background-color: black;
+  background-image: url(../../../../../assets/burst.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: show 2s;
+}
+
+.header > h2 {
+  margin: 0;
+  color: #4f46a5;
+  text-decoration: underline;
+}
+
+.title {
+  padding: 10px;
+  text-align: center;
+}
+
+.project {
+  margin-top: 30px;
+  position: relative;
+  animation: show 1s;
+  animation-fill-mode: both;
+  animation-delay: 1s;
+
+  .projectitle {
+    text-align: center;
+    padding: 10px;
+    color: white;
+    font-size: 20px;
+    background: #0f0f6d;
+    border-radius: 10px;
+    transition: all 0.5s;
+    position: relative;
+    cursor: pointer;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+
+    &:focus {
+      outline: none;
+    }
+
+    &:after {
+      content: "  >";
+      position: absolute;
+      right: 10px;
+      opacity: 0;
+      transition: all 0.5s;
+    }
+
+    &:hover {
+      padding-right: 30px;
+      @media only screen and (max-width: 1000px) {
+        padding-right: 10px;
+      }
+      &:after {
+        opacity: 1;
+        @media only screen and (max-width: 1000px) {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  .dropdown {
+    padding: 10px;
+    background-color: #92a8d1;
+    position: absolute;
+    left: 470px;
+    top: -0px;
+    width: 500px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, max-height 0.5s ease-out;
+    text-align: justify;
+    border-radius: 10px;
+    @media only screen and (max-width: 1000px) {
+      text-align: center;
+      width: 420px;
+      position: static;
+      max-height: 0;
+    }
+  }
+
+  &:hover {
+    .dropdown {
+      top: -0px;
+      opacity: 1;
+      @media only screen and (max-width: 1000px) {
+        max-height: 1000px;
+      }
+    }
+  }
+}
+
+@keyframes left {
+  0% {
+    opacity: 0;
+    width: 0;
+  }
+
+  100% {
+    opacity: 1;
+    padding: 20px 40px;
+    width: 500px;
+    opacity: 1;
+  }
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0px);
   }
 }

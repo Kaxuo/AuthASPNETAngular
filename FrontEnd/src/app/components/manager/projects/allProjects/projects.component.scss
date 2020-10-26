@@ -13,6 +13,14 @@ $card-shadow: -20px -20px 0px 0px $point-light;
 $card-padding-basis: 15px;
 $card_head_padding: 0px 0px $card-padding-basis 0px;
 
+.mega {
+  background-image: url(../../../../../assets/backgroundblack.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-top: 10px;
+}
+
 .animation {
   animation-name: opaci;
   animation-duration: 1s;

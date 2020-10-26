@@ -1,3 +1,11 @@
+.background {
+  background-image: url(../../../../../assets/nova.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 150vh;
+}
+
 .navigation {
   padding: 20px 10px;
   color: white;
@@ -16,6 +24,14 @@
     overflow: hidden;
     animation: show 0.5s;
     animation-timing-function: ease-in;
+    margin-right: 5%;
+    margin-left: 5%;
+
+    @media only screen and (max-width: 525px) {
+      height: 70px;
+      width: 200px;
+      margin: 10px;
+    }
     span {
       transition: 0.5s ease;
     }
@@ -64,6 +80,47 @@
   }
 }
 
+.add {
+  &:after {
+    content: "Task" !important;
+    position: absolute;
+    // bottom: 10px;
+    bottom: 100px;
+    right: 55px !important;
+    transition: all 0.5s;
+    opacity: 0;
+  }
+
+  &:hover:before {
+    left: 110%;
+  }
+
+  &:hover:after {
+    bottom: 10px;
+    opacity: 1;
+  }
+}
+
+.back {
+  &:after {
+    content: "Projects" !important;
+    position: absolute;
+    // bottom: 10px;
+    bottom: 100px;
+    right: 40px !important;
+    transition: all 0.5s;
+    opacity: 0;
+  }
+
+  &:hover:before {
+    left: 110%;
+  }
+
+  &:hover:after {
+    bottom: 10px;
+    opacity: 1;
+  }
+}
 button {
   background-color: inherit;
   border: none;
@@ -138,7 +195,6 @@ button {
   padding: 15px 10px;
   border-radius: 10px;
   transition: transform 1s ease;
-  animation: enlarge 3s ease;
   &:hover {
     transform: scale(1.1);
   }
@@ -162,7 +218,9 @@ button {
 .completedItems {
   border-left: 10px solid #ffbb33;
   border-right: 10px solid #ffbb33;
-  opacity: 0.7;
+  animation: enlarge 1s;
+  animation-fill-mode: both;
+  animation-delay: 2;
   cursor: pointer;
 }
 
@@ -186,9 +244,9 @@ button {
 
 @keyframes enlarge {
   from {
-    max-height: 0px;
+    opacity: 0;
   }
   to {
-    max-height: 340px;
+    opacity: 0.7;
   }
 }

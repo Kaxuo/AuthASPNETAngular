@@ -1,170 +1,171 @@
 <app-spinner *ngIf="loading != false"></app-spinner>
+<div class="mega">
+  <ng-container *ngIf="projects">
+    <div *ngIf="projects.length == 0 && loading == false" class="form">
+      <mdb-card>
+        <mdb-card-header class="info-color white-text text-center py-4">
+          <h5>
+            <strong>No Project !</strong>
+          </h5>
+        </mdb-card-header>
 
-<ng-container *ngIf="projects">
-  <div *ngIf="projects.length == 0 && loading == false" class="form">
-    <mdb-card>
-      <mdb-card-header class="info-color white-text text-center py-4">
-        <h5>
-          <strong>No Project !</strong>
-        </h5>
-      </mdb-card-header>
+        <mdb-card-body class="px-lg-5 pt-0 errorBody">
+          <h3 style="padding: 20px">Nothing to do ! (for now)</h3>
+          <h4 style="padding: 20px">
+            There's no projects at the moment. You can add one if you want
+          </h4>
+          <img class="errorimg" src="../../../assets/thumbup.png" />
+          <button
+            style="margin-top: 30px"
+            class="add"
+            type="button"
+            mdbBtn
+            mdbWavesEffect
+            color="primary"
+            routerLink="add"
+          >
+            <a class="nav-link waves-light" style="color: white" mdbWavesEffect
+              >Add project<span class="sr-only">(current)</span></a
+            >
+          </button>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </ng-container>
 
-      <mdb-card-body class="px-lg-5 pt-0 errorBody">
-        <h3 style="padding: 20px">Nothing to do ! (for now)</h3>
-        <h4 style="padding: 20px">
-          There's no projects at the moment. You can add one if you want
-        </h4>
-        <img class="errorimg" src="../../../assets/thumbup.png" />
+  <ng-container *ngIf="projects && loading == false">
+    <div class="flex animation">
+      <h3 class="smalltitle">{{ projects.length }} Projects</h3>
+      <h2 class="megatitle">Projects</h2>
+    </div>
+    <hr class="line" />
+    <div class="container center animation">
+      <div *ngFor="let el of projects" class="card">
+        <h2>{{ el.title }}</h2>
+        <hr />
+        <h4>Tasks: {{ el.tasks.length }}</h4>
+        <hr />
+        <p>
+          {{ el.description }}
+        </p>
         <button
-          style="margin-top: 30px"
-          class="add"
+          style="margin-top: 5%"
           type="button"
           mdbBtn
-          mdbWavesEffect
           color="primary"
-          routerLink="add"
+          mdbWavesEffect
+          [routerLink]="[el.id]"
         >
-          <a class="nav-link waves-light" style="color: white" mdbWavesEffect
-            >Add project<span class="sr-only">(current)</span></a
-          >
+          Check
         </button>
-      </mdb-card-body>
-    </mdb-card>
-  </div>
-</ng-container>
-
-<ng-container *ngIf="projects && loading == false">
-  <div class="flex animation">
-    <h3 class="smalltitle">{{ projects.length }} Projects</h3>
-    <h2 class="megatitle">Projects</h2>
-  </div>
-  <hr class="line" />
-  <div class="container center animation">
-    <div *ngFor="let el of projects" class="card">
-      <h2>{{ el.title }}</h2>
-      <hr />
-      <h4>Tasks: {{ el.tasks.length }}</h4>
-      <hr />
-      <p>
-        {{ el.description }}
-      </p>
-      <button
-        style="margin-top: 5%"
-        type="button"
-        mdbBtn
-        color="primary"
-        mdbWavesEffect
-        [routerLink]="[el.id]"
-      >
-        Check
-      </button>
-      <button
-        [routerLink]="[el.id, 'edit']"
-        type="button"
-        mdbBtn
-        color="secondary"
-        mdbWavesEffect
-      >
-        Edit Task
-      </button>
-      <button
-        (click)="basicModal.show()"
-        type="button"
-        mdbBtn
-        color="danger"
-        mdbWavesEffect
-      >
-        Remove
-      </button>
-      <div
-        mdbModal
-        #basicModal="mdbModal"
-        class="modal fade"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="myBasicModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button
-                type="button"
-                class="close pull-right"
-                aria-label="Close"
-                (click)="basicModal.hide()"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-              <h4
-                style="color: black"
-                class="modal-title w-100"
-                id="myModalLabel"
-              >
-                Are you sure ?
-              </h4>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                mdbBtn
-                color="secondary"
-                class="secret waves-light"
-                aria-label="Close"
-                (click)="basicModal.hide()"
-                mdbWavesEffect
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                mdbBtn
-                color="primary"
-                class="relative secret waves-light"
-                mdbWavesEffect
-                (click)="deleteProject(el)"
-              >
-                Yes
-              </button>
+        <button
+          [routerLink]="[el.id, 'edit']"
+          type="button"
+          mdbBtn
+          color="secondary"
+          mdbWavesEffect
+        >
+          Edit Task
+        </button>
+        <button
+          (click)="basicModal.show()"
+          type="button"
+          mdbBtn
+          color="danger"
+          mdbWavesEffect
+        >
+          Remove
+        </button>
+        <div
+          mdbModal
+          #basicModal="mdbModal"
+          class="modal fade"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myBasicModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close pull-right"
+                  aria-label="Close"
+                  (click)="basicModal.hide()"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4
+                  style="color: black"
+                  class="modal-title w-100"
+                  id="myModalLabel"
+                >
+                  Are you sure ?
+                </h4>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  mdbBtn
+                  color="secondary"
+                  class="secret waves-light"
+                  aria-label="Close"
+                  (click)="basicModal.hide()"
+                  mdbWavesEffect
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  mdbBtn
+                  color="primary"
+                  class="relative secret waves-light"
+                  mdbWavesEffect
+                  (click)="deleteProject(el)"
+                >
+                  Yes
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div routerLink="add" class="card special">
+        <h2>New Project</h2>
+        <hr />
+        <h4>No Tasks</h4>
+        <hr />
+        <p>Click to add new project</p>
+        <button
+          style="margin-top: 5%"
+          type="button"
+          mdbBtn
+          color="primary"
+          mdbWavesEffect
+          disabled="true"
+        >
+          Check
+        </button>
+        <button
+          disabled="true"
+          type="button"
+          mdbBtn
+          color="secondary"
+          mdbWavesEffect
+        >
+          Add Task
+        </button>
+        <button
+          disabled="true"
+          type="button"
+          mdbBtn
+          color="danger"
+          mdbWavesEffect
+        >
+          Delete
+        </button>
+      </div>
     </div>
-    <div routerLink="add" class="card special">
-      <h2>New Project</h2>
-      <hr />
-      <h4>No Tasks</h4>
-      <hr />
-      <p>Click to add new project</p>
-      <button
-        style="margin-top: 5%"
-        type="button"
-        mdbBtn
-        color="primary"
-        mdbWavesEffect
-        disabled="true"
-      >
-        Check
-      </button>
-      <button
-        disabled="true"
-        type="button"
-        mdbBtn
-        color="secondary"
-        mdbWavesEffect
-      >
-        Add Task
-      </button>
-      <button
-        disabled="true"
-        type="button"
-        mdbBtn
-        color="danger"
-        mdbWavesEffect
-      >
-        Delete
-      </button>
-    </div>
-  </div>
-</ng-container>
+  </ng-container>
+</div>
