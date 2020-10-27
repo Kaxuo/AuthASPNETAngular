@@ -170,7 +170,7 @@
     </ng-container>
   </ng-container>
   <div *ngIf="!project && loading == false" style="text-align: center">
-    <div class="form">
+    <div class="form" *ngIf="!project.tasks.length == 0">
       <mdb-card>
         <mdb-card-header class="info-color white-text text-center py-4">
           <h5>

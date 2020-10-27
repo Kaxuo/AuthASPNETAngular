@@ -67,7 +67,6 @@ export class KanbanComponent implements OnInit {
         this.WorkingTasks = singleProject.tasks.filter((x) => x.status == 1);
         this.ReviewingTasks = singleProject.tasks.filter((x) => x.status == 2);
         this.CompletedTasks = singleProject.tasks.filter((x) => x.status == 3);
-        console.log(this.CompletedTasks);
         this.loading = false;
       });
   }

@@ -30,30 +30,32 @@
   </div>
 </ng-container>
 
-<div class="total" *ngIf="projects && loading == false">
-  <div class="left">
-    <div class="header">
-      <h2 class="title">Projects</h2>
-      <div class="project" *ngFor="let el of projects; let index = index">
-        <p class="projectitle" [routerLink]="[el.id]">{{ el.title }}</p>
-        <div class="dropdown">
-          <p>{{ el.description }}</p>
-          <p>Tasks: {{ el.tasks.length }}</p>
-          <p>Completed : {{ this.completedTasks[index].length }}</p>
-          <p>Not assigned :{{ this.notAssignedTasks[index].length }}</p>
+<ng-container *ngIf="projects && loading == false">
+  <div class="total" *ngIf="projects.length > 0">
+    <div class="left">
+      <div class="header">
+        <h2 class="title">Projects</h2>
+        <div class="project" *ngFor="let el of projects; let index = index">
+          <p class="projectitle" [routerLink]="[el.id]">{{ el.title }}</p>
+          <div class="dropdown">
+            <p>{{ el.description }}</p>
+            <p>Tasks: {{ el.tasks.length }}</p>
+            <p>Completed : {{ this.completedTasks[index].length }}</p>
+            <p>Not assigned :{{ this.notAssignedTasks[index].length }}</p>
+          </div>
         </div>
       </div>
+      <ion-button style="margin-top: 40%" fill="outline" expand="block">
+        <lottie-player
+          slot="end"
+          autoplay
+          loop
+          src="../../../../../assets/manwithphone.json"
+        >
+        </lottie-player>
+      </ion-button>
     </div>
-    <ion-button style="margin-top: 40%" fill="outline" expand="block">
-      <lottie-player
-        slot="end"
-        autoplay
-        loop
-        src="../../../../../assets/manwithphone.json"
-      >
-      </lottie-player>
-    </ion-button>
-  </div>
 
-  <div class="right"></div>
-</div>
+    <div class="right"></div>
+  </div>
+</ng-container>

@@ -18,6 +18,10 @@ export class TasksListComponent implements OnInit {
   loading: boolean;
   id: number;
   object = this.auth.decryptedAndDecodedToken();
+  PendingTasks: Task[] = [];
+  WorkingTasks: Task[] = [];
+  ReviewingTasks: Task[] = [];
+  CompletedTasks: Task[] = [];
 
   constructor(
     private projectService: ProjectService,
@@ -60,6 +64,10 @@ export class TasksListComponent implements OnInit {
       )
       .subscribe((singleProject: Project) => {
         this.project = singleProject;
+        this.PendingTasks = singleProject.tasks.filter((x) => x.status == 0);
+        this.WorkingTasks = singleProject.tasks.filter((x) => x.status == 1);
+        this.ReviewingTasks = singleProject.tasks.filter((x) => x.status == 2);
+        this.CompletedTasks = singleProject.tasks.filter((x) => x.status == 3);
         this.loading = false;
       });
   }

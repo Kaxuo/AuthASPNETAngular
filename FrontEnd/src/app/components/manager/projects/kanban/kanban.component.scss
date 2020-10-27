@@ -1,11 +1,3 @@
-.background {
-  background-image: url(../../../../../assets/nova.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  min-height: 150vh;
-}
-
 .navigation {
   padding: 20px 10px;
   color: white;
@@ -135,7 +127,7 @@ button {
   display: flex;
   margin: 1%;
   justify-content: space-around;
-  animation: show 1s ease-in;
+  animation: showColumns 1s ease-in;
 
   .column {
     position: relative;
@@ -233,7 +225,7 @@ button {
   font-weight: bold;
 }
 
-@keyframes show {
+@keyframes showColumns {
   from {
     opacity: 0;
   }

@@ -47,9 +47,20 @@
               <span [ngClass]="{ important: el.importance }">{{
                 el.description
               }}</span>
-
-              <span [ngClass]="{ user: el.user }" class="small"
-                >User : {{ el.user || "None" }}</span
+              <span style="display: flex">
+                <span
+                  [ngClass]="{ user: el.user }"
+                  class="small"
+                  style="font-weight: bold; cursor: pointer"
+                  [routerLink]="['../tasks/', el.taskId]"
+                  >Assign <mdb-icon fas icon="caret-square-right"></mdb-icon
+                ></span>
+                <span
+                  [ngClass]="{ user: el.user }"
+                  style="flex-grow: 1"
+                  class="small"
+                  >User : {{ el.user || "None" }}</span
+                ></span
               >
             </p>
           </div>
@@ -64,8 +75,20 @@
               <span [ngClass]="{ important: el.importance }">{{
                 el.description
               }}</span>
-              <span [ngClass]="{ user: el.user }" class="small"
-                >User : {{ el.user || "None" }}</span
+              <span style="display: flex">
+                <span
+                  [ngClass]="{ user: el.user }"
+                  class="small"
+                  style="font-weight: bold; cursor: pointer"
+                  [routerLink]="['../tasks/', el.taskId]"
+                  >Assign <mdb-icon fas icon="caret-square-right"></mdb-icon
+                ></span>
+                <span
+                  [ngClass]="{ user: el.user }"
+                  style="flex-grow: 1"
+                  class="small"
+                  >User : {{ el.user || "None" }}</span
+                ></span
               >
             </p>
           </div>
@@ -77,11 +100,24 @@
               <button><mdb-icon fas icon="search"></mdb-icon></button>
             </div>
             <p class="items reviewingItems" *ngFor="let el of ReviewingTasks">
-              <span [ngClass]="{ important: el.importance }">
-                {{ el.description }}</span
-              >
-              <span [ngClass]="{ user: el.user }" class="small"
-                >User : {{ el.user || "None" }}</span
+              <span [ngClass]="{ important: el.importance }">{{
+                el.description
+              }}</span>
+              <span style="display: flex">
+                <button
+                  [ngClass]="{ user: el.user }"
+                  class="small"
+                  style="font-weight: bold"
+                  [routerLink]="['../tasks/', el.taskId]"
+                >
+                  Assign <mdb-icon fas icon="caret-square-right"></mdb-icon>
+                </button>
+                <span
+                  [ngClass]="{ user: el.user }"
+                  style="flex-grow: 1"
+                  class="small"
+                  >User : {{ el.user || "None" }}</span
+                ></span
               >
             </p>
           </div>
