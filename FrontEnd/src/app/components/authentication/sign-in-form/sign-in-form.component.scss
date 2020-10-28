@@ -14,7 +14,7 @@
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
-  animation-name: left;
+  animation-name: left2;
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-delay: 0.5s;
@@ -28,7 +28,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  animation: show 2s;
+  animation: show2 2s;
 }
 
 .header > h2 {
@@ -82,7 +82,7 @@
 }
 
 .animation {
-  animation-name: move;
+  animation-name: move2;
   animation-duration: 0.4s;
   animation-fill-mode: both;
   animation-delay: 1s;
@@ -112,7 +112,7 @@
   animation-delay: 1.6s;
 }
 
-@keyframes move {
+@keyframes move2 {
   0% {
     opacity: 0;
     visibility: hidden;
@@ -126,7 +126,7 @@
   }
 }
 
-@keyframes left {
+@keyframes left2 {
   0% {
     opacity: 0;
     width: 0;
@@ -139,7 +139,7 @@
   }
 }
 
-@keyframes show {
+@keyframes show2 {
   0% {
     opacity: 0;
   }

@@ -1,7 +1,5 @@
-<!-- Material form login -->
 <app-spinner *ngIf="loading != false || !registerForm"></app-spinner>
-<div class="form">
-  <!-- Material form register -->
+<!-- <div class="form">
   <mdb-card class="form2">
     <mdb-card-header class="info-color white-text text-center py-4">
       <h5>
@@ -9,9 +7,7 @@
       </h5>
     </mdb-card-header>
 
-    <!--Card content-->
     <mdb-card-body class="px-lg-5 pt-0">
-      <!-- Form -->
       <form
         [formGroup]="registerForm"
         (ngSubmit)="sendData(registerForm.value)"
@@ -21,7 +17,6 @@
       >
         <div class="form-row">
           <div class="col">
-            <!-- First name -->
             <div class="md-form">
               <input
                 type="text"
@@ -41,7 +36,6 @@
             </div>
           </div>
           <div class="col">
-            <!-- Last name -->
             <div class="md-form">
               <input
                 type="email"
@@ -62,7 +56,6 @@
           </div>
         </div>
 
-        <!-- Name -->
         <div class="md-form mt-3">
           <input
             type="text"
@@ -81,7 +74,6 @@
           >
         </div>
 
-        <!-- Phone number -->
         <div class="md-form">
           <input
             type="number"
@@ -101,7 +93,6 @@
           >
         </div>
 
-        <!-- City -->
         <div class="md-form mt-3">
           <input
             type="text"
@@ -120,7 +111,6 @@
           >
         </div>
 
-        <!-- Country -->
         <div class="md-form mt-3">
           <input
             type="text"
@@ -139,7 +129,6 @@
           >
         </div>
 
-        <!-- Name -->
         <div class="md-form mt-3">
           <input
             type="text"
@@ -158,7 +147,6 @@
           >
         </div>
         <em *ngIf="message">{{ message }}</em>
-        <!-- Sign up button -->
         <button
           [disabled]="registerForm.invalid"
           mdbBtn
@@ -175,9 +163,47 @@
 
         <hr />
       </form>
-      <!-- Form -->
     </mdb-card-body>
   </mdb-card>
-  <!-- Material form register -->
+</div> -->
+
+<div class="box">
+  <div class="form">
+    <h3 style="text-align: center; margin-top: 5vh">Update Profile</h3>
+    <div class="inputs">
+      <div class="singleInput">
+        <input />
+        <label>User</label>
+      </div>
+      <div class="singleInput">
+        <input />
+        <label>User</label>
+      </div>
+      <div class="singleInput">
+        <input />
+        <label>User</label>
+      </div>
+      <div class="singleInput">
+        <input />
+        <label>User</label>
+      </div>
+      <div class="singleInput">
+        <input />
+        <label>User</label>
+      </div>
+      <div class="singleInput">
+        <input />
+        <label>User</label>
+      </div>
+      <div class="singleInput">
+        <input />
+        <label>User</label>
+      </div>
+    </div>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <button>Submit</button>
+  </div>
 </div>
-<!-- Material form login -->

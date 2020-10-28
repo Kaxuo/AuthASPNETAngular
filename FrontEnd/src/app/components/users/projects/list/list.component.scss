@@ -7,7 +7,7 @@
 }
 
 .left {
-  background-color: white;
+  background-color: #1e2325;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -30,7 +30,7 @@
 
 .header > h2 {
   margin: 0;
-  color: #4f46a5;
+  color: white;
   text-decoration: underline;
 }
 
@@ -99,6 +99,7 @@
     transition: opacity 0.5s ease-in-out, max-height 0.5s ease-out;
     text-align: justify;
     border-radius: 10px;
+
     @media only screen and (max-width: 1000px) {
       text-align: center;
       width: 420px;

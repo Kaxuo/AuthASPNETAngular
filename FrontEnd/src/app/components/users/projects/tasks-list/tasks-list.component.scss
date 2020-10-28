@@ -14,6 +14,7 @@ button {
     .left {
       flex-grow: 1;
     }
+
     h3 {
       display: inline-block;
       margin: 20px;
@@ -22,6 +23,7 @@ button {
       animation: slide 1s;
       animation-fill-mode: both;
     }
+
     .list {
       display: flex;
       justify-content: space-between;
@@ -35,9 +37,11 @@ button {
         max-width: 80vw;
       }
     }
+
     .desc {
       width: 250px;
     }
+
     .username {
       flex-grow: 1;
       width: 50px;
@@ -46,6 +50,7 @@ button {
         display: none;
       }
     }
+
     .last {
       text-align: center;
       min-width: 50px;
@@ -79,6 +84,7 @@ button {
   background-color: #8da5b1;
   border: 2px outset #8da5b1;
 }
+
 .pending {
   border-left: 10px outset #8da5b1;
   animation: slide 1.5s;
@@ -89,6 +95,7 @@ button {
   background-color: #00a8ff;
   border: 2px outset #00a8ff;
 }
+
 .working {
   border-left: 10px outset #00a8ff;
   animation: slide 1.5s;
@@ -100,6 +107,7 @@ button {
   background-color: #65d300;
   border: 2px outset #65d300;
 }
+
 .review {
   border-left: 10px outset #65d300;
   animation: slide 1.5s;
@@ -111,6 +119,7 @@ button {
   background-color: #ffbb33;
   border: 2px outset #ffbb33;
 }
+
 .complete {
   border-left: 10px outset #ffbb33;
   animation: slide 1.5s;
