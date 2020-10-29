@@ -1,61 +1,50 @@
 <app-spinner *ngIf="loading != false || !registerForm"></app-spinner>
-<!-- <div class="form">
-  <mdb-card class="form2">
-    <mdb-card-header class="info-color white-text text-center py-4">
-      <h5>
-        <strong>Update</strong>
-      </h5>
-    </mdb-card-header>
 
-    <mdb-card-body class="px-lg-5 pt-0">
-      <form
-        [formGroup]="registerForm"
-        (ngSubmit)="sendData(registerForm.value)"
-        class="text-center"
-        style="color: #757575"
-        *ngIf="registerForm"
-      >
-        <div class="form-row">
-          <div class="col">
-            <div class="md-form">
-              <input
-                type="text"
-                id="materialRegisterFormFirstName"
-                class="form-control"
-                mdbInput
-                formControlName="firstName"
-              />
-              <label for="materialRegisterFormFirstName">First name</label>
-              <em
-                *ngIf="
-                  registerForm.get('firstName').hasError('required') &&
-                  registerForm.get('firstName').touched
-                "
-                >Required</em
-              >
-            </div>
-          </div>
-          <div class="col">
-            <div class="md-form">
-              <input
-                type="email"
-                id="materialRegisterFormLastName"
-                class="form-control"
-                mdbInput
-                formControlName="lastName"
-              />
-              <label for="materialRegisterFormLastName">Last name</label>
-              <em
-                *ngIf="
-                  registerForm.get('lastName').hasError('required') &&
-                  registerForm.get('lastName').touched
-                "
-                >Required</em
-              >
-            </div>
-          </div>
+<div *ngIf="registerForm" class="box">
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="sendData(registerForm.value)"
+    class="text-center"
+    style="color: #757575"
+    class="form"
+  >
+    <h3 style="text-align: center; margin-top: 5vh; color: white">Profile</h3>
+    <div class="inputs">
+      <div class="col">
+        <div class="md-form">
+          <input
+            type="text"
+            id="materialRegisterFormFirstName"
+            class="form-control"
+            mdbInput
+            formControlName="firstName"
+          />
+          <label for="materialRegisterFormFirstName">First name</label>
+          <em
+            *ngIf="
+              registerForm.get('firstName').hasError('required') &&
+              registerForm.get('firstName').touched
+            "
+            >Required</em
+          >
         </div>
-
+        <div class="md-form">
+          <input
+            type="email"
+            id="materialRegisterFormLastName"
+            class="form-control"
+            mdbInput
+            formControlName="lastName"
+          />
+          <label for="materialRegisterFormLastName">Last name</label>
+          <em
+            *ngIf="
+              registerForm.get('lastName').hasError('required') &&
+              registerForm.get('lastName').touched
+            "
+            >Required</em
+          >
+        </div>
         <div class="md-form mt-3">
           <input
             type="text"
@@ -147,63 +136,19 @@
           >
         </div>
         <em *ngIf="message">{{ message }}</em>
-        <button
-          [disabled]="registerForm.invalid"
-          mdbBtn
-          color="info"
-          outline="true"
-          rounded="true"
-          block="true"
-          class="my-4 waves-effect z-depth-0"
-          mdbWavesEffect
-          type="submit"
-        >
-          Update
-        </button>
-
-        <hr />
-      </form>
-    </mdb-card-body>
-  </mdb-card>
-</div> -->
-
-<div class="box">
-  <div class="form">
-    <h3 style="text-align: center; margin-top: 5vh">Update Profile</h3>
-    <div class="inputs">
-      <div class="singleInput">
-        <input />
-        <label>User</label>
-      </div>
-      <div class="singleInput">
-        <input />
-        <label>User</label>
-      </div>
-      <div class="singleInput">
-        <input />
-        <label>User</label>
-      </div>
-      <div class="singleInput">
-        <input />
-        <label>User</label>
-      </div>
-      <div class="singleInput">
-        <input />
-        <label>User</label>
-      </div>
-      <div class="singleInput">
-        <input />
-        <label>User</label>
-      </div>
-      <div class="singleInput">
-        <input />
-        <label>User</label>
       </div>
     </div>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <button>Submit</button>
-  </div>
+    <button
+      [ngClass]="{ invalid: registerForm.invalid }"
+      [disabled]="registerForm.invalid"
+      type="submit"
+      class="animated"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Update
+    </button>
+  </form>
 </div>

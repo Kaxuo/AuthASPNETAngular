@@ -56,7 +56,6 @@ export class ProfilePageComponent implements OnInit {
         this.CompletedTasks = this.form.value.tasks.filter(
           (x) => x.status == 3
         );
-        console.log(this.PendingTasks);
       });
   }
 
