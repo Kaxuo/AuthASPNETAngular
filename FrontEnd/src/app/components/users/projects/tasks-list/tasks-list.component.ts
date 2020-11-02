@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserReceived } from 'src/app/Models/UsersReceived';
 import { Task } from 'src/app/Models/Tasks';
+import { defineCustomElements } from '@teamhive/lottie-player/loader';
 
 @Component({
   selector: 'app-tasks-list',
@@ -31,6 +32,7 @@ export class TasksListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    defineCustomElements(window);
     this.id = this.route.snapshot.params.id;
     this.projectService
       .getOneProject(this.id)
@@ -141,5 +143,9 @@ export class TasksListComponent implements OnInit {
 
   scroll(el: HTMLElement) {
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  goHome() {
+    this.router.navigate(['assignTasks']);
   }
 }

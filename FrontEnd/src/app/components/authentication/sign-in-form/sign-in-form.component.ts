@@ -33,7 +33,7 @@ export class SignInFormComponent implements OnInit {
             if (isAdmin) {
               this.router.navigate(['projects']);
             } else {
-              this.router.navigate(['tasks']);
+              this.router.navigate(['assignTasks']);
             }
           })
         )

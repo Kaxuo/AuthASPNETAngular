@@ -113,4 +113,8 @@ export class ProjectDetailsComponent implements OnInit {
     }
     this.project.tasks = [...table];
   }
+
+  goHome() {
+    this.router.navigate(['assignTasks']);
+  }
 }

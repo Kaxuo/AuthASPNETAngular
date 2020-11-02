@@ -1,18 +1,13 @@
-<div class="form">
-    <mdb-card>
-      <mdb-card-header class="info-color white-text text-center py-4">
-        <h5>
-          <strong>Task Not found</strong>
-        </h5>
-      </mdb-card-header>
-  
-      <mdb-card-body  class="px-lg-5 pt-0 errorBody">
-        <h3 style="padding: 20px">No task, No edit, No hope</h3>
-        <img class="errorimg" src="../../../../assets/depression.jpeg" />
-        <button style="margin-top: 30px;"(click)="goBack()" type="button" mdbBtn mdbWavesEffect color="primary">
-          Go Back
-        </button>
-      </mdb-card-body>
-    </mdb-card>
+<body>
+  <div class="noise"></div>
+  <div class="overlay"></div>
+  <div class="terminal">
+    <h1>Error <span class="errorcode">404</span></h1>
+    <p class="output">Where the hell are you trying to go ?</p>
+    <p class="output">
+      Please try to <span (click)="goBack()">go back</span> or
+      <span (click)="goHome()">return to the homepage</span>.
+    </p>
+    <p class="output">Good luck.</p>
   </div>
-  
+</body>

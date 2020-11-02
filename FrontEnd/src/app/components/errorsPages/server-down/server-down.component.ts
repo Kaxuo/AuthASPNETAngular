@@ -13,4 +13,8 @@ export class ServerDownComponent implements OnInit {
   goBack() {
     this.router.navigate(['signin']);
   }
+
+  goHome() {
+    this.router.navigate(['assignTasks']);
+  }
 }

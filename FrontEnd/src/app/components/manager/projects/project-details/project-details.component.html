@@ -196,3 +196,21 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="project" class="nothing">
+  <section *ngIf="project.tasks.length == 0" style="text-align: center">
+    <div class="face">
+      <div class="band">
+        <div class="red"></div>
+        <div class="white"></div>
+        <div class="blue"></div>
+      </div>
+      <div class="eyes"></div>
+      <div class="dimples"></div>
+      <div class="mouth"></div>
+    </div>
+
+    <h1>Oops! No tasks(yet) for this project ! Want to add one ?</h1>
+    <div routerLink="add" class="buttonwa">Add Task</div>
+  </section>
+</div>

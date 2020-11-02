@@ -169,7 +169,15 @@ button {
   }
 }
 
-.anim {
+.anim10 {
   height: 50vh;
   transform: scale(0.8);
+
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
 }

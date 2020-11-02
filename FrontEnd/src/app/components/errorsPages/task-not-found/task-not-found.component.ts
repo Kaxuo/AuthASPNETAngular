@@ -13,4 +13,8 @@ export class TaskNotFoundComponent implements OnInit {
   goBack() {
     this.router.navigate(['..'], { relativeTo: this.route });
   }
+  
+  goHome() {
+    this.router.navigate(['assignTasks']);
+  }
 }

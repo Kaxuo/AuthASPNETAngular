@@ -11,8 +11,29 @@
       >Management</a
     ></mdb-navbar-brand
   >
+
   <!-- Collapsible content -->
   <links>
+    <div class="list" *ngIf="authenticated | async">
+      <input
+        #input
+        placeholder="Where to ?"
+        (keyup)="searchValue(input.value)"
+      />
+      <ul *ngIf="toSearch.length > 0">
+        <li *ngIf="isAdminObs | async">
+          {{ toSearch[0] }}
+        </li>
+        <ng-container *ngIf="toSearch[1]">
+          <li *ngIf="isAdminObs | async">{{ toSearch[1] }}</li>
+        </ng-container>
+
+        <li *ngIf="toSearch[2]">{{ toSearch[2] }}</li>
+        <li *ngIf="toSearch[3]">{{ toSearch[3] }}</li>
+        <li *ngIf="toSearch[4]">{{ toSearch[4] }}</li>
+        <li *ngIf="toSearch[5]">{{ toSearch[5] }}</li>
+      </ul>
+    </div>
     <!-- Links -->
     <ul class="navbar-nav ml-auto">
       <li

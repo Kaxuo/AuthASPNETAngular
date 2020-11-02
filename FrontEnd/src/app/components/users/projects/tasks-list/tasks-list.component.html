@@ -108,17 +108,20 @@
   </div>
 </div>
 
-<div *ngIf="project" style="text-align: center">
-  <button
-    *ngIf="project.tasks.length == 0"
-    style="cursor: default"
-    class="special"
-    mdbBtn
-    type="button"
-    gradient="peach"
-    rounded="true"
-    mdbWavesEffect
-  >
-    No Tasks
-  </button>
+<div *ngIf="project" class="nothing">
+  <section *ngIf="project.tasks.length == 0" style="text-align: center">
+    <div class="face">
+      <div class="band">
+        <div class="red"></div>
+        <div class="white"></div>
+        <div class="blue"></div>
+      </div>
+      <div class="eyes"></div>
+      <div class="dimples"></div>
+      <div class="mouth"></div>
+    </div>
+
+    <h1>Oops! No tasks(yet) for this project ! Wait a little bit</h1>
+    <div (click)="goHome()" class="buttonwa">Return to Home</div>
+  </section>
 </div>

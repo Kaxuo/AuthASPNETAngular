@@ -1,17 +1,14 @@
-<div class="form">
-  <mdb-card>
-    <mdb-card-header class="info-color white-text text-center py-4">
-      <h5>
-        <strong>Add Task</strong>
-      </h5>
-    </mdb-card-header>
-    <mdb-card-body class="px-lg-5 pt-0">
-      <form
-        [formGroup]="AddTask"
-        (ngSubmit)="sendTask(AddTask.value)"
-        class="text-center"
-        style="color: #757575"
-      >
+
+<div class="box">
+  <form
+    [formGroup]="AddTask"
+    (ngSubmit)="sendTask(AddTask.value)"
+    style="color: #757575"
+    class="form"
+  >
+    <h3 style="text-align: center; margin-top: 5vh; color: white">Add Task</h3>
+    <div class="inputs">
+      <div class="col">
         <div class="md-form">
           <input
             type="email"
@@ -41,23 +38,19 @@
             <mdb-checkbox formControlName="importance">Important</mdb-checkbox>
           </div>
         </div>
-
-        <button
-          mdbBtn
-          color="info"
-          outline="true"
-          rounded="true"
-          block="true"
-          class="my-4 waves-effect z-depth-0"
-          mdbWavesEffect
-          type="submit"
-          [disabled]="AddTask.invalid || clicked"
-        >
-          Add Task
-        </button>
-      </form>
-    </mdb-card-body>
-  </mdb-card>
+      </div>
+    </div>
+    <button
+      [ngClass]="{ invalid: AddTask.invalid }"
+      [disabled]="AddTask.invalid || clicked"
+      type="submit"
+      class="animated"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Add
+    </button>
+  </form>
 </div>
-
-<app-spinner *ngIf="clicked != false"></app-spinner>
