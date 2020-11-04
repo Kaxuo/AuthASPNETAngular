@@ -1,0 +1,135 @@
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #abd9e9;
+
+  .chatbox {
+    width: 1200px;
+    height: 95vh;
+    background-color: white;
+    display: flex;
+    overflow: hidden;
+
+    .left {
+      height: 100%;
+      width: 300px;
+      background-color: #3b3e49;
+      display: flex;
+      flex-direction: column;
+      color: white;
+      overflow-y: auto;
+      h4 {
+        margin-top: 25px;
+        align-self: center;
+      }
+      .allUsers {
+        margin: 25px 0px;
+
+        .users {
+          color: white;
+          padding: 0;
+          margin: 20px 15px;
+          display: flex;
+
+          .icon {
+            font-size: 60px;
+          }
+
+          span {
+            font-size: 20px;
+            margin-left: 20px;
+          }
+        }
+      }
+    }
+
+    .right {
+      background-color: #eff3f7;
+      height: 100%;
+      width: 900px;
+      overflow: hidden;
+
+      h4 {
+        text-align: center;
+        margin-top: 25px;
+      }
+
+      p {
+        color: grey;
+        text-align: center;
+      }
+
+      hr {
+        height: 2px;
+        background-color: black;
+        width: 90%;
+      }
+
+      .messages {
+        display: flex;
+        flex-direction: column;
+        height: 60vh;
+        overflow-y: auto;
+
+        .singleMessage {
+          margin: 5px 20px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          &:nth-child(even) {
+            align-items: flex-start;
+          }
+
+          &:nth-child(odd) {
+            align-items: flex-end;
+          }
+
+          p {
+            text-align: justify;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+          }
+        }
+      }
+
+      .form {
+        margin: 0px 15px;
+        display: flex;
+        flex-direction: column;
+
+        textarea {
+          min-height: 10vh;
+        }
+
+        button {
+          outline: none;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+
+  .stat {
+    font-size: 15px !important;
+
+    .circle {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 7px;
+      margin-left: 0 !important;
+      background-color: #58b666;
+      //   background-color:#ff725d;
+    }
+  }
+}

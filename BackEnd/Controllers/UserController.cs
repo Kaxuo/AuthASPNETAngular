@@ -30,7 +30,7 @@ namespace BackEnd.Controllers
             _appSettings = appSettings.Value;
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetAll()
         {

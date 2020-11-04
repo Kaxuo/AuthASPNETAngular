@@ -26,6 +26,7 @@ import { TasksListComponent } from './components/users/projects/tasks-list/tasks
 import { ChartComponent } from './components/users/chart/chart.component';
 import { UsersDataComponent } from './components/manager/users/users-data/users-data.component';
 import { KanbanComponent } from './components/manager/projects/kanban/kanban.component';
+import { ChatComponent } from './components/users/chat/chat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -50,6 +51,11 @@ const routes: Routes = [
   {
     path: 'update',
     component: UpdateProfileComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'chat',
+    component: ChatComponent,
     canActivate: [AuthenticationGuard],
   },
   {

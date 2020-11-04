@@ -1,0 +1,51 @@
+<div class="box">
+  <div class="chatbox">
+    <div class="left">
+      <h4>Users List</h4>
+      <div class="allUsers">
+        <div class="users" *ngFor="let el of users">
+          <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
+          <div class="status">
+            <span>{{ el.username }}</span>
+            <span class="stat"> <span class="circle"></span>Online</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <h4>Public Room</h4>
+      <p>1000 messages</p>
+      <hr />
+      <div #container class="messages">
+        <div class="singleMessage" *ngFor="let el of messages">
+          <h6>
+            {{ el.user }}
+            <span style="color: grey"
+              >{{ el.dateCreated | date: "dd MMMM yyyy, HH:mm:ss" }} </span
+            ><mdb-icon fas icon="angle-down"></mdb-icon>
+          </h6>
+          <p [ngStyle]="{ 'background-color': el.color }">{{ el.message }}</p>
+        </div>
+      </div>
+      <hr />
+      <form
+        [formGroup]="textbox"
+        (ngSubmit)="send(textbox.value.message)"
+        class="form"
+      >
+        <textarea
+          #message
+          id="textarea1"
+          style="resize: none"
+          type="text"
+          placeholder="Write your message"
+          formControlName="message"
+          (keydown)="triggerFunction($event, textbox.value.message)"
+        ></textarea>
+        <button [disabled]="textbox.invalid" type="submit">
+          <mdb-icon fas icon="paper-plane"></mdb-icon>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

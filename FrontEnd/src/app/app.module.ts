@@ -45,6 +45,7 @@ import { ChartComponent } from './components/users/chart/chart.component';
 import { UsersDataComponent } from './components/manager/users/users-data/users-data.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { KanbanComponent } from './components/manager/projects/kanban/kanban.component';
+import { ChatComponent } from './components/users/chat/chat.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { KanbanComponent } from './components/manager/projects/kanban/kanban.com
     ChartComponent,
     UsersDataComponent,
     KanbanComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,

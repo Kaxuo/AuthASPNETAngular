@@ -7,7 +7,7 @@
 
 .list {
   position: relative;
-  margin-left: 30vw;
+  margin-left: 25vw;
 
   ul {
     color: black;
@@ -23,6 +23,7 @@
       text-align: center;
       cursor: pointer;
       padding: 5px 0px;
+      border-bottom: 1px solid black;
       &:hover {
         background-color: lightgray;
       }
@@ -30,16 +31,16 @@
   }
 
   @media only screen and (max-width: 1500px) {
-    margin-left: 20vw;
+    margin-left: 15vw;
   }
 
   @media only screen and (max-width: 1300px) {
-    margin-left: 10vw;
+    margin-left: 5vw;
   }
 
   @media only screen and (max-width: 1155px) {
-    margin-left: 5vw;
-    width: 24vw;
+    margin-left: 0;
+    width: 20vw;
   }
 
   @media only screen and (max-width: 992px) {

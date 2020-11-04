@@ -4,6 +4,8 @@ html {
   min-height: 100%;
 }
 
+//Text //
+
 body {
   box-sizing: border-box;
   height: 100%;
@@ -18,6 +20,8 @@ body {
   text-shadow: 0 0 1ex rgba(51, 255, 51, 1), 0 0 2px rgba(255, 255, 255, 0.8);
 }
 
+//Background Image//
+
 .noise {
   pointer-events: none;
   position: absolute;
@@ -29,6 +33,8 @@ body {
   z-index: -1;
   opacity: 0.02;
 }
+
+// Background Color //
 
 .overlay {
   pointer-events: none;
@@ -44,6 +50,8 @@ body {
   background-size: auto 4px;
   z-index: 1;
 }
+
+// Background Effect //
 
 .overlay::before {
   content: "";
@@ -114,14 +122,6 @@ span {
   color: #fff;
   text-decoration: none;
   cursor: pointer;
-}
-
-a::before {
-  content: "[";
-}
-
-a::after {
-  content: "]";
 }
 
 .errorcode {

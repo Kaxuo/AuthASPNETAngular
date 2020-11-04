@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,21 +10,30 @@ import { Observable } from 'rxjs';
   animations: [],
 })
 export class NavbarComponent implements OnInit {
-  Links: string[] = [
-    'Manage',
-    'Users',
-    'Projects',
-    'Tasks',
-    'Profile',
-    'Update',
+  Links: any[] = [
+    { name: 'Manage', link: '/projects' },
+    { name: 'Users', link: '/users' },
+    { name: 'Projects', link: '/assignTasks' },
+    { name: 'Tasks', link: '/tasks' },
+    { name: 'Profile', link: '/profile' },
+    { name: 'Update', link: '/update' },
   ];
 
-  toSearch: string[] = [];
+  toSearch: any[] = [
+    { name: 'Manage', link: '/projects' },
+    { name: 'Users', link: '/users' },
+    { name: 'Projects', link: '/assignTasks' },
+    { name: 'Tasks', link: '/tasks' },
+    { name: 'Profile', link: '/profile' },
+    { name: 'Update', link: '/update' },
+  ];
+
+  display: boolean = false;
 
   authenticated: Observable<boolean> = this.auth.isAuthenticated();
   isAdminObs: Observable<boolean> = this.auth.isAdmin();
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -35,11 +45,13 @@ export class NavbarComponent implements OnInit {
     let valueToSearch = el.toLocaleLowerCase().trim();
     setTimeout(() => {
       let newTable = this.Links.filter((x) =>
-        x.toLocaleLowerCase().includes(valueToSearch)
+        x.name.toLocaleLowerCase().includes(valueToSearch)
       );
       this.toSearch = newTable;
     }, 500);
-    console.log(this.toSearch);
-    console.log(valueToSearch);
+  }
+
+  select(el) {
+    this.router.navigate([el.link]);
   }
 }
