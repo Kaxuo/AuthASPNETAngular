@@ -1,5 +1,6 @@
 using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
+using BackEnd.Hub;
 
 namespace BackEnd.Data
 {
@@ -29,5 +30,6 @@ namespace BackEnd.Data
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<TasksPerUsers> TasksPerUsers { get; set; }
+        public DbSet<Model> Messages { get; set; }
     }
 }

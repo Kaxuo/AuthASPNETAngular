@@ -19,12 +19,20 @@ export class ChatComponent implements OnInit {
   msgDto: MessageReceived;
   msgInboxArray: MessageReceived[] = [];
   textbox: FormGroup;
+  loading: boolean;
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
 
   constructor(private auth: AuthService, private chatService: ChatService) {}
 
   ngOnInit(): void {
+    this.chatService.GetMessage().subscribe((mess: MessageReceived[]) => {
+      this.msgInboxArray = mess;
+      this.loading = false;
+      setTimeout(() => {
+        this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+      }, 400);
+    });
     this.chatService
       .retrieveMappedObject()
       .subscribe((receivedObj: MessageReceived) => {
@@ -51,10 +59,6 @@ export class ChatComponent implements OnInit {
     this.textbox = new FormGroup({
       message: new FormControl('', [Validators.required]),
     });
-  }
-
-  ngAfterViewInit() {
-    this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
   }
 
   send(el) {

@@ -15,6 +15,7 @@ export class ChatService {
     }) // mapping to the chathub as in startup.cs
     .configureLogging(signalR.LogLevel.Information)
     .build();
+  readonly GET_URL = 'https://localhost:5001/api/chat/get';
   readonly POST_URL = 'https://localhost:5001/api/chat/send';
 
   private receivedMessageObject: any = { user: 'lmao' };
@@ -51,6 +52,9 @@ export class ChatService {
   /* ****************************** Public Mehods **************************************** */
 
   // Calls the controller method
+  public GetMessage() {
+    return this.http.get(this.GET_URL);
+  }
   public broadcastMessage(msgDto: any) {
     this.http
       .post(this.POST_URL, msgDto)
