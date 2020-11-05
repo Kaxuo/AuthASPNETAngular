@@ -1,10 +1,11 @@
-import { Messages } from 'src/app/Models/Messages';
+import { MessageReceived } from 'src/app/Models/Messages';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserReceived } from 'src/app/Models/UsersReceived';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, take } from 'rxjs/operators';
 import { colors } from './colors';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -12,43 +13,24 @@ import { colors } from './colors';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
+  object = this.auth.decryptedAndDecodedToken();
+  username: string;
   users: UserReceived[] = [];
+  msgDto: MessageReceived;
+  msgInboxArray: MessageReceived[] = [];
   textbox: FormGroup;
-  messages: Messages[] = [
-    {
-      user: 'Vincent',
-      dateCreated: new Date(),
-      message:
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
-      color: '#FF6633',
-    },
-    {
-      user: 'Bob',
-      dateCreated: new Date(),
-      message: 'ok',
-      color: '#FFB399',
-    },
-    {
-      user: 'Jin',
-      dateCreated: new Date(),
-      message:
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
-      color: '#00B3E6',
-    },
-    {
-      user: 'Freya',
-      dateCreated: new Date(),
-      message:
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
-      color: '#3366E6',
-    },
-  ];
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
-  constructor(private authService: AuthService) {}
+
+  constructor(private auth: AuthService, private chatService: ChatService) {}
 
   ngOnInit(): void {
-    this.authService
+    this.chatService
+      .retrieveMappedObject()
+      .subscribe((receivedObj: MessageReceived) => {
+        this.addToInbox(receivedObj);
+      }); // calls the service method to get the new messages sent
+    this.auth
       .getAllUsers()
       .pipe(
         take(1),
@@ -62,6 +44,10 @@ export class ChatComponent implements OnInit {
         this.users = users;
         console.log(this.users);
       });
+    this.auth
+      .getOne(this.object.unique_name)
+      .pipe(take(1))
+      .subscribe((single: UserReceived) => (this.username = single.username));
     this.textbox = new FormGroup({
       message: new FormControl('', [Validators.required]),
     });
@@ -73,19 +59,16 @@ export class ChatComponent implements OnInit {
 
   send(el) {
     if (el != null) {
-      let message = {
-        user: 'Bob',
-        dateCreated: new Date(),
+      this.chatService.broadcastMessage({
+        user: this.username,
         message: el,
-        color: '#991AFF',
-      };
+      }); // Send the message via a service
       this.textbox.reset();
-      this.messages.push(message);
       this.messageRef.nativeElement.focus();
-      setTimeout(() => {
-        this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
-      }, 10);
     }
+    setTimeout(() => {
+      this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+    }, 200);
   }
 
   triggerFunction(event, el) {
@@ -101,5 +84,28 @@ export class ChatComponent implements OnInit {
       event.preventDefault();
       this.send(el);
     }
+  }
+
+  addToInbox(obj: MessageReceived) {
+    this.msgInboxArray.push({
+      user: obj.user,
+      message: obj.message,
+    });
+  }
+
+  myStyles(el): object {
+    let colors = this.users.find((x) => x.username == el.user);
+    if (this.username == el.user) {
+      return { 'background-color': '#6666FF' };
+    }
+    if (this.username != el.user && colors != undefined) {
+      return { 'background-color': colors.colors };
+    } else {
+      return { 'background-color': 'black' };
+    }
+  }
+
+  scrollDown() {
+    this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
   }
 }

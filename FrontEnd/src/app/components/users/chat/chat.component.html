@@ -17,15 +17,30 @@
       <p>1000 messages</p>
       <hr />
       <div #container class="messages">
-        <div class="singleMessage" *ngFor="let el of messages">
+        <div
+          [ngClass]="username == mObj.user ? 'leftone' : 'rightone'"
+          class="singleMessage"
+          *ngFor="let mObj of msgInboxArray"
+        >
           <h6>
-            {{ el.user }}
+            {{ mObj.user }}
             <span style="color: grey"
-              >{{ el.dateCreated | date: "dd MMMM yyyy, HH:mm:ss" }} </span
+              >{{ mObj.dateCreated | date: "dd MMMM yyyy, HH:mm:ss" }} </span
             ><mdb-icon fas icon="angle-down"></mdb-icon>
           </h6>
-          <p [ngStyle]="{ 'background-color': el.color }">{{ el.message }}</p>
+          <p [ngStyle]="myStyles(mObj)">
+            {{ mObj.message }}
+          </p>
         </div>
+      </div>
+      <div style="text-align: center">
+        <mdb-icon
+          style="cursor: pointer; font-size: 25px; width: 50px"
+          class="lmao"
+          (click)="scrollDown()"
+          fas
+          icon="angle-double-down"
+        ></mdb-icon>
       </div>
       <hr />
       <form

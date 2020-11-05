@@ -1,38 +1,5 @@
 <app-spinner *ngIf="loading != false"></app-spinner>
 <div class="mega">
-  <ng-container *ngIf="projects">
-    <div *ngIf="projects.length == 0 && loading == false" class="form">
-      <mdb-card>
-        <mdb-card-header class="info-color white-text text-center py-4">
-          <h5>
-            <strong>No Project !</strong>
-          </h5>
-        </mdb-card-header>
-
-        <mdb-card-body class="px-lg-5 pt-0 errorBody">
-          <h3 style="padding: 20px">Nothing to do ! (for now)</h3>
-          <h4 style="padding: 20px">
-            There's no projects at the moment. You can add one if you want
-          </h4>
-          <img class="errorimg" src="../../../assets/thumbup.png" />
-          <button
-            style="margin-top: 30px"
-            class="add"
-            type="button"
-            mdbBtn
-            mdbWavesEffect
-            color="primary"
-            routerLink="add"
-          >
-            <a class="nav-link waves-light" style="color: white" mdbWavesEffect
-              >Add project<span class="sr-only">(current)</span></a
-            >
-          </button>
-        </mdb-card-body>
-      </mdb-card>
-    </div>
-  </ng-container>
-
   <ng-container *ngIf="projects && loading == false">
     <div class="flex animation">
       <h3 class="smalltitle">{{ projects.length }} Projects</h3>

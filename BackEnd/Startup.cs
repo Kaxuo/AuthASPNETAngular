@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using BackEnd.Data.Interface;
 using BackEnd.Data.DatabaseMethods;
+using BackEnd.Hub;
 
 namespace BackEnd
 {
@@ -41,6 +42,7 @@ namespace BackEnd
                                                                                             .AllowAnyMethod()
                                                                                             .AllowAnyHeader()));
             services.AddControllers();
+            services.AddSignalR();
             services.AddMvc();
             services.AddDbContext<Context>(options => options.UseSqlServer(
             Configuration.GetConnectionString("DefaultConnection")
@@ -120,6 +122,7 @@ namespace BackEnd
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MainHub>("/chatsocket");
             });
         }
     }

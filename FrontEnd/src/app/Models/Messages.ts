@@ -1,6 +1,5 @@
-export interface Messages {
+export interface MessageReceived {
   user: string;
-  dateCreated: Date;
+  dateCreated?: Date;
   message: string;
-  color: string;
 }
