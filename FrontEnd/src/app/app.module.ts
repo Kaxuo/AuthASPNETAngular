@@ -46,7 +46,7 @@ import { UsersDataComponent } from './components/manager/users/users-data/users-
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { KanbanComponent } from './components/manager/projects/kanban/kanban.component';
 import { ChatComponent } from './components/users/chat/chat.component';
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -82,6 +82,7 @@ import { ChatComponent } from './components/users/chat/chat.component';
   ],
   imports: [
     BrowserModule,
+    NgxSkeletonLoaderModule,
     MDBBootstrapModule.forRoot(),
     NavbarModule,
     WavesModule.forRoot(),

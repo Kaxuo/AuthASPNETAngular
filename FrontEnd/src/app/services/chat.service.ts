@@ -62,7 +62,7 @@ export class ChatService {
     // this.connection.invoke("SendMessage1", msgDto.user, msgDto.msgText).catch(err => console.error(err));    // This can invoke the server method named as "SendMethod1" directly.
   }
 
-  // Share the data received from the backend, with other components in the project. , transfomr values into observable to be consumed
+  // Share the data received from the backend, with other components in the project. , transform values into observable to be consumed
   public retrieveMappedObject(): Observable<MessageReceived> {
     return this.sharedObj.asObservable();
   }
