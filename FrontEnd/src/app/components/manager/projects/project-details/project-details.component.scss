@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 .navigation {
@@ -126,18 +127,44 @@
   overflow: hidden;
   animation: showTable 2s;
   animation-timing-function: ease-in;
+=======
+.container {
+  text-align: center;
+  background-color: white;
+  margin-top: 5%;
+  padding: 0;
+  width: 50%;
+  border-radius: 1%;
+}
+
+.title {
+  text-decoration: underline;
+  margin-bottom: 4%;
+  padding: 3%;
+}
+
+.tasks {
+  text-align: center;
+  margin: 3%;
+  color: white;
+  text-decoration: underline;
+  font-weight: bold;
+>>>>>>> master
 }
 
 .table {
   text-align: center;
 }
 
+<<<<<<< HEAD
 tr {
   transition: 0.5s;
   &:hover {
     background-color: lightgrey !important;
   }
 }
+=======
+>>>>>>> master
 button {
   background-color: inherit;
   border: none;
@@ -183,6 +210,7 @@ th {
     display: none;
   }
 }
+<<<<<<< HEAD
 
 tr:nth-child(2n) {
   background-color: #f8f8f8;
@@ -405,3 +433,5 @@ $break: 400px;
     }
   }
 }
+=======
+>>>>>>> master

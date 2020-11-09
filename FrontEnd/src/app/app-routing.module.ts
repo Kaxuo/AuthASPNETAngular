@@ -73,6 +73,12 @@ const routes: Routes = [
     component: ProjectDetailsComponent,
     canActivate: [AdminPrivileges],
   },
+
+  {
+    path: 'chart/:id',
+    component: ChartComponent,
+    canActivate: [AuthenticationGuard],
+  },
   {
     path: 'projects/:id/kanban',
     component: KanbanComponent,

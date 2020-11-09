@@ -15,10 +15,6 @@ export class UserDetailsComponent implements OnInit {
   tasksComplete: Task[];
   loading: boolean;
   id: number;
-  PendingTasks: Task[] = [];
-  WorkingTasks: Task[] = [];
-  ReviewingTasks: Task[] = [];
-  CompletedTasks: Task[] = [];
 
   constructor(
     private auth: AuthService,
@@ -36,10 +32,7 @@ export class UserDetailsComponent implements OnInit {
           this.router.navigate(['404']);
         }
         this.User = user;
-        this.PendingTasks = this.User.tasks.filter((x) => x.status == 0);
-        this.WorkingTasks = this.User.tasks.filter((x) => x.status == 1);
-        this.ReviewingTasks = this.User.tasks.filter((x) => x.status == 2);
-        this.CompletedTasks = this.User.tasks.filter((x) => x.status == 3);
+        this.tasksComplete = this.User.tasks.filter(x => x.status == 3)
         this.loading = false;
       });
   }

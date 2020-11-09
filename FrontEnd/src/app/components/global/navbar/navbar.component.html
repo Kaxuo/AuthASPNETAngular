@@ -1,7 +1,11 @@
 <!--Navbar-->
 <mdb-navbar
   class="top"
+<<<<<<< HEAD:FrontEnd/src/app/components/global/navbar/navbar.component.html
   SideClass="navbar navbar-expand-lg navbar-dark indigo "
+=======
+  SideClass="navbar navbar-expand-lg navbar-dark unique-color sticky-top "
+>>>>>>> master:FrontEnd/src/app/components/navbar/navbar.component.html
   [containerInside]="false"
 >
   <!-- Navbar brand -->
@@ -11,7 +15,10 @@
       >Management</a
     ></mdb-navbar-brand
   >
+<<<<<<< HEAD:FrontEnd/src/app/components/global/navbar/navbar.component.html
 
+=======
+>>>>>>> master:FrontEnd/src/app/components/navbar/navbar.component.html
   <!-- Collapsible content -->
   <links>
     <div class="list" *ngIf="authenticated | async">
@@ -54,6 +61,7 @@
         class="nav-item"
         routerLinkActive="active"
         *ngIf="isAdminObs | async"
+<<<<<<< HEAD:FrontEnd/src/app/components/global/navbar/navbar.component.html
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <a class="nav-link waves-light" routerLink="/projects" mdbWavesEffect
@@ -78,8 +86,34 @@
       >
         <a class="nav-link waves-light" routerLink="assignTasks" mdbWavesEffect
           >Projects<span class="sr-only">(current)</span></a
+=======
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link waves-light" routerLink="/projects" mdbWavesEffect
+          >Manage<span class="sr-only">(current)</span></a
         >
       </li>
+      <li
+        class="nav-item"
+        routerLinkActive="active"
+        *ngIf="isAdminObs | async"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link waves-light" routerLink="/users" mdbWavesEffect
+          >Users<span class="sr-only">(current)</span></a
+>>>>>>> master:FrontEnd/src/app/components/navbar/navbar.component.html
+        >
+      </li>
+      <li
+      class="nav-item"
+      routerLinkActive="active"
+      *ngIf="authenticated | async"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a class="nav-link waves-light" routerLink="assignTasks" mdbWavesEffect
+        >Projects<span class="sr-only">(current)</span></a
+      >
+    </li>
       <li
         class="nav-item"
         routerLinkActive="active"

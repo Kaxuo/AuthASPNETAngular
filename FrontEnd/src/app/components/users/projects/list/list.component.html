@@ -1,6 +1,7 @@
 <app-spinner *ngIf="loading != false"></app-spinner>
 
 <ng-container *ngIf="projects && loading == false">
+<<<<<<< HEAD
   <div *ngIf="projects.length == 0 && loading == false" class="form">
     <mdb-card>
       <mdb-card-header class="info-color white-text text-center py-4">
@@ -57,4 +58,66 @@
     </div>
     <div class="right"></div>
   </div>
+=======
+  <table *ngIf="projects.length > 0" mdbTable>
+    <thead>
+      <tr style="text-align: center">
+        <th class="id">ID</th>
+        <th>Project</th>
+        <th>Tasks</th>
+        <th>Completed</th>
+        <th>Not Assigned</th>
+        <th>Check</th>
+      </tr>
+    </thead>
+    <tbody style="text-align: center">
+      <tr mdbTableCol *ngFor="let el of projects; let index = index">
+        <td class="id">{{ el.id }}</td>
+        <td>{{ el.title }}</td>
+        <td>{{ el.tasks.length }}</td>
+        <td>
+          {{ this.completedTasks[index].length }}
+        </td>
+        <td>
+          {{ this.notAssignedTasks[index].length }}
+        </td>
+        <td>
+          <button [routerLink]="[el.id]">
+            <mdb-icon class="icon" fas icon="share"></mdb-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-container *ngIf="projects">
+    <div *ngIf="projects.length == 0 && loading == false" class="form">
+      <mdb-card>
+        <mdb-card-header class="info-color white-text text-center py-4">
+          <h5>
+            <strong>No Project !</strong>
+          </h5>
+        </mdb-card-header>
+
+        <mdb-card-body class="px-lg-5 pt-0 errorBody">
+          <h3 style="padding: 20px">Nothing to do ! (for now)</h3>
+          <h4 style="padding: 20px">There are no projects at the moment</h4>
+          <img class="errorimg" src="../../../assets/thumbup.png" />
+          <button
+            style="margin-top: 30px"
+            type="button"
+            mdbBtn
+            mdbWavesEffect
+            color="primary"
+            routerLink="/profile"
+          >
+            <a class="nav-link waves-light" style="color: white" mdbWavesEffect
+              >Go Back<span class="sr-only">(current)</span></a
+            >
+          </button>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </ng-container>
+>>>>>>> master
 </ng-container>

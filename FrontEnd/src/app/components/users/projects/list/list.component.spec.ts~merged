@@ -1,7 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 <<<<<<< HEAD
-<<<<<<< HEAD:FrontEnd/src/app/components/users/projects/list/list.component.spec.ts
+=======
+<<<<<<< HEAD:FrontEnd/src/app/components/users/chat/chat.component.spec.ts
+import { ChatComponent } from './chat.component';
+
+describe('ChatComponent', () => {
+  let component: ChatComponent;
+  let fixture: ComponentFixture<ChatComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ ChatComponent ]
 =======
 >>>>>>> master
 import { ListComponent } from './list.component';
@@ -15,17 +25,7 @@ describe('ListComponent', () => {
       declarations: [ ListComponent ]
 <<<<<<< HEAD
 =======
-import { ChartComponent } from './chart.component';
-
-describe('ChartComponent', () => {
-  let component: ChartComponent;
-  let fixture: ComponentFixture<ChartComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ChartComponent ]
->>>>>>> master:FrontEnd/src/app/components/users/chart/chart.component.spec.ts
-=======
+>>>>>>> master:FrontEnd/src/app/components/users/projects/list/list.component.spec.ts
 >>>>>>> master
     })
     .compileComponents();
@@ -33,13 +33,13 @@ describe('ChartComponent', () => {
 
   beforeEach(() => {
 <<<<<<< HEAD
-<<<<<<< HEAD:FrontEnd/src/app/components/users/projects/list/list.component.spec.ts
     fixture = TestBed.createComponent(ListComponent);
 =======
-    fixture = TestBed.createComponent(ChartComponent);
->>>>>>> master:FrontEnd/src/app/components/users/chart/chart.component.spec.ts
+<<<<<<< HEAD:FrontEnd/src/app/components/users/chat/chat.component.spec.ts
+    fixture = TestBed.createComponent(ChatComponent);
 =======
     fixture = TestBed.createComponent(ListComponent);
+>>>>>>> master:FrontEnd/src/app/components/users/projects/list/list.component.spec.ts
 >>>>>>> master
     component = fixture.componentInstance;
     fixture.detectChanges();

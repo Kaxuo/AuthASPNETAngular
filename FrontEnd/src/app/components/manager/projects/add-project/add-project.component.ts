@@ -21,7 +21,11 @@ export class AddProjectComponent implements OnInit {
         Validators.required,
         Validators.maxLength(20),
       ]),
+<<<<<<< HEAD
       description: new FormControl('', [Validators.required,Validators.maxLength(620)]),
+=======
+      description: new FormControl('', [Validators.required]),
+>>>>>>> master
     });
   }
 

@@ -6,7 +6,6 @@ import { take } from 'rxjs/operators';
 import { UserReceived } from 'src/app/Models/UsersReceived';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Task } from 'src/app/Models/Tasks';
 
 @Component({
   selector: 'app-profile-page',
@@ -18,13 +17,7 @@ export class ProfilePageComponent implements OnInit {
   propertyEditable: any;
   form: FormGroup;
   message: string;
-  originalFirstName: string;
-  originalLastName: string;
   object = this.auth.decryptedAndDecodedToken();
-  PendingTasks: Task[] = [];
-  WorkingTasks: Task[] = [];
-  ReviewingTasks: Task[] = [];
-  CompletedTasks: Task[] = [];
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -46,16 +39,6 @@ export class ProfilePageComponent implements OnInit {
           );
           this.loading = false;
         });
-        this.originalFirstName = this.form.value.firstName;
-        this.originalLastName = this.form.value.lastName;
-        this.PendingTasks = this.form.value.tasks.filter((x) => x.status == 0);
-        this.WorkingTasks = this.form.value.tasks.filter((x) => x.status == 1);
-        this.ReviewingTasks = this.form.value.tasks.filter(
-          (x) => x.status == 2
-        );
-        this.CompletedTasks = this.form.value.tasks.filter(
-          (x) => x.status == 3
-        );
       });
   }
 
@@ -69,8 +52,6 @@ export class ProfilePageComponent implements OnInit {
         (res: HttpResponse<any>) => {
           this.propertyEditable[property] = false;
           this.message = '';
-          this.originalFirstName = this.form.value.firstName;
-          this.originalLastName = this.form.value.lastName;
           this.router.navigate(['profile']);
         },
         (err: HttpErrorResponse) => (this.message = err.error.message)

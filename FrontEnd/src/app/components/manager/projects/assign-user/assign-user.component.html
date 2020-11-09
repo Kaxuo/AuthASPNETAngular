@@ -1,4 +1,5 @@
 <app-spinner *ngIf="loading != false"></app-spinner>
+<<<<<<< HEAD
 
 <div class="box">
   <form
@@ -22,6 +23,32 @@
             (keyup)="searchUser()"
             (focus)="display = true"
             (blur)="display = false"
+=======
+<div class="form">
+  <mdb-card>
+    <mdb-card-header class="info-color white-text text-center py-4">
+      <h5>
+        <strong>Assign User</strong>
+      </h5>
+    </mdb-card-header>
+
+    <mdb-card-body class="px-lg-5 pt-0">
+      <form
+        [formGroup]="assignUser"
+        (ngSubmit)="assign(assignUser.value)"
+        class="text-center"
+        style="color: #757575"
+      >
+        <div class="md-form">
+          <input
+            autofocus
+            type="email"
+            id="materialLoginFormEmail"
+            class="form-control"
+            mdbInput
+            formControlName="user"
+            (keyup)="searchUser()"
+>>>>>>> master
           />
           <label for="materialLoginFormEmail">User</label>
         </div>
@@ -34,6 +61,7 @@
           >Required</em
         >
         <em style="padding-bottom: 10px" *ngIf="error">User incorrect</em>
+<<<<<<< HEAD
         <div class="d-flex justify-content-around"></div>
       </div>
       <div class="bob" *ngIf="display">
@@ -61,4 +89,37 @@
       Assign
     </button>
   </form>
+=======
+        <div *ngIf="filteredList">
+          <div *ngIf="filteredList.length > 0" class="list-group">
+            <button
+              mdbBtn
+              type="button"
+              color="deep-purple"
+              *ngFor="let el of filteredList"
+              class="list-group-item waves-light"
+              mdbWavesEffect
+              (click)="select(el)"
+            >
+              {{ el.username | lowercase | titlecase }}
+            </button>
+          </div>
+        </div>
+        <button
+          mdbBtn
+          color="info"
+          outline="true"
+          rounded="true"
+          block="true"
+          class="my-4 waves-effect z-depth-0"
+          mdbWavesEffect
+          type="submit"
+          [disabled]="assignUser.invalid || clicked"
+        >
+          Assign
+        </button>
+      </form>
+    </mdb-card-body>
+  </mdb-card>
+>>>>>>> master
 </div>
