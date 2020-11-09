@@ -9,10 +9,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { ProjectService } from 'src/app/services/project.service';
-<<<<<<< HEAD
 import { defineCustomElements } from '@teamhive/lottie-player/loader';
-=======
->>>>>>> master
 
 @Component({
   selector: 'app-tasks',
@@ -35,7 +32,6 @@ export class TasksComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-<<<<<<< HEAD
     defineCustomElements(window);
     this.auth.getAllTasks(this.object.unique_name).subscribe((res: Task[]) => {
       this.Tasks = res;
@@ -45,18 +41,6 @@ export class TasksComponent implements OnInit {
       this.CompletedTasks = res.filter((x) => x.status == 3);
       this.loading = false;
     });
-=======
-    this.auth
-      .getAllTasks(this.object.unique_name)
-      .subscribe((res: Task[]) => {
-        this.Tasks = res;
-        this.PendingTasks = res.filter((x) => x.status == 0);
-        this.WorkingTasks = res.filter((x) => x.status == 1);
-        this.ReviewingTasks = res.filter((x) => x.status == 2);
-        this.CompletedTasks = res.filter((x) => x.status == 3);
-        this.loading = false;
-      });
->>>>>>> master
   }
 
   drop(event: CdkDragDrop<string[]>) {

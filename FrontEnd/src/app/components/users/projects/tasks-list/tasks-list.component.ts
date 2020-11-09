@@ -7,10 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserReceived } from 'src/app/Models/UsersReceived';
 import { Task } from 'src/app/Models/Tasks';
-<<<<<<< HEAD
 import { defineCustomElements } from '@teamhive/lottie-player/loader';
-=======
->>>>>>> master
 
 @Component({
   selector: 'app-tasks-list',
@@ -22,13 +19,10 @@ export class TasksListComponent implements OnInit {
   loading: boolean;
   id: number;
   object = this.auth.decryptedAndDecodedToken();
-<<<<<<< HEAD
   PendingTasks: Task[] = [];
   WorkingTasks: Task[] = [];
   ReviewingTasks: Task[] = [];
   CompletedTasks: Task[] = [];
-=======
->>>>>>> master
 
   constructor(
     private projectService: ProjectService,
@@ -38,10 +32,7 @@ export class TasksListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-<<<<<<< HEAD
     defineCustomElements(window);
-=======
->>>>>>> master
     this.id = this.route.snapshot.params.id;
     this.projectService
       .getOneProject(this.id)
@@ -75,13 +66,10 @@ export class TasksListComponent implements OnInit {
       )
       .subscribe((singleProject: Project) => {
         this.project = singleProject;
-<<<<<<< HEAD
         this.PendingTasks = singleProject.tasks.filter((x) => x.status == 0);
         this.WorkingTasks = singleProject.tasks.filter((x) => x.status == 1);
         this.ReviewingTasks = singleProject.tasks.filter((x) => x.status == 2);
         this.CompletedTasks = singleProject.tasks.filter((x) => x.status == 3);
-=======
->>>>>>> master
         this.loading = false;
       });
   }
@@ -156,11 +144,8 @@ export class TasksListComponent implements OnInit {
   scroll(el: HTMLElement) {
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
-<<<<<<< HEAD
 
   goHome() {
     this.router.navigate(['assignTasks']);
   }
-=======
->>>>>>> master
 }

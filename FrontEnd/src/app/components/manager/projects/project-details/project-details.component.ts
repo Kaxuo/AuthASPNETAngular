@@ -64,7 +64,6 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   deleteTask(element) {
-<<<<<<< HEAD
     this.projectService
       .deleteTask(this.id, element.taskId)
       .subscribe(
@@ -73,12 +72,6 @@ export class ProjectDetailsComponent implements OnInit {
             (x) => x.taskId != element.taskId
           ))
       );
-=======
-    this.projectService.deleteTask(this.id, element.taskId).subscribe();
-    this.project.tasks = this.project.tasks.filter(
-      (x) => x.taskId != element.taskId
-    );
->>>>>>> master
   }
 
   importanceFlag(element) {
@@ -121,12 +114,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.project.tasks = [...table];
   }
 
-<<<<<<< HEAD
   goHome() {
     this.router.navigate(['assignTasks']);
-=======
-  scroll(el: HTMLElement) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
->>>>>>> master
   }
 }

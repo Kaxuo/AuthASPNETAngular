@@ -44,12 +44,9 @@ import { TasksListComponent } from './components/users/projects/tasks-list/tasks
 import { ChartComponent } from './components/users/chart/chart.component';
 import { UsersDataComponent } from './components/manager/users/users-data/users-data.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-<<<<<<< HEAD
 import { KanbanComponent } from './components/manager/projects/kanban/kanban.component';
 import { ChatComponent } from './components/users/chat/chat.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-=======
->>>>>>> master
 
 @NgModule({
   declarations: [
@@ -80,11 +77,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     TasksListComponent,
     ChartComponent,
     UsersDataComponent,
-<<<<<<< HEAD
     KanbanComponent,
     ChatComponent,
-=======
->>>>>>> master
   ],
   imports: [
     BrowserModule,

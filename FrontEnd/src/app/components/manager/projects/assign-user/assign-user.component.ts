@@ -22,10 +22,7 @@ export class AssignUserComponent implements OnInit {
   filteredList: UserReceived[];
   error: boolean = false;
   loading: boolean;
-<<<<<<< HEAD
   display: boolean = false;
-=======
->>>>>>> master
 
   constructor(
     private projectService: ProjectService,
@@ -40,10 +37,7 @@ export class AssignUserComponent implements OnInit {
     this.auth.getAllUsers().subscribe((data: UserReceived[]) => {
       this.loading = false;
       this.users = data;
-<<<<<<< HEAD
       this.filteredList = this.users;
-=======
->>>>>>> master
     });
     this.projectService
       .getOneTask(this.projectId, this.taskId)
@@ -74,7 +68,6 @@ export class AssignUserComponent implements OnInit {
   }
 
   searchUser() {
-<<<<<<< HEAD
     //assignUser is the formname, like in react, onChangeevent, you get the value each time you type
     let valueToSearch = this.assignUser.get('user').value;
     valueToSearch = valueToSearch.toLocaleUpperCase().trim();
@@ -96,32 +89,6 @@ export class AssignUserComponent implements OnInit {
           )
         );
     }, 500);
-=======
-    let valueToSearch = this.assignUser.get('user').value;
-    valueToSearch = valueToSearch.toLocaleUpperCase().trim();
-    if (valueToSearch != '') {
-      setTimeout(() => {
-        this.filteredList = this.users
-          .map((user: UserReceived) => ({
-            ...user,
-            username: user.username.toLocaleUpperCase().trim(),
-            firstName: user.firstName.toLocaleUpperCase().trim(),
-          }))
-          .filter(
-            (user: UserReceived) =>
-              user.username.includes(valueToSearch) ||
-              user.firstName.includes(valueToSearch)
-          )
-          .concat(
-            this.users.filter(
-              (user: UserReceived) => user.id.toString() == valueToSearch
-            )
-          );
-      }, 500);
-    } else {
-      this.filteredList = [];
-    }
->>>>>>> master
     this.error = false;
   }
 
@@ -130,9 +97,6 @@ export class AssignUserComponent implements OnInit {
       .get('user')
       .setValue(this.auth.capitalizeFirstLetter(user.username.toLowerCase()));
     this.filteredList = [];
-<<<<<<< HEAD
     this.display = false;
-=======
->>>>>>> master
   }
 }

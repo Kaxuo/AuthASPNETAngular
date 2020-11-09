@@ -16,10 +16,6 @@ $screen-lg-min: 900px;
   .board-wrapper {
     display: flex;
     flex-grow: 1;
-<<<<<<< HEAD
-=======
-    overflow-x: auto;
->>>>>>> master
     .board-columns {
       display: flex;
       flex-grow: 1;
@@ -28,7 +24,6 @@ $screen-lg-min: 900px;
         flex-direction: column;
         align-items: center;
       }
-<<<<<<< HEAD
       .board-column:nth-child(1) {
         background: rgba(#8da5b1, 0.3);
         animation-delay: 0.3s;
@@ -61,29 +56,18 @@ $screen-lg-min: 900px;
           background: #ffbb33;
         }
       }
-=======
->>>>>>> master
       .board-column {
         //   force column to be the same size no matter the content
         flex-basis: 0;
         flex-grow: 1;
         flex-direction: column;
         // Prevent them from being squashed //
-<<<<<<< HEAD
         width: 15vw;
         margin: 50px;
         padding: 25px;
         border-radius: 4px;
         animation: slide1 1s;
         animation-fill-mode: both;
-=======
-        min-width: 100px;
-        max-width: 250px;
-        margin: 50px;
-        padding: 25px;
-        background: rgba(white, 0.5);
-        border-radius: 4px;
->>>>>>> master
         @include lg {
           min-width: 53%;
         }
@@ -99,11 +83,8 @@ $screen-lg-min: 900px;
           text-transform: uppercase;
           margin-bottom: 20px;
           text-align: center;
-<<<<<<< HEAD
           padding: 10px;
           border-radius: 10px;
-=======
->>>>>>> master
           &::selection {
             outline: none;
           }
@@ -131,10 +112,6 @@ $screen-lg-min: 900px;
   justify-content: center;
   padding: 15px 12px;
   background-color: white;
-<<<<<<< HEAD
-=======
-  border-bottom: solid 1px #ddd;
->>>>>>> master
   margin-bottom: 15px;
   border-radius: 4px;
   cursor: pointer;
@@ -180,7 +157,6 @@ button {
   margin: 0;
   padding: 1%;
 }
-<<<<<<< HEAD
 
 @keyframes slide1 {
   from {
@@ -205,5 +181,3 @@ button {
   align-items: center;
   margin-top: 100px;
 }
-=======
->>>>>>> master

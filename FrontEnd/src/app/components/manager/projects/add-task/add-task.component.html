@@ -1,4 +1,3 @@
-<<<<<<< HEAD:FrontEnd/src/app/components/manager/projects/add-task/add-task.component.html
 
 <div class="box">
   <form
@@ -10,22 +9,6 @@
     <h3 style="text-align: center; margin-top: 5vh; color: white">Add Task</h3>
     <div class="inputs">
       <div class="col">
-=======
-<div class="form">
-  <mdb-card>
-    <mdb-card-header class="info-color white-text text-center py-4">
-      <h5>
-        <strong>Add Task</strong>
-      </h5>
-    </mdb-card-header>
-    <mdb-card-body class="px-lg-5 pt-0">
-      <form
-        [formGroup]="AddTask"
-        (ngSubmit)="sendTask(AddTask.value)"
-        class="text-center"
-        style="color: #757575"
-      >
->>>>>>> master:FrontEnd/src/app/components/manager/add-tasks/add-tasks.component.html
         <div class="md-form">
           <input
             type="email"
@@ -71,5 +54,3 @@
     </button>
   </form>
 </div>
-
-<app-spinner *ngIf="clicked != false"></app-spinner>
