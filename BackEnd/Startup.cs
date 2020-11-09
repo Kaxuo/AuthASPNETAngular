@@ -119,6 +119,10 @@ namespace BackEnd
 
             app.UseAuthorization();
 
+            app.UseDefaultFiles();
+             
+            app.UseStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

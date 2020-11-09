@@ -62,6 +62,10 @@
     animation: slideIn 2s;
     animation-fill-mode: both;
 
+    &:hover + .dropdown {
+      opacity: 1;
+    }
+
     &:focus {
       outline: none;
     }
@@ -105,16 +109,7 @@
       width: 420px;
       position: static;
       max-height: 0;
-    }
-  }
-
-  &:hover {
-    .dropdown {
-      top: -0px;
-      opacity: 1;
-      @media only screen and (max-width: 1000px) {
-        max-height: 1000px;
-      }
+      max-height: 1000px;
     }
   }
 }
@@ -156,4 +151,3 @@
     transform: translateX(0px);
   }
 }
-
