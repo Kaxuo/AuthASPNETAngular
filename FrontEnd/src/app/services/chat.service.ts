@@ -8,15 +8,20 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class ChatService {
+  private chat = 'https://authaspnetcore.azurewebsites.net/chatsocket';
+  readonly GET_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/get';
+  readonly POST_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/send';
+  // private chat = 'https://localhost:5001/chatsocket'
+  // readonly GET_URL = 'https://localhost:5001/api/chat/get';
+  // readonly POST_URL = 'https://localhost:5001/api/chat/send';
+
   private connection: any = new signalR.HubConnectionBuilder()
-    .withUrl('https://localhost:5001/chatsocket', {
+    .withUrl(this.chat, {
       skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets,
     }) // mapping to the chathub as in startup.cs
     .configureLogging(signalR.LogLevel.Information)
     .build();
-  readonly GET_URL = 'https://localhost:5001/api/chat/get';
-  readonly POST_URL = 'https://localhost:5001/api/chat/send';
 
   private receivedMessageObject: any = { user: 'lmao' };
   private sharedObj = new Subject<MessageReceived>();

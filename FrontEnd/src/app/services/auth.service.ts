@@ -11,7 +11,7 @@ import { UpdateUser } from '../Models/UpdateUser';
 import { Task } from '../Models/Tasks';
 import jwt_decode from 'jwt-decode';
 import * as CryptoJS from 'crypto-js';
-import { secret } from '../../secrets/keys';
+import { secret } from '../secrets/keys';
 
 @Injectable({
   providedIn: 'root',

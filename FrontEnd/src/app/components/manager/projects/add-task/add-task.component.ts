@@ -25,7 +25,7 @@ export class AddTaskComponent implements OnInit {
     this.AddTask = new FormGroup({
       description: new FormControl('', [
         Validators.required,
-        Validators.maxLength(20),
+        Validators.maxLength(100),
       ]),
       importance: new FormControl(false),
     });

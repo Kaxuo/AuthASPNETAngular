@@ -172,7 +172,6 @@ button {
 .anim10 {
   height: 50vh;
   transform: scale(0.8);
-
 }
 
 .form {
@@ -180,4 +179,8 @@ button {
   justify-content: center;
   align-items: center;
   margin-top: 100px;
+}
+
+p {
+  word-break: break-all;
 }
