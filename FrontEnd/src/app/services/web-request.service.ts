@@ -17,7 +17,7 @@ export class WebRequestService {
     // this.ROOT_URL = 'https://localhost:5001';
   }
 
-  // Users //
+  // Users Only//
 
   getAllUsers(url: string) {
     return this.http.get(`${this.ROOT_URL}/${url}`);
