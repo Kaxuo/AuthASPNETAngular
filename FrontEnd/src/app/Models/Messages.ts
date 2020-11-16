@@ -1,6 +1,13 @@
+// export interface MessageReceived {
+//   user: string;
+//   dateCreated?: Date;
+//   message: string;
+//   id?: number;
+// }
+
 export interface MessageReceived {
-  user: string;
-  dateCreated?: Date;
-  message: string;
-  id?: number;
+  senderName: string;
+  sentDate?: Date;
+  content: string;
+  senderId?: number;
 }

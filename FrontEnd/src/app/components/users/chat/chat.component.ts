@@ -6,6 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, take } from 'rxjs/operators';
 import { colors } from './colors';
 import { ChatService } from 'src/app/services/chat.service';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-chat',
@@ -20,12 +21,18 @@ export class ChatComponent implements OnInit {
   msgInboxArray: MessageReceived[] = [];
   textbox: FormGroup;
   loading: boolean;
+  onlineUsers: any[];
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
 
-  constructor(private auth: AuthService, private chatService: ChatService) {}
+  constructor(
+    private auth: AuthService,
+    private chatService: ChatService,
+    private LocalStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
+    // Messages //
     this.chatService.GetMessage().subscribe((mess: MessageReceived[]) => {
       this.msgInboxArray = mess;
       this.loading = false;
@@ -36,10 +43,15 @@ export class ChatComponent implements OnInit {
     this.chatService
       .retrieveMappedObject()
       .subscribe((receivedObj: MessageReceived) => {
+        setTimeout(() => {
+          this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+        }, 200);
         this.addToInbox(receivedObj);
       }); // calls the service method to get the new messages sent
-    this.auth
-      .getAllUsers()
+
+    // Users //
+    this.chatService
+      .GetAllUserMongo()
       .pipe(
         take(1),
         map((users: UserReceived[]) => {
@@ -50,22 +62,47 @@ export class ChatComponent implements OnInit {
       )
       .subscribe((users: UserReceived[]) => {
         this.users = users;
-        console.log(this.users);
       });
+
+    this.chatService
+      .GetAllConnectedUserMongo()
+      .pipe(
+        map((connectedUsers: any) => {
+          return connectedUsers.filter((users) => users.userId != 'null');
+        })
+      )
+      .subscribe((connectedUsers: any) => {
+        this.onlineUsers = connectedUsers;
+        console.log(connectedUsers);
+        // SingleUser //
+        this.chatService.retrieveSingleUser().subscribe((data: any) => {
+          console.log(data.userId);
+        });
+      });
+
+    this.chatService
+      .retrieveUsers()
+      .pipe(map((x: any) => x.users.filter((x) => x.userId != 'null')))
+      .subscribe();
+
+    // Owner Session //
     this.auth
       .getOne(this.object.unique_name)
-      .pipe(take(1))
-      .subscribe((single: UserReceived) => (this.username = single.username));
+      .subscribe((single: UserReceived) => {
+        this.username = single.username;
+      });
     this.textbox = new FormGroup({
       message: new FormControl('', [Validators.required]),
     });
   }
 
+  // Changed
   send(el) {
     if (el != null) {
       this.chatService.broadcastMessage({
-        user: this.username,
-        message: el,
+        senderId: this.LocalStorageService.retrieve('mongoID'),
+        senderName: this.username,
+        content: el,
       }); // Send the message via a service
       this.textbox.reset();
       this.messageRef.nativeElement.focus();
@@ -90,19 +127,26 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  // Changed
   addToInbox(obj: MessageReceived) {
     this.msgInboxArray.push({
-      user: obj.user,
-      message: obj.message,
+      senderName: obj.senderName,
+      content: obj.content,
+      sentDate: obj.sentDate,
     });
   }
 
+  switchStatus(el: any) {
+    this.onlineUsers.push(el);
+  }
+
+  // changed
   myStyles(el): object {
-    let colors = this.users.find((x) => x.username == el.user);
-    if (this.username == el.user) {
+    let colors = this.users.find((x) => x.username == el.senderName);
+    if (this.username == el.senderName) {
       return { 'background-color': '#6666FF' };
     }
-    if (this.username != el.user && colors != undefined) {
+    if (this.username != el.senderName && colors != undefined) {
       return { 'background-color': colors.colors };
     } else {
       return { 'background-color': 'black' };
@@ -111,5 +155,9 @@ export class ChatComponent implements OnInit {
 
   scrollDown() {
     this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+  }
+
+  onlineCheck(el) {
+    return this.onlineUsers?.find((y) => el.id === y.userId) !== undefined;
   }
 }

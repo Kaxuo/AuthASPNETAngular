@@ -39,7 +39,8 @@ button {
 
     .desc {
       width: 250px;
-      word-break: break-all;
+      overflow-wrap: break-word;
+      // word-break: break-all;
     }
 
     .username {

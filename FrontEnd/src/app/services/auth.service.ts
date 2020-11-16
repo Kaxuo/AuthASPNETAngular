@@ -5,7 +5,14 @@ import { WebRequestService } from './web-request.service';
 import { UserRegister } from '../Models/UserRegister';
 import { map, shareReplay, tap, timestamp } from 'rxjs/operators';
 import { UserAuth } from '../Models/UserAuth';
-import { BehaviorSubject, merge, Observable, of, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  merge,
+  Observable,
+  of,
+  Subject,
+  throwError,
+} from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { UpdateUser } from '../Models/UpdateUser';
 import { Task } from '../Models/Tasks';
@@ -56,7 +63,7 @@ export class AuthService {
   }
 
   getOne(id: number) {
-    return this.webRequest.getOneUser(`api/users`, id);
+    return this.webRequest.getOneUser(`api/users`, id).pipe(shareReplay());
   }
 
   editUser(id: number, data: Partial<UpdateUser>) {
@@ -152,6 +159,7 @@ export class AuthService {
 
   private removeSession() {
     this.LocalStorageService.clear('token');
-    this.router.navigate(['signin'])
+    this.LocalStorageService.clear('mongoID');
+    this.router.navigate(['signin']);
   }
 }

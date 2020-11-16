@@ -2,13 +2,25 @@
   <div class="chatbox">
     <div class="left" *ngIf="users && loading == false">
       <h4>Hello {{ username }}</h4>
-      <h6>3 users online</h6>
+      <h6>
+        <span *ngIf="onlineUsers">{{ onlineUsers.length || "??" }}</span> users
+        online
+      </h6>
       <div class="allUsers">
         <div class="users" *ngFor="let el of users">
           <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
           <div class="status">
             <span>{{ el.username }}</span>
-            <span class="stat"> <span class="circle"></span>Online</span>
+            <span
+              *ngIf="onlineCheck(el)"
+              (click)="switchStatus(el)"
+              class="stat"
+            >
+              <span class="circle"></span>Online</span
+            >
+            <span *ngIf="!onlineCheck(el)" class="stat">
+              <span class="red"></span>Offline</span
+            >
           </div>
         </div>
       </div>
@@ -109,18 +121,22 @@
       <hr />
       <div #container class="messages">
         <div
-          [ngClass]="username == mObj.user ? 'leftone' : 'rightone'"
+          [ngClass]="username == mObj.senderName ? 'leftone' : 'rightone'"
           class="singleMessage"
           *ngFor="let mObj of msgInboxArray"
         >
           <h6>
-            {{ mObj.user }}
+            <!-- {{ mObj.user }} -->
+            {{ mObj.senderName }}
+            <!-- <span style="color: grey">{{ mObj.dateCreated | date: "dd MMMM yyyy, HH:mm:ss" }} </span> -->
             <span style="color: grey"
-              >{{ mObj.dateCreated | date: "dd MMMM yyyy, HH:mm:ss" }} </span
-            ><mdb-icon fas icon="angle-down"></mdb-icon>
+              >{{ mObj.sentDate | date: "dd MMMM yyyy, HH:mm:ss" }}
+            </span>
+            <mdb-icon fas icon="angle-down"></mdb-icon>
           </h6>
           <p [ngStyle]="myStyles(mObj)">
-            {{ mObj.message }}
+            <!-- {{ mObj.message }} -->
+            {{ mObj.content }}
           </p>
         </div>
       </div>

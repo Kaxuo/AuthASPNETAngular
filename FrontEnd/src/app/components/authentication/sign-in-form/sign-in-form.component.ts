@@ -3,9 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { UserAuth } from 'src/app/Models/UserAuth';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { LocalStorageService } from 'ngx-webstorage';
 import { Router } from '@angular/router';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-sign-in-form',
@@ -21,7 +22,8 @@ export class SignInFormComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private LocalStorageService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private chatService: ChatService,
   ) {}
 
   ngOnInit(): void {
@@ -67,5 +69,14 @@ export class SignInFormComponent implements OnInit {
         )
       )
       .subscribe();
+    this.chatService
+      .Log(values.username)
+      .pipe(
+        take(1),
+        tap((data: any) => this.LocalStorageService.store('mongoID', data.body.id))
+      )
+      .subscribe((res: HttpResponse<any>) => {
+        console.log(res);
+      });
   }
 }
