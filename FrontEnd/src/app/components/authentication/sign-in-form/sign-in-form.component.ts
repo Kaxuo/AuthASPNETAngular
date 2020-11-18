@@ -7,6 +7,13 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { LocalStorageService } from 'ngx-webstorage';
 import { Router } from '@angular/router';
 import { ChatService } from 'src/app/services/chat.service';
+import {
+  BehaviorSubject,
+  interval,
+  Observable,
+  Subject,
+  throwError,
+} from 'rxjs';
 
 @Component({
   selector: 'app-sign-in-form',
@@ -18,12 +25,13 @@ export class SignInFormComponent implements OnInit {
   message: string;
   loading: boolean = false;
   he: boolean = true;
+  // test = new BehaviorSubject<number>(0);
 
   constructor(
     private auth: AuthService,
     private LocalStorageService: LocalStorageService,
     private router: Router,
-    private chatService: ChatService,
+    private chatService: ChatService
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +53,11 @@ export class SignInFormComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
+    // setInterval(() => {
+    //   this.test.next(this.testB++)
+    // }, 2000);
+
+    // this.test.pipe(tap(console.log)).subscribe()
   }
 
   sendData(values: UserAuth) {
@@ -73,7 +86,26 @@ export class SignInFormComponent implements OnInit {
       .Log(values.username)
       .pipe(
         take(1),
-        tap((data: any) => this.LocalStorageService.store('mongoID', data.body.id))
+        tap((data: any) =>
+          this.LocalStorageService.store('mongoID', data.body.id)
+        ),
+        catchError((err) => {
+          this.chatService
+            .CreateAccount({
+              username: values.username,
+              password: '12345',
+              firstname: 'Default',
+              lastName: 'Default',
+            })
+            .pipe(
+              take(1),
+              tap((data: any) => {
+                this.LocalStorageService.store('mongoID', data.body.id);
+              })
+            )
+            .subscribe();
+          return throwError(err);
+        })
       )
       .subscribe((res: HttpResponse<any>) => {
         console.log(res);

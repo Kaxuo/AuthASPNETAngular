@@ -22,6 +22,7 @@ export class ChatComponent implements OnInit {
   textbox: FormGroup;
   loading: boolean;
   onlineUsers: any[];
+  token: string = this.LocalStorageService.retrieve('mongoID');
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
 
@@ -68,22 +69,26 @@ export class ChatComponent implements OnInit {
       .GetAllConnectedUserMongo()
       .pipe(
         map((connectedUsers: any) => {
-          return connectedUsers.filter((users) => users.userId != 'null');
+          return connectedUsers;
         })
       )
       .subscribe((connectedUsers: any) => {
         this.onlineUsers = connectedUsers;
-        console.log(connectedUsers);
+
         // SingleUser //
-        this.chatService.retrieveSingleUser().subscribe((data: any) => {
-          console.log(data.userId);
+        this.chatService.retrieveSingleUser().subscribe((user: any) => {
+          this.switchOnline(user);
         });
       });
 
+    // Dynamically track online/offline online users
+    this.chatService.retrieveUsers().subscribe();
     this.chatService
-      .retrieveUsers()
-      .pipe(map((x: any) => x.users.filter((x) => x.userId != 'null')))
-      .subscribe();
+      .removeUser()
+      .pipe()
+      .subscribe((user) => {
+        this.switchOffline(user.id);
+      });
 
     // Owner Session //
     this.auth
@@ -132,12 +137,16 @@ export class ChatComponent implements OnInit {
     this.msgInboxArray.push({
       senderName: obj.senderName,
       content: obj.content,
-      sentDate: obj.sentDate,
+      sentDate: new Date(),
     });
   }
 
-  switchStatus(el: any) {
+  switchOnline(el) {
     this.onlineUsers.push(el);
+  }
+
+  switchOffline(el) {
+    this.onlineUsers = this.onlineUsers.filter((users) => users.userId !== el);
   }
 
   // changed

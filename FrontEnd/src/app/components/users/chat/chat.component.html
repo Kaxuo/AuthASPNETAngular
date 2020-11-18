@@ -1,27 +1,29 @@
 <div class="box">
   <div class="chatbox">
     <div class="left" *ngIf="users && loading == false">
-      <h4>Hello {{ username }}</h4>
+      <h4 >Hello {{ username }}</h4>
       <h6>
-        <span *ngIf="onlineUsers">{{ onlineUsers.length || "??" }}</span> users
-        online
+        <span *ngIf="onlineUsers">{{ onlineUsers.length - 1 || "0" }}</span>
+        users online
       </h6>
       <div class="allUsers">
         <div class="users" *ngFor="let el of users">
-          <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
-          <div class="status">
-            <span>{{ el.username }}</span>
-            <span
-              *ngIf="onlineCheck(el)"
-              (click)="switchStatus(el)"
-              class="stat"
-            >
-              <span class="circle"></span>Online</span
-            >
-            <span *ngIf="!onlineCheck(el)" class="stat">
-              <span class="red"></span>Offline</span
-            >
-          </div>
+          <ng-container *ngIf="token !== el.id">
+            <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
+            <div class="status">
+              <span>{{ el.username }}</span>
+              <span
+                *ngIf="onlineCheck(el)"
+                (click)="switchStatus(el)"
+                class="stat"
+              >
+                <span class="circle"></span>Online</span
+              >
+              <span *ngIf="!onlineCheck(el)" class="stat">
+                <span class="red"></span>Offline</span
+              >
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>

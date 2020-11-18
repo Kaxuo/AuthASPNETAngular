@@ -20,30 +20,46 @@ export class ChatService {
 
   // Charlotte //
 
-  readonly GET_URL = 'https://localhost:5001/api/chat/public';
+  readonly URL = `https://localhost:5001/api`;
   readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
 
-  private connection: any;
+  private connection: any = new signalR.HubConnectionBuilder()
+    .withUrl(`https://localhost:5001/chat?userId=default`, {
+      skipNegotiation: true,
+      transport: signalR.HttpTransportType.WebSockets,
+    }) // mapping to the chathub as in startup.cs
+    .withAutomaticReconnect()
+    .configureLogging(signalR.LogLevel.Information)
+    .build();
 
-  private receivedMessageObject: any = { user: 'lmao' };
+  private receivedMessageObject: any = {};
   private sharedObj = new Subject<MessageReceived>();
 
-  private singleUser: any = { userId: 'lmao' };
+  private singleUser: any = {};
   private sharedSingle = new Subject<any>();
 
-  private usersConnection: any = { users: 'lmao' };
+  private usersConnected: any = {};
   private sharedUsers = new Subject<any>();
+
+  private removedUsers = new Subject<any>();
 
   constructor(
     private http: HttpClient,
     private LocalStorageService: LocalStorageService
   ) {
-    // this.connection.on('ReceiveOne', (user, message) => {
-    //   this.mapReceivedMessage(user, message);
-    // });
     this.isAuthenticated().subscribe((authenticated) => {
       if (authenticated) {
         this.start();
+        this.connection.on('userConnectedList', (users) => {
+          this.usersConnecting(users);
+        });
+        this.connection.on('updatedConnectedUser', (user) => {
+          this.singleUserConnected(user);
+        });
+        this.connection.on('newDisconnectedUser', (user) => {
+          this.removedUsers.next(user);
+          this.removeConnected(user.id).subscribe();
+        });
       }
     });
   }
@@ -60,30 +76,22 @@ export class ChatService {
           transport: signalR.HttpTransportType.WebSockets,
         }
       ) // mapping to the chathub as in startup.cs
+      .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
     try {
       await this.connection.start();
-      this.connection.on(
-        'receiveNewPublicMessage',
-        (user, message, sentDate) => {
-          this.mapReceivedMessage(user, message, sentDate);
-        }
-      );
-      this.connection.on('updatedConnectedUser', (user) => {
-        this.singleUserConnected(user);
-      });
       this.connection.on('userConnectedList', (users) => {
         this.usersConnecting(users);
       });
-
-      this.connection.onclose(async (user) => {
-        console.log('someonedisconnectedCLOSE');
-        this.isAuthenticated().subscribe((authenticated) => {
-          if (authenticated) {
-            setTimeout(() => this.start(), 1000);
-          }
-        });
+      this.connection.on('newConnectedUser', (user) => {
+        this.singleUserConnected(user);
+      });
+      this.connection.on('receiveNewPublicMessage', (message) => {
+        this.mapReceivedMessage(message);
+      });
+      this.connection.on('updatedConnectedUser', (user) => {
+        this.singleUserConnected(user);
       });
       console.log('connected');
     } catch (err) {
@@ -93,34 +101,28 @@ export class ChatService {
   }
 
   // Receive message and put them as the next value in the river //
-  private mapReceivedMessage(user: string, message: string, date: Date): void {
-    this.receivedMessageObject.senderName = user;
-    this.receivedMessageObject.content = message;
-    this.receivedMessageObject.sentDate = date;
+  private mapReceivedMessage(message: string): void {
+    this.receivedMessageObject = message;
     this.sharedObj.next(this.receivedMessageObject);
   }
 
   // Get the user that connects
-  private singleUserConnected(userId: string) {
-    this.singleUser.userId = userId;
+  private singleUserConnected(id: string) {
+    this.singleUser = id;
     this.sharedSingle.next(this.singleUser);
   }
 
   // Get all the users and put them as the next value in the river if someone connects
   private usersConnecting(users: string) {
-    this.usersConnection.users = users;
-    this.sharedUsers.next(this.usersConnection);
-  }
-
-  private userDisconnecting(user: string) {
-    this.usersConnection.userId = user;
+    this.usersConnected = users;
+    this.sharedUsers.next(this.usersConnected);
   }
 
   /* ****************************** Public Methods **************************************** */
 
   // Calls the controller method
   public GetMessage() {
-    return this.http.get(this.GET_URL);
+    return this.http.get(`${this.URL}/chat/public`);
   }
 
   public broadcastMessage(msgDto: any) {
@@ -135,37 +137,59 @@ export class ChatService {
     return this.sharedObj.asObservable();
   }
 
-  public retrieveSingleUser(): Observable<MessageReceived> {
+  public retrieveSingleUser(): Observable<any> {
     return this.sharedSingle.asObservable();
   }
 
-  public retrieveUsers(): Observable<MessageReceived> {
+  public retrieveUsers(): Observable<any> {
     return this.sharedUsers.asObservable();
   }
 
+  public removeUser(): Observable<any> {
+    this.removedUsers.next('lmao');
+    return this.removedUsers.asObservable();
+  }
+
   public disconnectUser() {
-    this.connection.stop();
+    if (this.connection) {
+      this.connection.stop();
+      this.connection = new signalR.HubConnectionBuilder()
+        .withUrl(`https://localhost:5001/chat?userId=default`, {
+          skipNegotiation: true,
+          transport: signalR.HttpTransportType.WebSockets,
+        }) // mapping to the chathub as in startup.cs
+        .withAutomaticReconnect()
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+      this.removeConnected(
+        this.LocalStorageService.retrieve('mongoID')
+      ).subscribe();
+    }
   }
 
   // Charlotte
   GetAllUserMongo() {
-    return this.http.get('https://localhost:5001/api/account/');
+    return this.http.get(`${this.URL}/account`);
   }
 
   GetAllConnectedUserMongo() {
-    return this.http.get('https://localhost:5001/api/account/all');
+    return this.http.get(`${this.URL}/account/all`);
   }
 
   CreateAccount(body) {
-    return this.http.post('https://localhost:5001/api/account/', body, {
+    return this.http.post(`${this.URL}/account`, body, {
       observe: 'response',
     });
   }
 
   Log(body) {
-    return this.http.get(`https://localhost:5001/api/account/login/${body}`, {
+    return this.http.get(`${this.URL}/account/login/${body}`, {
       observe: 'response',
     });
+  }
+
+  removeConnected(id) {
+    return this.http.get(`${this.URL}/account/remove/${id}`);
   }
 
   observeToken(): Observable<string> {

@@ -43,8 +43,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {}
 
   logout() {
-    this.auth.logout();
     this.ChatService.disconnectUser();
+    this.auth.logout();
   }
 
   searchValue(el) {
