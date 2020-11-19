@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import * as signalR from '@microsoft/signalr'; // import signalR
 import { HttpClient } from '@angular/common/http';
 import { MessageReceived } from '../Models/Messages';
-import { BehaviorSubject, merge, Observable, of, Subject } from 'rxjs';
+import { merge, Observable, of, Subject } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { map } from 'rxjs/operators';
 
@@ -32,7 +32,7 @@ export class ChatService {
     .configureLogging(signalR.LogLevel.Information)
     .build();
 
-  private receivedMessageObject: any = {};
+  private receivedMessageObject: MessageReceived;
   private sharedObj = new Subject<MessageReceived>();
 
   private singleUser: any = {};
@@ -101,7 +101,7 @@ export class ChatService {
   }
 
   // Receive message and put them as the next value in the river //
-  private mapReceivedMessage(message: string): void {
+  private mapReceivedMessage(message: MessageReceived): void {
     this.receivedMessageObject = message;
     this.sharedObj.next(this.receivedMessageObject);
   }
@@ -190,6 +190,10 @@ export class ChatService {
 
   removeConnected(id) {
     return this.http.get(`${this.URL}/account/remove/${id}`);
+  }
+
+  GetAllRoom() {
+    return this.http.get(`${this.URL}/chat/room`);
   }
 
   observeToken(): Observable<string> {

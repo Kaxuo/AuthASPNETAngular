@@ -47,6 +47,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { KanbanComponent } from './components/manager/projects/kanban/kanban.component';
 import { ChatComponent } from './components/users/chat/chat.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { RoomComponent } from './components/users/chat/room/room.component';
+import { MatInputModule } from '@angular/material/input';
+import { OneononeComponent } from './components/users/chat/oneonone/oneonone.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +82,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     UsersDataComponent,
     KanbanComponent,
     ChatComponent,
+    RoomComponent,
+    OneononeComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,6 +100,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     BrowserAnimationsModule,
     NgxWebstorageModule.forRoot(),
     DragDropModule,
+    MatInputModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

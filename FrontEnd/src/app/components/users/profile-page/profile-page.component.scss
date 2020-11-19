@@ -28,7 +28,8 @@ button {
 }
 
 .total {
-  height: 100vh;
+  min-height: 100vh;
+  max-height: 300vh;
   display: flex;
   justify-content: center;
   align-items: center;

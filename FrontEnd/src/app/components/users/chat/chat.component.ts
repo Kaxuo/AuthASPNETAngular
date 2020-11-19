@@ -7,6 +7,8 @@ import { map, take } from 'rxjs/operators';
 import { colors } from './colors';
 import { ChatService } from 'src/app/services/chat.service';
 import { LocalStorageService } from 'ngx-webstorage';
+import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
+import { Rooms } from 'src/app/models/ChatModels/Rooms';
 
 @Component({
   selector: 'app-chat',
@@ -21,7 +23,8 @@ export class ChatComponent implements OnInit {
   msgInboxArray: MessageReceived[] = [];
   textbox: FormGroup;
   loading: boolean;
-  onlineUsers: any[];
+  onlineUsers: ConnectedUsers[] = [];
+  rooms: Rooms[] = [];
   token: string = this.LocalStorageService.retrieve('mongoID');
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
@@ -41,6 +44,8 @@ export class ChatComponent implements OnInit {
         this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
       }, 400);
     });
+
+    // calls the service method to get the new messages sent
     this.chatService
       .retrieveMappedObject()
       .subscribe((receivedObj: MessageReceived) => {
@@ -48,7 +53,7 @@ export class ChatComponent implements OnInit {
           this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
         }, 200);
         this.addToInbox(receivedObj);
-      }); // calls the service method to get the new messages sent
+      });
 
     // Users //
     this.chatService
@@ -68,17 +73,19 @@ export class ChatComponent implements OnInit {
     this.chatService
       .GetAllConnectedUserMongo()
       .pipe(
-        map((connectedUsers: any) => {
+        map((connectedUsers: ConnectedUsers[]) => {
           return connectedUsers;
         })
       )
-      .subscribe((connectedUsers: any) => {
+      .subscribe((connectedUsers: ConnectedUsers[]) => {
         this.onlineUsers = connectedUsers;
 
         // SingleUser //
-        this.chatService.retrieveSingleUser().subscribe((user: any) => {
-          this.switchOnline(user);
-        });
+        this.chatService
+          .retrieveSingleUser()
+          .subscribe((user: ConnectedUsers) => {
+            this.switchOnline(user);
+          });
       });
 
     // Dynamically track online/offline online users
@@ -99,6 +106,14 @@ export class ChatComponent implements OnInit {
     this.textbox = new FormGroup({
       message: new FormControl('', [Validators.required]),
     });
+
+    // Rooms //
+    this.chatService
+      .GetAllRoom()
+      .pipe(take(1))
+      .subscribe((rooms: Rooms[]) => {
+        this.rooms = rooms;
+      });
   }
 
   // Changed

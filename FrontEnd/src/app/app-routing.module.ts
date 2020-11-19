@@ -27,6 +27,8 @@ import { ChartComponent } from './components/users/chart/chart.component';
 import { UsersDataComponent } from './components/manager/users/users-data/users-data.component';
 import { KanbanComponent } from './components/manager/projects/kanban/kanban.component';
 import { ChatComponent } from './components/users/chat/chat.component';
+import { RoomComponent } from './components/users/chat/room/room.component';
+import { OneononeComponent } from './components/users/chat/oneonone/oneonone.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -56,6 +58,16 @@ const routes: Routes = [
   {
     path: 'chat',
     component: ChatComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'chat/room/:id',
+    component: RoomComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'chat/user/:id',
+    component: OneononeComponent,
     canActivate: [AuthenticationGuard],
   },
   {

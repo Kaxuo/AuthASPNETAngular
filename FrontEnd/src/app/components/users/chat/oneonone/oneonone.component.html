@@ -1,0 +1,380 @@
+<div class="page">
+    <div class="box" *ngIf="loading == false">
+      <div class="headNav">
+        <mdb-icon
+          routerLink="/chat"
+          fas
+          class="icon"
+          icon="angle-double-left"
+        ></mdb-icon>
+      </div>
+      <div class="board">
+        <div class="leftside">
+          <div class="top">
+            <h3>Hello Freya</h3>
+          </div>
+          <div class="middleSection"></div>
+          <div class="input">
+            <mat-form-field class="search">
+              <mat-label>Search Rooms</mat-label>
+              <input
+                #input
+                (keyup)="searchRoom(input.value)"
+                matInput
+                placeholder="Rooms's Name"
+                value=""
+              />
+            </mat-form-field>
+          </div>
+          <h4 style="text-align: center">Rooms</h4>
+          <div class="rooms">
+            <div class="room" *ngFor="let el of show">
+              <mdb-icon class="icon" fas icon="list-alt"></mdb-icon>
+              <h5>{{ el.roomName | titlecase }}</h5>
+            </div>
+          </div>
+          <div class="exit">
+            <h5 routerLink="/chat">Exit Room</h5>
+          </div>
+        </div>
+        <div class="middleSide">
+          <div class="top">
+            <h3>Talking with Freya</h3>
+          </div>
+          <div #container class="middleSection">
+            <div class="singleMessage" *ngFor="let mObj of messages">
+              <h6>
+                <!-- {{ mObj.user }} -->
+                {{ mObj.senderName }}
+                <!-- <span style="color: grey">{{ mObj.dateCreated | date: "dd MMMM yyyy, HH:mm:ss" }} </span> -->
+                <span style="color: grey"
+                  >{{ mObj.sentDate | date: "dd MMMM yyyy, HH:mm:ss" }}
+                </span>
+                <mdb-icon fas icon="angle-down"></mdb-icon>
+              </h6>
+              <p>
+                <!-- {{ mObj.message }} -->
+                {{ mObj.content }}
+              </p>
+            </div>
+          </div>
+          <div class="bottomSection">
+            <textarea
+              class="text"
+              #message
+              id="textarea1"
+              style="resize: none"
+              type="text"
+              placeholder="Write your message"
+              (keydown)="triggerFunction($event)"
+            ></textarea>
+            <button [disabled]="true" type="submit">
+              <mdb-icon fas icon="paper-plane"></mdb-icon>
+            </button>
+          </div>
+        </div>
+        <div class="rightSide">
+          <div class="topSide">
+            <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
+            <h4>Nguyen Hoang</h4>
+          </div>
+          <div class="middleSection">
+            <h5>Room's Users</h5>
+            <div class="user">
+              <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
+              <h6>Nguyen Hoang</h6>
+            </div>
+          </div>
+          <div class="bottomSection">
+            <div class="input">
+              <mat-form-field class="search">
+                <mat-label>Search User</mat-label>
+                <input
+                  #input2
+                  (keyup)="searchUser(input2.value)"
+                  matInput
+                  placeholder="User's Name"
+                  value=""
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- SKeleton  -->
+    <div class="box" *ngIf="loading != false">
+      <div class="headNav">
+        <mdb-icon
+          routerLink="/chat"
+          fas
+          class="icon"
+          icon="angle-double-left"
+        ></mdb-icon>
+      </div>
+      <div class="board">
+        <div class="leftside">
+          <div class="top">
+            <h3>Hello !!</h3>
+          </div>
+          <div class="middleSection"></div>
+          <div class="input">
+            <mat-form-field class="search">
+              <mat-label> Unknown</mat-label>
+              <input matInput placeholder="Rooms's Name" value="" />
+            </mat-form-field>
+          </div>
+          <h4 style="text-align: center">Rooms</h4>
+          <div class="rooms">
+            <div class="room" style="margin-left: 10px">
+              <ngx-skeleton-loader
+                style="transform: scale(1.3)"
+                count="1"
+                appearance="circle"
+                animation="progress"
+                [theme]="{
+                  'border-radius': '5px',
+                  transform: 'scale(1.1)',
+                  'background-color': 'lightgrey',
+                  border: '1px solid white'
+                }"
+              ></ngx-skeleton-loader>
+              <div style="width: 90px; margin-left: 10px">
+                <span>
+                  <ngx-skeleton-loader
+                    animation="progress"
+                    [theme]="{
+                      'background-color': 'lightgrey'
+                    }"
+                  ></ngx-skeleton-loader>
+                </span>
+              </div>
+            </div>
+            <div class="room" style="margin-left: 10px">
+              <ngx-skeleton-loader
+                style="transform: scale(1.3)"
+                count="1"
+                appearance="circle"
+                animation="progress"
+                [theme]="{
+                  'border-radius': '5px',
+                  transform: 'scale(1.1)',
+                  'background-color': 'lightgrey',
+                  border: '1px solid white'
+                }"
+              ></ngx-skeleton-loader>
+              <div style="width: 90px; margin-left: 10px">
+                <span>
+                  <ngx-skeleton-loader
+                    animation="progress"
+                    [theme]="{
+                      'background-color': 'lightgrey'
+                    }"
+                  ></ngx-skeleton-loader>
+                </span>
+              </div>
+            </div>
+            <div class="room" style="margin-left: 10px">
+              <ngx-skeleton-loader
+                style="transform: scale(1.3)"
+                count="1"
+                appearance="circle"
+                animation="progress"
+                [theme]="{
+                  'border-radius': '5px',
+                  transform: 'scale(1.1)',
+                  'background-color': 'lightgrey',
+                  border: '1px solid white'
+                }"
+              ></ngx-skeleton-loader>
+              <div style="width: 90px; margin-left: 10px">
+                <span>
+                  <ngx-skeleton-loader
+                    animation="progress"
+                    [theme]="{
+                      'background-color': 'lightgrey'
+                    }"
+                  ></ngx-skeleton-loader>
+                </span>
+              </div>
+            </div>
+            <div class="room" style="margin-left: 10px">
+              <ngx-skeleton-loader
+                style="transform: scale(1.3)"
+                count="1"
+                appearance="circle"
+                animation="progress"
+                [theme]="{
+                  'border-radius': '5px',
+                  transform: 'scale(1.1)',
+                  'background-color': 'lightgrey',
+                  border: '1px solid white'
+                }"
+              ></ngx-skeleton-loader>
+              <div style="width: 90px; margin-left: 10px">
+                <span>
+                  <ngx-skeleton-loader
+                    animation="progress"
+                    [theme]="{
+                      'background-color': 'lightgrey'
+                    }"
+                  ></ngx-skeleton-loader>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="exit">
+            <h5 routerLink="/chat">Exit Room</h5>
+          </div>
+        </div>
+        <div class="middleSide">
+          <div class="top">
+            <h3>A moment please</h3>
+          </div>
+          <div #container class="middleSection">
+            <div style="margin: 10px 10px">
+              <span>
+                <ngx-skeleton-loader
+                  count="3"
+                  animation="progress"
+                  [theme]="{
+                    width: '48vw',
+                    height: '150px',
+                    'background-color': 'lightgrey',
+                    border: '1px solid white'
+                  }"
+                ></ngx-skeleton-loader>
+              </span>
+            </div>
+          </div>
+          <div class="bottomSection">
+            <textarea
+              class="text"
+              #message
+              id="textarea1"
+              style="resize: none"
+              type="text"
+              placeholder="Write your message"
+              (keydown)="triggerFunction($event)"
+            ></textarea>
+            <button [disabled]="true" type="submit">
+              <mdb-icon fas icon="paper-plane"></mdb-icon>
+            </button>
+          </div>
+        </div>
+        <div class="rightSide">
+          <div class="topSide">
+            <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
+            <h4>Nguyen Hoang</h4>
+          </div>
+          <div class="middleSection">
+            <h5>Room's Users</h5>
+            <div class="user">
+              <ngx-skeleton-loader
+                style="transform: scale(1.3)"
+                count="1"
+                appearance="circle"
+                animation="pulse"
+                [theme]="{
+                  'background-color': 'lightgrey',
+                  transform: 'scale(1.1)'
+                }"
+              ></ngx-skeleton-loader>
+              <div style="width: 90px; margin-left: 10px">
+                <span>
+                  <ngx-skeleton-loader
+                    animation="pulse"
+                    [theme]="{
+                      'background-color': 'lightgrey'
+                    }"
+                  ></ngx-skeleton-loader>
+                </span>
+              </div>
+            </div>
+            <div class="user">
+              <ngx-skeleton-loader
+                style="transform: scale(1.3)"
+                count="1"
+                appearance="circle"
+                animation="pulse"
+                [theme]="{
+                  'background-color': 'lightgrey',
+                  transform: 'scale(1.1)'
+                }"
+              ></ngx-skeleton-loader>
+              <div style="width: 90px; margin-left: 10px">
+                <span>
+                  <ngx-skeleton-loader
+                    animation="pulse"
+                    [theme]="{
+                      'background-color': 'lightgrey'
+                    }"
+                  ></ngx-skeleton-loader>
+                </span>
+              </div>
+            </div>
+            <div class="user">
+              <ngx-skeleton-loader
+                style="transform: scale(1.3)"
+                count="1"
+                appearance="circle"
+                animation="pulse"
+                [theme]="{
+                  'background-color': 'lightgrey',
+                  transform: 'scale(1.1)'
+                }"
+              ></ngx-skeleton-loader>
+              <div style="width: 90px; margin-left: 10px">
+                <span>
+                  <ngx-skeleton-loader
+                    animation="pulse"
+                    [theme]="{
+                      'background-color': 'lightgrey'
+                    }"
+                  ></ngx-skeleton-loader>
+                </span>
+              </div>
+            </div>
+            <div class="user">
+              <ngx-skeleton-loader
+                style="transform: scale(1.3)"
+                count="1"
+                appearance="circle"
+                animation="pulse"
+                [theme]="{
+                  'background-color': 'lightgrey',
+                  transform: 'scale(1.1)'
+                }"
+              ></ngx-skeleton-loader>
+              <div style="width: 90px; margin-left: 10px">
+                <span>
+                  <ngx-skeleton-loader
+                    animation="pulse"
+                    [theme]="{
+                      'background-color': 'lightgrey'
+                    }"
+                  ></ngx-skeleton-loader>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="bottomSection">
+            <div class="input">
+              <mat-form-field class="search">
+                <mat-label>Search User</mat-label>
+                <input
+                  #input2
+                  (keyup)="searchUser(input2.value)"
+                  matInput
+                  placeholder="User's Name"
+                  value=""
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

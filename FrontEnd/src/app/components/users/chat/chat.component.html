@@ -1,13 +1,17 @@
 <div class="box">
   <div class="chatbox">
     <div class="left" *ngIf="users && loading == false">
-      <h4 >Hello {{ username }}</h4>
+      <h4>Hello {{ username }}</h4>
       <h6>
         <span *ngIf="onlineUsers">{{ onlineUsers.length - 1 || "0" }}</span>
         users online
       </h6>
       <div class="allUsers">
-        <div class="users" *ngFor="let el of users">
+        <div
+          class="users"
+          *ngFor="let el of users"
+          [routerLink]="['user', el.id]"
+        >
           <ng-container *ngIf="token !== el.id">
             <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
             <div class="status">
@@ -24,6 +28,21 @@
               >
             </div>
           </ng-container>
+        </div>
+      </div>
+      <hr />
+      <h3>Rooms</h3>
+      <div class="rooms">
+        <div
+          class="room"
+          *ngFor="let el of rooms"
+          [routerLink]="['room', el.id]"
+        >
+          <mdb-icon class="icon" fas icon="comment"></mdb-icon>
+          <div class="status">
+            <span> {{ el.roomName }} </span>
+            <span class="stat">{{ el.roomUsers.length }} users</span>
+          </div>
         </div>
       </div>
     </div>
