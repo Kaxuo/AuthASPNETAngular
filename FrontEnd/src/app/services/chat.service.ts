@@ -2,9 +2,12 @@ import { Injectable, OnInit } from '@angular/core';
 import * as signalR from '@microsoft/signalr'; // import signalR
 import { HttpClient } from '@angular/common/http';
 import { MessageReceived } from '../Models/Messages';
+import { ConnectedUsers } from '../Models/ChatModels/ConnectedUsers';
+import { Rooms } from '../Models/ChatModels/Rooms';
 import { merge, Observable, of, Subject } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { map } from 'rxjs/operators';
+import { MongoUsers } from '../Models/ChatModels/MongoUsers';
 
 @Injectable({
   providedIn: 'root',
@@ -35,11 +38,17 @@ export class ChatService {
   private receivedMessageObject: MessageReceived;
   private sharedObj = new Subject<MessageReceived>();
 
-  private singleUser: any = {};
+  private singleUser: ConnectedUsers;
   private sharedSingle = new Subject<any>();
 
-  private usersConnected: any = {};
+  private usersConnected: ConnectedUsers[];
   private sharedUsers = new Subject<any>();
+
+  private roomAdded: Rooms;
+  private sharedRooms = new Subject<any>();
+
+  private userJoinRoom: MongoUsers;
+  private sharedUsersInRoom = new Subject<any>();
 
   private removedUsers = new Subject<any>();
 
@@ -58,7 +67,7 @@ export class ChatService {
         });
         this.connection.on('newDisconnectedUser', (user) => {
           this.removedUsers.next(user);
-          this.removeConnected(user.id).subscribe();
+          this.RemoveConnected(user.id).subscribe();
         });
       }
     });
@@ -93,6 +102,16 @@ export class ChatService {
       this.connection.on('updatedConnectedUser', (user) => {
         this.singleUserConnected(user);
       });
+      this.connection.on('receiveNewRoom', (room) => {
+        this.addingRoom(room);
+      });
+      this.connection.on('newJoinRoom', (user: MongoUsers) => {
+        console.log('newJoinrooms');
+        this.userJoinedRoom(user);
+      });
+      this.connection.on('joinRoomSuccess', (user) => {
+        console.log('joinroomsuccess');
+      });
       console.log('connected');
     } catch (err) {
       console.log(err);
@@ -107,13 +126,23 @@ export class ChatService {
   }
 
   // Get the user that connects
-  private singleUserConnected(id: string) {
-    this.singleUser = id;
+  private singleUserConnected(user: ConnectedUsers) {
+    this.singleUser = user;
     this.sharedSingle.next(this.singleUser);
   }
 
+  private addingRoom(room: Rooms) {
+    this.roomAdded = room;
+    this.sharedRooms.next(this.roomAdded);
+  }
+
+  private userJoinedRoom(user: MongoUsers) {
+    this.userJoinRoom = user;
+    this.sharedUsersInRoom.next(this.userJoinRoom);
+  }
+
   // Get all the users and put them as the next value in the river if someone connects
-  private usersConnecting(users: string) {
+  private usersConnecting(users: ConnectedUsers[]) {
     this.usersConnected = users;
     this.sharedUsers.next(this.usersConnected);
   }
@@ -137,17 +166,24 @@ export class ChatService {
     return this.sharedObj.asObservable();
   }
 
-  public retrieveSingleUser(): Observable<any> {
+  public retrieveSingleUser(): Observable<ConnectedUsers> {
     return this.sharedSingle.asObservable();
   }
 
-  public retrieveUsers(): Observable<any> {
+  public retrieveUsers(): Observable<ConnectedUsers[]> {
     return this.sharedUsers.asObservable();
   }
 
+  public retrieveRoom(): Observable<Rooms> {
+    return this.sharedRooms.asObservable();
+  }
+
   public removeUser(): Observable<any> {
-    this.removedUsers.next('lmao');
     return this.removedUsers.asObservable();
+  }
+
+  public retrieveUsersInRoom(): Observable<any> {
+    return this.sharedUsersInRoom.asObservable();
   }
 
   public disconnectUser() {
@@ -161,7 +197,7 @@ export class ChatService {
         .withAutomaticReconnect()
         .configureLogging(signalR.LogLevel.Information)
         .build();
-      this.removeConnected(
+      this.RemoveConnected(
         this.LocalStorageService.retrieve('mongoID')
       ).subscribe();
     }
@@ -188,12 +224,24 @@ export class ChatService {
     });
   }
 
-  removeConnected(id) {
+  RemoveConnected(id) {
     return this.http.get(`${this.URL}/account/remove/${id}`);
   }
 
   GetAllRoom() {
     return this.http.get(`${this.URL}/chat/room`);
+  }
+
+  GetSingleRoom(roomId) {
+    return this.http.get(`${this.URL}/chat/room/${roomId}`);
+  }
+
+  AddRoom(body) {
+    return this.http.post(`${this.URL}/chat/room/new`, body);
+  }
+
+  joinRoom(roomId, body) {
+    return this.http.post(`${this.URL}/chat/room/${roomId}/join`, body);
   }
 
   observeToken(): Observable<string> {

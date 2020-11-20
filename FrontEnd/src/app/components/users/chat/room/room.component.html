@@ -11,7 +11,7 @@
     <div class="board">
       <div class="leftside">
         <div class="top">
-          <h3>Hello Freya</h3>
+          <h3>Hello {{ user.username }}</h3>
         </div>
         <div class="input">
           <mat-form-field class="search">
@@ -27,21 +27,24 @@
         </div>
         <h4 style="text-align: center">Rooms</h4>
         <div class="rooms">
-          <div class="room" *ngFor="let el of show">
+          <div class="room" *ngFor="let el of showRooms">
             <mdb-icon class="icon" fas icon="list-alt"></mdb-icon>
             <h5>{{ el.roomName | titlecase }}</h5>
           </div>
         </div>
-        <div class="exit">
-          <h5 routerLink="/chat">Exit Room</h5>
+        <div routerLink="/chat" class="exit">
+          <h5>Exit Room</h5>
         </div>
       </div>
-      <div class="middleSide">
+      <div class="middleSide" *ngIf="singleRoom">
         <div class="top">
-          <h3>Room Name</h3>
+          <h3>{{ singleRoom.roomName }}</h3>
         </div>
         <div #container class="middleSection">
-          <div class="singleMessage" *ngFor="let mObj of messages">
+          <div
+            class="singleMessage"
+            *ngFor="let mObj of singleRoom.roomMessages"
+          >
             <h6>
               <!-- {{ mObj.user }} -->
               {{ mObj.senderName }}
@@ -75,13 +78,13 @@
       <div class="rightSide">
         <div class="topSide">
           <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
-          <h4>Nguyen Hoang</h4>
+          <h4>{{ user.firstName }} {{ user.lastName }}</h4>
         </div>
         <div class="middleSection">
           <h5>Room's Users</h5>
-          <div class="user">
+          <div class="user" *ngFor="let el of singleRoom.roomUsers">
             <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
-            <h6>Nguyen Hoang</h6>
+            <h6>{{ el.username }}</h6>
           </div>
         </div>
         <div class="bottomSection">

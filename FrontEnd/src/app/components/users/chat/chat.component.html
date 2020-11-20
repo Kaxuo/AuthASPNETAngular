@@ -31,13 +31,17 @@
         </div>
       </div>
       <hr />
-      <h3>Rooms</h3>
+      <h3>
+        Rooms<mdb-icon
+          *ngIf="object.role == 'Admin'"
+          (click)="showModal()"
+          class="add"
+          fas
+          icon="plus-circle"
+        ></mdb-icon>
+      </h3>
       <div class="rooms">
-        <div
-          class="room"
-          *ngFor="let el of rooms"
-          [routerLink]="['room', el.id]"
-        >
+        <div class="room" *ngFor="let el of rooms" (click)="joinRoom(el)">
           <mdb-icon class="icon" fas icon="comment"></mdb-icon>
           <div class="status">
             <span> {{ el.roomName }} </span>
@@ -238,3 +242,65 @@
     <!-- End Skeleton -->
   </div>
 </div>
+
+<!-- Modal Content -->
+<form
+  *ngIf="addRoom"
+  [formGroup]="addRoom"
+  (ngSubmit)="add(addRoom.value)"
+  class="addRoom"
+  [ngClass]="{ show: isShown }"
+>
+  <div class="addRoom-content">
+    <h2>Add Room</h2>
+    <div class="md-form">
+      <input
+        type="email"
+        id="Room"
+        class="form-control"
+        mdbInput
+        formControlName="roomName"
+        style="color: white"
+      />
+      <label for="Room">Room</label>
+    </div>
+    <em
+      style="margin: 20px 100px"
+      *ngIf="
+        addRoom.get('roomName').hasError('required') &&
+        addRoom.get('roomName').touched
+      "
+      >Required</em
+    >
+    <em
+      style="margin: 20px 100px"
+      *ngIf="
+        addRoom.get('roomName').hasError('maxlength') &&
+        addRoom.get('roomName').touched
+      "
+      >Too Long !
+    </em>
+    <em style="margin: 20px 100px" *ngIf="error">
+      {{error}}
+    </em>
+    <button
+      [disabled]="addRoom.invalid"
+      [ngClass]="{ invalid: addRoom.invalid }"
+      type="submit"
+      class="animated"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Add
+    </button>
+    <button (click)="closeModal()" type="submit" class="animated">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Close
+    </button>
+  </div>
+</form>

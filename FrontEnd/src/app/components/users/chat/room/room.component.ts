@@ -1,6 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Rooms } from 'src/app/Models/ChatModels/Rooms';
-import { MessageReceived } from 'src/app/Models/Messages';
+import { RoomUsers } from 'src/app/Models/ChatModels/RoomUsers';
+import { UserReceived } from 'src/app/Models/UsersReceived';
+import { AuthService } from 'src/app/services/auth.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-room',
@@ -8,60 +12,48 @@ import { MessageReceived } from 'src/app/Models/Messages';
   styleUrls: ['./room.component.scss'],
 })
 export class RoomComponent implements OnInit {
-  loading: boolean = false;
-  rooms: Rooms[] = [
-    {
-      id: 'lmao',
-      roomName: 'Fish',
-    },
-    {
-      id: 'lmao',
-      roomName: 'Hunt',
-    },
-    {
-      id: 'lmao',
-      roomName: 'Build',
-    },
-    {
-      id: 'lmao',
-      roomName: 'Gaming',
-    },
-    {
-      id: 'lmao',
-      roomName: 'Camping',
-    },
-  ];
-
-  messages: MessageReceived[] = [
-    {
-      senderName: 'Bob',
-      sentDate: new Date(),
-      content: "Hello man , it's your boy",
-    },
-    {
-      senderName: 'Kain',
-      sentDate: new Date(),
-      content: "azeazn , it's your boy",
-    },
-    {
-      senderName: 'Kayle',
-      sentDate: new Date(),
-      content: "Hello man , it'sazeazer boy",
-    },
-    {
-      senderName: 'Jin',
-      sentDate: new Date(),
-      content: "Hello man , it's your azeaz",
-    },
-  ];
-
-  show: Rooms[] = [...this.rooms];
+  object = this.auth.decryptedAndDecodedToken();
+  loading: boolean;
+  singleRoom: Rooms;
+  user: UserReceived;
+  rooms: Rooms[] = [];
+  showRooms: Rooms[] = [];
 
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
-  constructor() {}
+  constructor(
+    private chatService: ChatService,
+    private route: ActivatedRoute,
+    private auth: AuthService
+  ) {}
 
   ngOnInit(): void {
+    this.chatService.GetAllRoom().subscribe((rooms: Rooms[]) => {
+      this.rooms = rooms;
+      this.showRooms = [...this.rooms];
+    });
+
+    this.chatService
+      .GetSingleRoom(this.route.snapshot.params.id)
+      .subscribe((singleRoom: Rooms) => {
+        this.singleRoom = singleRoom;
+        console.log(this.singleRoom);
+        // Nested ! //
+        this.chatService.retrieveUsersInRoom().subscribe((user: RoomUsers) => {
+          this.singleRoom.roomUsers.push({
+            id: user.userId,
+            username: user.username,
+          });
+        });
+      });
+
+    this.auth
+      .getOne(this.object.unique_name)
+      .subscribe((single: UserReceived) => {
+        this.user = single;
+        this.loading = false;
+      });
+
     setTimeout(() => {
       this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
     }, 400);
@@ -73,7 +65,7 @@ export class RoomComponent implements OnInit {
       let newRooms = this.rooms.filter((rooms) =>
         rooms.roomName.toLocaleLowerCase().includes(valueToSearch)
       );
-      this.show = newRooms;
+      this.showRooms = newRooms;
     }, 500);
   }
 
@@ -83,7 +75,7 @@ export class RoomComponent implements OnInit {
       let newRooms = this.rooms.filter((rooms) =>
         rooms.roomName.toLocaleLowerCase().includes(valueToSearch)
       );
-      this.show = newRooms;
+      this.showRooms = newRooms;
     }, 500);
   }
 

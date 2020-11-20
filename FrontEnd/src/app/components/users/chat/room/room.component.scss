@@ -111,10 +111,8 @@ $bottomheight: 7vh;
         background-color: lightgrey;
         cursor: pointer;
 
-        h5 {
-          &:focus {
-            outline: none;
-          }
+        &:focus {
+          outline: none;
         }
       }
     }

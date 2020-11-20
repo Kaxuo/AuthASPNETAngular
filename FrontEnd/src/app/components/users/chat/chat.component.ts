@@ -1,14 +1,24 @@
 import { MessageReceived } from 'src/app/Models/Messages';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { UserReceived } from 'src/app/Models/UsersReceived';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { map, take } from 'rxjs/operators';
+import { catchError, map, take } from 'rxjs/operators';
 import { colors } from './colors';
 import { ChatService } from 'src/app/services/chat.service';
 import { LocalStorageService } from 'ngx-webstorage';
 import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
 import { Rooms } from 'src/app/models/ChatModels/Rooms';
+import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
+import { HttpError } from '@microsoft/signalr';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-chat',
@@ -26,20 +36,22 @@ export class ChatComponent implements OnInit {
   onlineUsers: ConnectedUsers[] = [];
   rooms: Rooms[] = [];
   token: string = this.LocalStorageService.retrieve('mongoID');
+  isShown: boolean = false;
+  addRoom: FormGroup;
+  error: string;
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
-
   constructor(
     private auth: AuthService,
     private chatService: ChatService,
-    private LocalStorageService: LocalStorageService
+    private LocalStorageService: LocalStorageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     // Messages //
     this.chatService.GetMessage().subscribe((mess: MessageReceived[]) => {
       this.msgInboxArray = mess;
-      this.loading = false;
       setTimeout(() => {
         this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
       }, 400);
@@ -113,7 +125,20 @@ export class ChatComponent implements OnInit {
       .pipe(take(1))
       .subscribe((rooms: Rooms[]) => {
         this.rooms = rooms;
+        this.loading = false;
       });
+
+    this.chatService.retrieveRoom().subscribe((room: Rooms) => {
+      this.rooms.push(room);
+    });
+
+    // Form Add Room //
+    this.addRoom = new FormGroup({
+      roomName: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(30),
+      ]),
+    });
   }
 
   // Changed
@@ -183,5 +208,58 @@ export class ChatComponent implements OnInit {
 
   onlineCheck(el) {
     return this.onlineUsers?.find((y) => el.id === y.userId) !== undefined;
+  }
+
+  showModal() {
+    this.isShown = true;
+  }
+
+  @HostListener('click', ['$event'])
+  onDocumentClick(event) {
+    let modal = document.getElementsByClassName('addRoom')[0];
+    if (event.target == modal) {
+      this.isShown = false;
+    }
+  }
+
+  closeModal() {
+    this.isShown = false;
+  }
+
+  add(room) {
+    this.chatService
+      .AddRoom(room)
+      .pipe(
+        take(1),
+        catchError((err: HttpErrorResponse) => {
+          this.error = err.error.message;
+          return throwError(err);
+        })
+      )
+      .subscribe(() => {
+        this.addRoom.reset();
+        this.isShown = false;
+      });
+  }
+
+  joinRoom(element: Rooms) {
+    this.chatService.GetSingleRoom(element.id).subscribe((data: Rooms) => {
+      if (
+        data.roomUsers.find(
+          (users) =>
+            this.LocalStorageService.retrieve('mongoId') == users.userId
+        ) !== undefined
+      ) {
+        this.router.navigate(['chat', 'room', element.id]);
+      } else {
+        this.chatService
+          .joinRoom(element.id, {
+            roomName: element.roomName,
+            userId: this.LocalStorageService.retrieve('mongoID'),
+            username: this.username,
+          })
+          .subscribe(() => this.router.navigate(['chat', 'room', element.id]));
+      }
+    });
   }
 }

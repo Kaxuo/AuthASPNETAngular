@@ -1,6 +1,8 @@
-import { ConnectedUsers } from './ConnectedUsers';
+import { MessageReceived } from '../Messages';
+import { RoomUsers } from './RoomUsers';
 export interface Rooms {
-  id: string;
+  id?: string;
   roomName: string;
-  roomUsers?: ConnectedUsers[];
+  roomUsers?: RoomUsers[];
+  roomMessages?: MessageReceived[];
 }

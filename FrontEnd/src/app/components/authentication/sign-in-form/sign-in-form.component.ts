@@ -90,6 +90,7 @@ export class SignInFormComponent implements OnInit {
           this.LocalStorageService.store('mongoID', data.body.id)
         ),
         catchError((err) => {
+          if(err.status == 404){
           this.chatService
             .CreateAccount({
               username: values.username,
@@ -104,6 +105,7 @@ export class SignInFormComponent implements OnInit {
               })
             )
             .subscribe();
+          }
           return throwError(err);
         })
       )
