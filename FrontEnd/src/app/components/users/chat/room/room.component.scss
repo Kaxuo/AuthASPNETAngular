@@ -136,7 +136,7 @@ $bottomheight: 7vh;
       .middleSection {
         display: flex;
         flex-direction: column;
-        height: $middleheight;
+        height: 63.3vh;
         overflow-y: auto;
         scroll-behavior: smooth;
 
@@ -144,15 +144,15 @@ $bottomheight: 7vh;
           margin: 5px 20px;
           display: flex;
           flex-direction: column;
-          justify-content: flex-end;
-          align-items: flex-end;
 
           p {
+            width: fit-content;
             text-align: justify;
             background-color: white;
             padding: 15px 20px;
             border-radius: 10px;
             white-space: pre-wrap;
+            color: white;
           }
         }
       }
@@ -260,6 +260,14 @@ $bottomheight: 7vh;
       font-size: 20px;
     }
   }
+}
+
+.rightone {
+  align-items: flex-end;
+}
+
+.leftone {
+  align-items: flex-start;
 }
 
 @media only screen and (max-width: 705px) {

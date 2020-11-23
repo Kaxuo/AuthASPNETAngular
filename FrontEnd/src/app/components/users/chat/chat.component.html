@@ -245,9 +245,9 @@
 
 <!-- Modal Content -->
 <form
-  *ngIf="addRoom"
-  [formGroup]="addRoom"
-  (ngSubmit)="add(addRoom.value)"
+  *ngIf="addRoomForm"
+  [formGroup]="addRoomForm"
+  (ngSubmit)="addRoom(addRoomForm.value)"
   class="addRoom"
   [ngClass]="{ show: isShown }"
 >
@@ -267,25 +267,17 @@
     <em
       style="margin: 20px 100px"
       *ngIf="
-        addRoom.get('roomName').hasError('required') &&
-        addRoom.get('roomName').touched
-      "
-      >Required</em
-    >
-    <em
-      style="margin: 20px 100px"
-      *ngIf="
-        addRoom.get('roomName').hasError('maxlength') &&
-        addRoom.get('roomName').touched
+        addRoomForm.get('roomName').hasError('maxlength') &&
+        addRoomForm.get('roomName').touched
       "
       >Too Long !
     </em>
     <em style="margin: 20px 100px" *ngIf="error">
-      {{error}}
+      {{ error }}
     </em>
     <button
-      [disabled]="addRoom.invalid"
-      [ngClass]="{ invalid: addRoom.invalid }"
+      [disabled]="addRoomForm.invalid"
+      [ngClass]="{ invalid: addRoomForm.invalid }"
       type="submit"
       class="animated"
     >
@@ -295,7 +287,7 @@
       <span></span>
       Add
     </button>
-    <button (click)="closeModal()" type="submit" class="animated">
+    <button (click)="closeModal()" type="button" class="animated">
       <span></span>
       <span></span>
       <span></span>

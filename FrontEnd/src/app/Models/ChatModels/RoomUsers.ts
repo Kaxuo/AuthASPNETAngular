@@ -3,4 +3,5 @@ export interface RoomUsers {
   joinedDate?: Date;
   userId?: string;
   username: string;
+  colors?: string;
 }

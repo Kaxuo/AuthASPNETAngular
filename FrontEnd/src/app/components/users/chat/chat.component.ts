@@ -17,7 +17,6 @@ import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
 import { Rooms } from 'src/app/models/ChatModels/Rooms';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
-import { HttpError } from '@microsoft/signalr';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -37,8 +36,9 @@ export class ChatComponent implements OnInit {
   rooms: Rooms[] = [];
   token: string = this.LocalStorageService.retrieve('mongoID');
   isShown: boolean = false;
-  addRoom: FormGroup;
+  addRoomForm: FormGroup;
   error: string;
+  // Allow Focus on the textbox after sending a message
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
   constructor(
@@ -104,7 +104,6 @@ export class ChatComponent implements OnInit {
     this.chatService.retrieveUsers().subscribe();
     this.chatService
       .removeUser()
-      .pipe()
       .subscribe((user) => {
         this.switchOffline(user.id);
       });
@@ -126,14 +125,15 @@ export class ChatComponent implements OnInit {
       .subscribe((rooms: Rooms[]) => {
         this.rooms = rooms;
         this.loading = false;
+        console.log(rooms)
       });
 
     this.chatService.retrieveRoom().subscribe((room: Rooms) => {
       this.rooms.push(room);
     });
 
-    // Form Add Room //
-    this.addRoom = new FormGroup({
+    // AddRoom Form //
+    this.addRoomForm = new FormGroup({
       roomName: new FormControl('', [
         Validators.required,
         Validators.maxLength(30),
@@ -226,7 +226,7 @@ export class ChatComponent implements OnInit {
     this.isShown = false;
   }
 
-  add(room) {
+  addRoom(room) {
     this.chatService
       .AddRoom(room)
       .pipe(
@@ -237,7 +237,7 @@ export class ChatComponent implements OnInit {
         })
       )
       .subscribe(() => {
-        this.addRoom.reset();
+        this.addRoomForm.reset();
         this.isShown = false;
       });
   }

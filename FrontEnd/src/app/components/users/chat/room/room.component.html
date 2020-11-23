@@ -27,7 +27,12 @@
         </div>
         <h4 style="text-align: center">Rooms</h4>
         <div class="rooms">
-          <div class="room" *ngFor="let el of showRooms">
+          <div
+            class="room"
+            [routerLink]="['/chat/room', el.id]"
+            *ngFor="let el of showRooms"
+            (click)="joinRoom(el)"
+          >
             <mdb-icon class="icon" fas icon="list-alt"></mdb-icon>
             <h5>{{ el.roomName | titlecase }}</h5>
           </div>
@@ -44,6 +49,9 @@
           <div
             class="singleMessage"
             *ngFor="let mObj of singleRoom.roomMessages"
+            [ngClass]="
+              user.username == mObj.senderName ? 'leftone' : 'rightone'
+            "
           >
             <h6>
               <!-- {{ mObj.user }} -->
@@ -54,13 +62,26 @@
               </span>
               <mdb-icon fas icon="angle-down"></mdb-icon>
             </h6>
-            <p>
+            <p [ngStyle]="myStyles(mObj)">
               <!-- {{ mObj.message }} -->
               {{ mObj.content }}
             </p>
           </div>
         </div>
-        <div class="bottomSection">
+        <div style="text-align: center">
+          <mdb-icon
+            style="cursor: pointer; font-size: 25px; width: 50px"
+            class="lmao"
+            (click)="scrollDown()"
+            fas
+            icon="angle-double-down"
+          ></mdb-icon>
+        </div>
+        <form
+          [formGroup]="sendMessageRoom"
+          (ngSubmit)="send(sendMessageRoom.value)"
+          class="bottomSection"
+        >
           <textarea
             class="text"
             #message
@@ -68,12 +89,13 @@
             style="resize: none"
             type="text"
             placeholder="Write your message"
-            (keydown)="triggerFunction($event)"
+            formControlName="message"
+            (keydown)="triggerFunction($event, sendMessageRoom.value)"
           ></textarea>
-          <button [disabled]="true" type="submit">
+          <button [disabled]="sendMessageRoom.invalid" type="submit">
             <mdb-icon fas icon="paper-plane"></mdb-icon>
           </button>
-        </div>
+        </form>
       </div>
       <div class="rightSide">
         <div class="topSide">
@@ -82,10 +104,12 @@
         </div>
         <div class="middleSection">
           <h5>Room's Users</h5>
-          <div class="user" *ngFor="let el of singleRoom.roomUsers">
-            <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
-            <h6>{{ el.username }}</h6>
-          </div>
+          <ng-container *ngFor="let el of showUsers">
+            <div class="user" *ngIf="el.username != user.username">
+              <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
+              <h6>{{ el.username }}</h6>
+            </div>
+          </ng-container>
         </div>
         <div class="bottomSection">
           <div class="input">
@@ -250,6 +274,15 @@
             </span>
           </div>
         </div>
+        <div style="text-align: center">
+          <mdb-icon
+            style="cursor: pointer; font-size: 25px; width: 50px"
+            class="lmao"
+            (click)="scrollDown()"
+            fas
+            icon="angle-double-down"
+          ></mdb-icon>
+        </div>
         <div class="bottomSection">
           <textarea
             class="text"
@@ -268,7 +301,7 @@
       <div class="rightSide">
         <div class="topSide">
           <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
-          <h4>Nguyen Hoang</h4>
+          <h4>???? ????</h4>
         </div>
         <div class="middleSection">
           <h5>Room's Users</h5>

@@ -47,6 +47,9 @@ export class ChatService {
   private roomAdded: Rooms;
   private sharedRooms = new Subject<any>();
 
+  private roomMessage: MessageReceived;
+  private sharedRoomMessage = new Subject<any>();
+
   private userJoinRoom: MongoUsers;
   private sharedUsersInRoom = new Subject<any>();
 
@@ -112,6 +115,10 @@ export class ChatService {
       this.connection.on('joinRoomSuccess', (user) => {
         console.log('joinroomsuccess');
       });
+      this.connection.on('receiveNewRoomMessage', (message, id) => {
+        this.roomMessageReceived(message, id);
+      });
+
       console.log('connected');
     } catch (err) {
       console.log(err);
@@ -134,6 +141,11 @@ export class ChatService {
   private addingRoom(room: Rooms) {
     this.roomAdded = room;
     this.sharedRooms.next(this.roomAdded);
+  }
+
+  private roomMessageReceived(message: MessageReceived, id: string) {
+    this.roomMessage = message;
+    this.sharedRoomMessage.next({ ...this.roomMessage, id: id });
   }
 
   private userJoinedRoom(user: MongoUsers) {
@@ -176,6 +188,10 @@ export class ChatService {
 
   public retrieveRoom(): Observable<Rooms> {
     return this.sharedRooms.asObservable();
+  }
+
+  public retrieveNewMessage(): Observable<MessageReceived> {
+    return this.sharedRoomMessage.asObservable();
   }
 
   public removeUser(): Observable<any> {
@@ -242,6 +258,10 @@ export class ChatService {
 
   joinRoom(roomId, body) {
     return this.http.post(`${this.URL}/chat/room/${roomId}/join`, body);
+  }
+
+  sendMessageRoom(roomId, body) {
+    return this.http.post(`${this.URL}/chat/room/${roomId}/send`, body);
   }
 
   observeToken(): Observable<string> {
