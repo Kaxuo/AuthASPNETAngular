@@ -26,34 +26,28 @@ export class ChatService {
   readonly URL = `https://localhost:5001/api`;
   readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
 
-  private connection: any = new signalR.HubConnectionBuilder()
-    .withUrl(`https://localhost:5001/chat?userId=default`, {
-      skipNegotiation: true,
-      transport: signalR.HttpTransportType.WebSockets,
-    }) // mapping to the chathub as in startup.cs
-    .withAutomaticReconnect()
-    .configureLogging(signalR.LogLevel.Information)
-    .build();
+  private connection: any;
 
   private receivedMessageObject: MessageReceived;
   private sharedObj = new Subject<MessageReceived>();
 
   private singleUser: ConnectedUsers;
-  private sharedSingle = new Subject<any>();
+  private sharedSingle = new Subject<ConnectedUsers>();
 
   private usersConnected: ConnectedUsers[];
-  private sharedUsers = new Subject<any>();
+  private sharedUsers = new Subject<ConnectedUsers[]>();
 
   private roomAdded: Rooms;
-  private sharedRooms = new Subject<any>();
+  private sharedRooms = new Subject<Rooms>();
 
   private roomMessage: MessageReceived;
-  private sharedRoomMessage = new Subject<any>();
+  private sharedRoomMessage = new Subject<MessageReceived>();
 
   private userJoinRoom: MongoUsers;
-  private sharedUsersInRoom = new Subject<any>();
+  private sharedUsersInRoom = new Subject<MongoUsers>();
 
-  private removedUsers = new Subject<any>();
+  private removedUsers = new Subject<MongoUsers>();
+  private removedUsersInRoom = new Subject<any>();
 
   constructor(
     private http: HttpClient,
@@ -62,16 +56,18 @@ export class ChatService {
     this.isAuthenticated().subscribe((authenticated) => {
       if (authenticated) {
         this.start();
-        this.connection.on('userConnectedList', (users) => {
+        this.connection.on('userConnectedList', (users: ConnectedUsers[]) => {
           this.usersConnecting(users);
         });
-        this.connection.on('updatedConnectedUser', (user) => {
+        this.connection.on('updatedConnectedUser', (user: ConnectedUsers) => {
           this.singleUserConnected(user);
         });
-        this.connection.on('newDisconnectedUser', (user) => {
+        this.connection.on('newDisconnectedUser', (user: MongoUsers) => {
           this.removedUsers.next(user);
           this.RemoveConnected(user.id).subscribe();
         });
+      } else {
+        this.connection.stop();
       }
     });
   }
@@ -93,31 +89,40 @@ export class ChatService {
       .build();
     try {
       await this.connection.start();
-      this.connection.on('userConnectedList', (users) => {
+      this.connection.on('userConnectedList', (users: ConnectedUsers[]) => {
         this.usersConnecting(users);
       });
-      this.connection.on('newConnectedUser', (user) => {
+      this.connection.on('newConnectedUser', (user: ConnectedUsers) => {
         this.singleUserConnected(user);
       });
-      this.connection.on('receiveNewPublicMessage', (message) => {
-        this.mapReceivedMessage(message);
-      });
-      this.connection.on('updatedConnectedUser', (user) => {
+      this.connection.on(
+        'receiveNewPublicMessage',
+        (message: MessageReceived) => {
+          this.mapReceivedMessage(message);
+        }
+      );
+      this.connection.on('updatedConnectedUser', (user: ConnectedUsers) => {
         this.singleUserConnected(user);
       });
-      this.connection.on('receiveNewRoom', (room) => {
+      this.connection.on('receiveNewRoom', (room: Rooms) => {
         this.addingRoom(room);
       });
       this.connection.on('newJoinRoom', (user: MongoUsers) => {
         console.log('newJoinrooms');
         this.userJoinedRoom(user);
       });
-      this.connection.on('joinRoomSuccess', (user) => {
+      this.connection.on('joinRoomSuccess', () => {
         console.log('joinroomsuccess');
       });
-      this.connection.on('receiveNewRoomMessage', (message, id) => {
-        this.roomMessageReceived(message, id);
+      this.connection.on('leavingRoom', (roomId: string, userId: string) => {
+        this.removedUsersInRoom.next({ room: roomId, user: userId });
       });
+      this.connection.on(
+        'receiveNewRoomMessage',
+        (message: MessageReceived, id: string) => {
+          this.roomMessageReceived(message, id);
+        }
+      );
 
       console.log('connected');
     } catch (err) {
@@ -194,32 +199,28 @@ export class ChatService {
     return this.sharedRoomMessage.asObservable();
   }
 
-  public removeUser(): Observable<any> {
+  public removeUser(): Observable<MongoUsers> {
     return this.removedUsers.asObservable();
   }
 
-  public retrieveUsersInRoom(): Observable<any> {
+  public removeUserInRoom(): Observable<MongoUsers> {
+    return this.removedUsersInRoom.asObservable();
+  }
+
+  public retrieveUsersInRoom(): Observable<MongoUsers> {
     return this.sharedUsersInRoom.asObservable();
   }
 
   public disconnectUser() {
     if (this.connection) {
       this.connection.stop();
-      this.connection = new signalR.HubConnectionBuilder()
-        .withUrl(`https://localhost:5001/chat?userId=default`, {
-          skipNegotiation: true,
-          transport: signalR.HttpTransportType.WebSockets,
-        }) // mapping to the chathub as in startup.cs
-        .withAutomaticReconnect()
-        .configureLogging(signalR.LogLevel.Information)
-        .build();
       this.RemoveConnected(
         this.LocalStorageService.retrieve('mongoID')
       ).subscribe();
     }
   }
 
-  // Charlotte
+  // Charlotte's API
   GetAllUserMongo() {
     return this.http.get(`${this.URL}/account`);
   }
@@ -264,10 +265,14 @@ export class ChatService {
     return this.http.post(`${this.URL}/chat/room/${roomId}/send`, body);
   }
 
+  leaveRoom(roomId, userId) {
+    return this.http.delete(`${this.URL}/chat/room/${roomId}/users/${userId}`);
+  }
+
   observeToken(): Observable<string> {
     return merge(
-      of(this.LocalStorageService.retrieve('token')),
-      this.LocalStorageService.observe('token')
+      of(this.LocalStorageService.retrieve('mongoID')),
+      this.LocalStorageService.observe('mongoID')
     );
   }
 

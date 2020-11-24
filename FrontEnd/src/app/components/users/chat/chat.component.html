@@ -15,10 +15,9 @@
           <ng-container *ngIf="token !== el.id">
             <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
             <div class="status">
-              <span>{{ el.username }}</span>
+              <span>{{ el.username | titlecase }}</span>
               <span
                 *ngIf="onlineCheck(el)"
-                (click)="switchStatus(el)"
                 class="stat"
               >
                 <span class="circle"></span>Online</span
@@ -40,12 +39,17 @@
           icon="plus-circle"
         ></mdb-icon>
       </h3>
-      <div class="rooms">
+      <div class="rooms" *ngIf="rooms">
         <div class="room" *ngFor="let el of rooms" (click)="joinRoom(el)">
           <mdb-icon class="icon" fas icon="comment"></mdb-icon>
           <div class="status">
             <span> {{ el.roomName }} </span>
-            <span class="stat">{{ el.roomUsers.length }} users</span>
+            <span class="stat" *ngIf="!checkJoined(el)"
+              >{{ el.roomUsers.length }} users</span
+            >
+            <span class="stat" *ngIf="checkJoined(el)"
+              >Joined ({{ el.roomUsers.length }} users)
+            </span>
           </div>
         </div>
       </div>

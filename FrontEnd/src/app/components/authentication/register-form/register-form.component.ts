@@ -63,7 +63,7 @@ export class RegisterFormComponent implements OnInit {
         (res: HttpResponse<any>) => {
           this.chatService
             .CreateAccount({
-              username: values.username,
+              username: values.username.toLocaleLowerCase(),
               password: '12345',
               firstname: values.firstName,
               lastName: values.lastName,

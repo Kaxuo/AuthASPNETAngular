@@ -37,7 +37,7 @@
             <h5>{{ el.roomName | titlecase }}</h5>
           </div>
         </div>
-        <div routerLink="/chat" class="exit">
+        <div (click)="leaveRoom()" class="exit">
           <h5>Exit Room</h5>
         </div>
       </div>
@@ -107,7 +107,17 @@
           <ng-container *ngFor="let el of showUsers">
             <div class="user" *ngIf="el.username != user.username">
               <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
-              <h6>{{ el.username }}</h6>
+              <h6>
+                {{ el.username }}
+              </h6>
+              <span class="stat" *ngIf="onlineCheck(el)">
+                <span class="circle"></span
+                ><span class="letter">Online</span></span
+              >
+              <span class="stat" *ngIf="!onlineCheck(el)">
+                <span class="red"></span
+                ><span class="letter">Offline</span></span
+              >
             </div>
           </ng-container>
         </div>

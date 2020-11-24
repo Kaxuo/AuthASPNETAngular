@@ -226,12 +226,18 @@ $bottomheight: 7vh;
             cursor: pointer;
           }
 
+          .stat {
+            margin-bottom: 10px;
+            margin-right: 1vw;
+          }
+
           .icon {
             font-size: 30px;
           }
 
           h6 {
             margin-left: 10px;
+            flex-grow: 1;
           }
         }
       }
@@ -244,6 +250,26 @@ $bottomheight: 7vh;
       }
     }
   }
+}
+
+.circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 7px;
+  margin-left: 10px !important;
+  background-color: #58b666;
+}
+
+.red {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 7px;
+  margin-left: 10px !important;
+  background-color: #ff725d;
 }
 
 @media only screen and (max-width: 1090px) {
@@ -284,5 +310,11 @@ $bottomheight: 7vh;
     h5 {
       font-size: 15px;
     }
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .letter {
+    display: none;
   }
 }

@@ -7,13 +7,6 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { LocalStorageService } from 'ngx-webstorage';
 import { Router } from '@angular/router';
 import { ChatService } from 'src/app/services/chat.service';
-import {
-  BehaviorSubject,
-  interval,
-  Observable,
-  Subject,
-  throwError,
-} from 'rxjs';
 
 @Component({
   selector: 'app-sign-in-form',
@@ -82,18 +75,27 @@ export class SignInFormComponent implements OnInit {
         )
       )
       .subscribe();
+      
     this.chatService
-      .Log(values.username)
-      .pipe(
-        take(1),
-        tap((data: any) =>
-          this.LocalStorageService.store('mongoID', data.body.id)
-        ),
-        catchError((err) => {
-          if(err.status == 404){
+      .GetAllUserMongo()
+      .pipe(take(1))
+      .subscribe((users: any) => {
+        if (users.find((x) => x.username == values.username.toLowerCase())) {
+          this.chatService
+            .Log(values.username.toLocaleLowerCase())
+            .pipe(
+              take(1),
+              tap((data: any) =>
+                this.LocalStorageService.store('mongoID', data.body.id)
+              )
+            )
+            .subscribe((res: HttpResponse<any>) => {
+              console.log(res);
+            });
+        } else {
           this.chatService
             .CreateAccount({
-              username: values.username,
+              username: values.username.toLocaleLowerCase(),
               password: '12345',
               firstname: 'Default',
               lastName: 'Default',
@@ -105,12 +107,7 @@ export class SignInFormComponent implements OnInit {
               })
             )
             .subscribe();
-          }
-          return throwError(err);
-        })
-      )
-      .subscribe((res: HttpResponse<any>) => {
-        console.log(res);
+        }
       });
   }
 }

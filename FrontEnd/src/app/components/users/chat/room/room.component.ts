@@ -10,6 +10,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { colors } from 'src/app/components/users/chat/colors';
 import { map, take } from 'rxjs/operators';
 import { MessageReceived } from 'src/app/Models/Messages';
+import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
 
 @Component({
   selector: 'app-room',
@@ -28,6 +29,7 @@ export class RoomComponent implements OnInit {
   rooms: Rooms[] = [];
   showRooms: Rooms[] = [];
   roomId: string;
+  onlineUsers: ConnectedUsers[] = [];
 
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
@@ -35,7 +37,8 @@ export class RoomComponent implements OnInit {
     private chatService: ChatService,
     private route: ActivatedRoute,
     private auth: AuthService,
-    private LocalStorageService: LocalStorageService
+    private LocalStorageService: LocalStorageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +55,9 @@ export class RoomComponent implements OnInit {
       }, 200);
     });
 
-    this.chatService.removeUser().subscribe((user) => console.log(user));
+    this.chatService.removeUser().subscribe((user) => {
+      this.switchOffline(user.id);
+    });
 
     this.chatService
       .GetAllRoom()
@@ -72,15 +77,20 @@ export class RoomComponent implements OnInit {
             return { ...user, colors: colors[index] };
           });
           this.showUsers = [...this.usersList];
-          console.log(this.usersList);
           // Nested ! //
           this.chatService
             .retrieveUsersInRoom()
             .subscribe((user: RoomUsers) => {
-              this.singleRoom.roomUsers.push({
-                id: user.userId,
-                username: user.username,
-              });
+              if (this.singleRoom.roomName == user.roomName) {
+                this.showUsers.push({
+                  userId: user.userId,
+                  username: user.username,
+                });
+                this.showUsers = this.getUniqueListBy(
+                  this.showUsers,
+                  'username'
+                );
+              }
             });
         });
     });
@@ -96,6 +106,32 @@ export class RoomComponent implements OnInit {
     this.sendMessageRoom = new FormGroup({
       message: new FormControl('', [Validators.required]),
     });
+
+    this.chatService.removeUserInRoom().subscribe((userLeft: any) => {
+      if (userLeft.room == this.roomId) {
+        this.showUsers = this.showUsers.filter(
+          (users) => users.userId != userLeft.user
+        );
+      }
+    });
+
+    this.chatService
+      .GetAllConnectedUserMongo()
+      .pipe(
+        map((connectedUsers: ConnectedUsers[]) => {
+          return connectedUsers;
+        })
+      )
+      .subscribe((connectedUsers: ConnectedUsers[]) => {
+        this.onlineUsers = connectedUsers;
+
+        // SingleUser //
+        this.chatService
+          .retrieveSingleUser()
+          .subscribe((user: ConnectedUsers) => {
+            this.switchOnline(user);
+          });
+      });
 
     setTimeout(() => {
       this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
@@ -192,5 +228,32 @@ export class RoomComponent implements OnInit {
 
   scrollDown() {
     this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+  }
+
+  leaveRoom() {
+    this.chatService
+      .leaveRoom(this.roomId, this.LocalStorageService.retrieve('mongoID'))
+      .pipe(take(1))
+      .subscribe(() => {
+        this.router.navigate(['chat']);
+      });
+  }
+
+  // Helper Methods //
+
+  switchOnline(el) {
+    this.onlineUsers.push(el);
+  }
+
+  switchOffline(el) {
+    this.onlineUsers = this.onlineUsers.filter((users) => users.userId !== el);
+  }
+
+  getUniqueListBy(arr, key) {
+    return [...new Map(arr.map((item) => [item[key], item])).values()];
+  }
+
+  onlineCheck(el) {
+    return this.onlineUsers?.find((y) => el.userId === y.userId) !== undefined;
   }
 }

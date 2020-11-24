@@ -3,4 +3,5 @@ export interface MessageReceived {
   sentDate?: Date;
   content: string;
   senderId?: number;
+  id?:string;
 }
