@@ -13,13 +13,16 @@ import { MongoUsers } from '../Models/ChatModels/MongoUsers';
   providedIn: 'root',
 })
 export class ChatService {
+
   // private chat = 'https://authaspnetcore.azurewebsites.net/chatsocket';
   // readonly GET_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/get';
   // readonly POST_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/send';
 
+
   // private chat = 'https://localhost:5001/chatsocket'
   // readonly GET_URL = 'https://localhost:5001/api/chat/get';
   // readonly POST_URL = 'https://localhost:5001/api/chat/send';
+
 
   // Charlotte //
 
@@ -29,6 +32,7 @@ export class ChatService {
   private connection: any;
 
   private receivedMessageObject: MessageReceived;
+
   private sharedObj = new Subject<MessageReceived>();
 
   private singleUser: ConnectedUsers;
