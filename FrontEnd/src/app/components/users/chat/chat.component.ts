@@ -1,45 +1,80 @@
 import { MessageReceived } from 'src/app/Models/Messages';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { UserReceived } from 'src/app/Models/UsersReceived';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { map, take } from 'rxjs/operators';
+import { catchError, map, take } from 'rxjs/operators';
 import { colors } from './colors';
 import { ChatService } from 'src/app/services/chat.service';
+import { LocalStorageService } from 'ngx-webstorage';
+import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
+import { Rooms } from 'src/app/models/ChatModels/Rooms';
+import { Router } from '@angular/router';
+import { forkJoin, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
+@UntilDestroy()
 export class ChatComponent implements OnInit {
-  object = this.auth.decryptedAndDecodedToken();
+  token = this.auth.decryptedAndDecodedToken();
   username: string;
   users: UserReceived[] = [];
   msgDto: MessageReceived;
   msgInboxArray: MessageReceived[] = [];
   textbox: FormGroup;
   loading: boolean;
+  onlineUsers: ConnectedUsers[] = [];
+  rooms: Rooms[] = [];
+  isShown: boolean = false;
+  addRoomForm: FormGroup;
+  error: string;
+  // Allow Focus on the textbox after sending a message
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
-
-  constructor(private auth: AuthService, private chatService: ChatService) {}
+  constructor(
+    private auth: AuthService,
+    private chatService: ChatService,
+    private LocalStorageService: LocalStorageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.chatService.GetMessage().subscribe((mess: MessageReceived[]) => {
-      this.msgInboxArray = mess;
-      this.loading = false;
-      setTimeout(() => {
-        this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
-      }, 400);
-    });
+    // Messages //
+    this.chatService
+      .GetMessage()
+      .pipe(take(1))
+      .subscribe((mess: MessageReceived[]) => {
+        this.msgInboxArray = mess;
+        setTimeout(() => {
+          this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+        }, 400);
+      });
+
+    // New Messages
     this.chatService
       .retrieveMappedObject()
+      .pipe(untilDestroyed(this))
       .subscribe((receivedObj: MessageReceived) => {
+        setTimeout(() => {
+          this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+        }, 200);
         this.addToInbox(receivedObj);
-      }); // calls the service method to get the new messages sent
-    this.auth
-      .getAllUsers()
+      });
+
+    // Users //
+    this.chatService
+      .GetAllUserMongo()
       .pipe(
         take(1),
         map((users: UserReceived[]) => {
@@ -50,12 +85,65 @@ export class ChatComponent implements OnInit {
       )
       .subscribe((users: UserReceived[]) => {
         this.users = users;
-        console.log(this.users);
       });
-    this.auth
-      .getOne(this.object.unique_name)
+
+    // Get All users
+    this.chatService
+      .GetAllConnectedUserMongo()
       .pipe(take(1))
-      .subscribe((single: UserReceived) => (this.username = single.username));
+      .subscribe((connectedUsers: ConnectedUsers[]) => {
+        this.onlineUsers = connectedUsers;
+      });
+
+    // Dynamically track online/offline online users
+    this.chatService
+      .removeUser()
+      .pipe(untilDestroyed(this))
+      .subscribe((user) => {
+        this.switchOffline(user.id);
+      });
+
+    // SingleUser //
+    this.chatService
+      .retrieveSingleUser()
+      .pipe(take(1))
+      .subscribe((user: ConnectedUsers) => {
+        this.switchOnline(user);
+      });
+
+    // Owner Session //
+    this.auth
+      .getOne(this.token.unique_name)
+      .pipe(take(1))
+      .subscribe((single: UserReceived) => {
+        this.username = single.username;
+      });
+
+    // Rooms //
+    this.chatService
+      .GetAllRoom()
+      .pipe(take(1))
+      .subscribe((rooms: Rooms[]) => {
+        this.rooms = rooms;
+        this.loading = false;
+      });
+
+    // Check if a new room has been created
+    this.chatService
+      .retrieveRoom()
+      .pipe(untilDestroyed(this))
+      .subscribe((room: Rooms) => {
+        this.rooms.push(room);
+      });
+
+    // AddRoom Form //
+    this.addRoomForm = new FormGroup({
+      roomName: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(30),
+      ]),
+    });
+
     this.textbox = new FormGroup({
       message: new FormControl('', [Validators.required]),
     });
@@ -64,8 +152,9 @@ export class ChatComponent implements OnInit {
   send(el) {
     if (el != null) {
       this.chatService.broadcastMessage({
-        user: this.username,
-        message: el,
+        senderId: this.LocalStorageService.retrieve('mongoID'),
+        senderName: this.username,
+        content: el,
       }); // Send the message via a service
       this.textbox.reset();
       this.messageRef.nativeElement.focus();
@@ -75,7 +164,44 @@ export class ChatComponent implements OnInit {
     }, 200);
   }
 
-  triggerFunction(event, el) {
+  addRoom(room) {
+    this.chatService
+      .AddRoom(room)
+      .pipe(
+        take(1),
+        catchError((err: HttpErrorResponse) => {
+          this.error = err.error.message;
+          return throwError(err);
+        })
+      )
+      .subscribe(() => {
+        this.addRoomForm.reset();
+        this.isShown = false;
+      });
+  }
+
+  joinRoom(element: Rooms) {
+    this.chatService.GetSingleRoom(element.id).subscribe((data: Rooms) => {
+      if (
+        data.roomUsers.find(
+          (users) =>
+            this.LocalStorageService.retrieve('mongoId') == users.userId
+        ) !== undefined
+      ) {
+        this.router.navigate(['chat', 'room', element.id]);
+      } else {
+        this.chatService
+          .joinRoom(element.id, {
+            roomName: element.roomName,
+            userId: this.LocalStorageService.retrieve('mongoID'),
+            username: this.username,
+          })
+          .subscribe(() => this.router.navigate(['chat', 'room', element.id]));
+      }
+    });
+  }
+
+  breakLineForTextBox(event, el) {
     if (event.ctrlKey && event.key === 'Enter') {
       /*
         cannot make textarea produce a next line.
@@ -90,19 +216,31 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  // Helper Methods //
   addToInbox(obj: MessageReceived) {
     this.msgInboxArray.push({
-      user: obj.user,
-      message: obj.message,
+      senderName: obj.senderName,
+      content: obj.content,
+      sentDate: new Date(),
     });
   }
 
+  switchOnline(el) {
+    this.onlineUsers.push(el);
+  }
+
+  switchOffline(el) {
+    this.onlineUsers = this.onlineUsers.filter((users) => users.userId !== el);
+  }
+
   myStyles(el): object {
-    let colors = this.users.find((x) => x.username == el.user);
-    if (this.username == el.user) {
+    let colors = this.users.find(
+      (x) => x.username.toLowerCase() == el.senderName.toLowerCase()
+    );
+    if (this.username == el.senderName) {
       return { 'background-color': '#6666FF' };
     }
-    if (this.username != el.user && colors != undefined) {
+    if (this.username != el.senderName && colors != undefined) {
       return { 'background-color': colors.colors };
     } else {
       return { 'background-color': 'black' };
@@ -111,5 +249,30 @@ export class ChatComponent implements OnInit {
 
   scrollDown() {
     this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+  }
+
+  onlineCheck(el) {
+    return this.onlineUsers?.find((y) => el.id === y.userId) !== undefined;
+  }
+
+  showModal() {
+    this.isShown = true;
+  }
+
+  @HostListener('click', ['$event'])
+  onDocumentClick(event) {
+    let modal = document.getElementsByClassName('addRoom')[0];
+    if (event.target == modal) {
+      this.isShown = false;
+    }
+  }
+
+  closeModal() {
+    this.isShown = false;
+  }
+
+  checkJoined(element: Rooms) {
+    let check = element.roomUsers.find((x) => x.username == this.username);
+    return check;
   }
 }

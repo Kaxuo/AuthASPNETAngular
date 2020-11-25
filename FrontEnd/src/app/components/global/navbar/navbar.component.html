@@ -8,13 +8,13 @@
 
   <mdb-navbar-brand
     ><a class="navbar-brand" style="color: white; cursor: default"
-      >Management</a
+      >Board</a
     ></mdb-navbar-brand
   >
 
   <!-- Collapsible content -->
   <links>
-    <div class="list" *ngIf="authenticated | async">
+    <div (click)="click()" class="list" *ngIf="authenticated | async">
       <input
         #input
         placeholder="Where to ?"

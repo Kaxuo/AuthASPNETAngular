@@ -96,7 +96,6 @@ namespace BackEnd
                 hstsOpts.MaxAge = TimeSpan.FromMinutes(5);
                 hstsOpts.ExcludedHosts.Clear();
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

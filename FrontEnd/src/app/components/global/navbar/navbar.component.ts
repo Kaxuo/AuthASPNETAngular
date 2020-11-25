@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-navbar',
@@ -33,11 +34,16 @@ export class NavbarComponent implements OnInit {
   authenticated: Observable<boolean> = this.auth.isAuthenticated();
   isAdminObs: Observable<boolean> = this.auth.isAdmin();
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private ChatService: ChatService
+  ) {}
 
   ngOnInit(): void {}
 
   logout() {
+    this.ChatService.disconnectUser();
     this.auth.logout();
   }
 

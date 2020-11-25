@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { fader } from './animation';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,8 @@ import { fader } from './animation';
 export class AppComponent {
   title = 'FrontEnd';
 
+  constructor(private ChatService: ChatService) {}
+
   prepareRoute(outlet: RouterOutlet) {
     return (
       outlet &&
@@ -18,6 +21,7 @@ export class AppComponent {
       outlet.activatedRouteData['animation']
     );
   }
+
   onActivate(event) {
     let scrollToTop = window.setInterval(() => {
       let pos = window.pageYOffset;

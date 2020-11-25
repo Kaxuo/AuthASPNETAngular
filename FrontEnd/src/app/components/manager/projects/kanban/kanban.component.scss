@@ -187,7 +187,9 @@ button {
   padding: 15px 10px;
   border-radius: 10px;
   transition: transform 1s ease;
-  word-break: break-all;
+
+  // word-break: break-all;
+  overflow-wrap: break-word;
   &:hover {
     transform: scale(1.1);
   }

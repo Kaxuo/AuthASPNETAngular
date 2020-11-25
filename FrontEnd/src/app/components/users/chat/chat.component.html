@@ -2,13 +2,51 @@
   <div class="chatbox">
     <div class="left" *ngIf="users && loading == false">
       <h4>Hello {{ username }}</h4>
-      <h6>3 users online</h6>
+      <h6>
+        <span *ngIf="onlineUsers">{{ onlineUsers.length - 1 || "0" }}</span>
+        users online
+      </h6>
       <div class="allUsers">
-        <div class="users" *ngFor="let el of users">
-          <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
+        <div
+          class="users"
+          *ngFor="let el of users"
+          [routerLink]="['user', el.id]"
+        >
+          <ng-container *ngIf="token !== el.id">
+            <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
+            <div class="status">
+              <span>{{ el.username | titlecase }}</span>
+              <span *ngIf="onlineCheck(el)" class="stat">
+                <span class="circle"></span>Online</span
+              >
+              <span *ngIf="!onlineCheck(el)" class="stat">
+                <span class="red"></span>Offline</span
+              >
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <hr />
+      <h3>
+        Rooms<mdb-icon
+          *ngIf="token.role == 'Admin'"
+          (click)="showModal()"
+          class="add"
+          fas
+          icon="plus-circle"
+        ></mdb-icon>
+      </h3>
+      <div class="rooms" *ngIf="rooms">
+        <div class="room" *ngFor="let el of rooms" (click)="joinRoom(el)">
+          <mdb-icon class="icon" fas icon="comment"></mdb-icon>
           <div class="status">
-            <span>{{ el.username }}</span>
-            <span class="stat"> <span class="circle"></span>Online</span>
+            <span> {{ el.roomName }} </span>
+            <span class="stat" *ngIf="!checkJoined(el)"
+              >{{ el.roomUsers.length }} users</span
+            >
+            <span class="stat" *ngIf="checkJoined(el)"
+              >Joined ({{ el.roomUsers.length }} users)
+            </span>
           </div>
         </div>
       </div>
@@ -109,18 +147,22 @@
       <hr />
       <div #container class="messages">
         <div
-          [ngClass]="username == mObj.user ? 'leftone' : 'rightone'"
+          [ngClass]="username == mObj.senderName ? 'leftone' : 'rightone'"
           class="singleMessage"
           *ngFor="let mObj of msgInboxArray"
         >
           <h6>
-            {{ mObj.user }}
+            <!-- {{ mObj.user }} -->
+            {{ mObj.senderName }}
+            <!-- <span style="color: grey">{{ mObj.dateCreated | date: "dd MMMM yyyy, HH:mm:ss" }} </span> -->
             <span style="color: grey"
-              >{{ mObj.dateCreated | date: "dd MMMM yyyy, HH:mm:ss" }} </span
-            ><mdb-icon fas icon="angle-down"></mdb-icon>
+              >{{ mObj.sentDate | date: "dd MMMM yyyy, HH:mm:ss" }}
+            </span>
+            <mdb-icon fas icon="angle-down"></mdb-icon>
           </h6>
           <p [ngStyle]="myStyles(mObj)">
-            {{ mObj.message }}
+            <!-- {{ mObj.message }} -->
+            {{ mObj.content }}
           </p>
         </div>
       </div>
@@ -146,7 +188,7 @@
           type="text"
           placeholder="Write your message"
           formControlName="message"
-          (keydown)="triggerFunction($event, textbox.value.message)"
+          (keydown)="breakLineForTextBox($event, textbox.value.message)"
         ></textarea>
         <button [disabled]="textbox.invalid" type="submit">
           <mdb-icon fas icon="paper-plane"></mdb-icon>
@@ -201,3 +243,57 @@
     <!-- End Skeleton -->
   </div>
 </div>
+
+<!-- Modal Content -->
+<form
+  *ngIf="addRoomForm"
+  [formGroup]="addRoomForm"
+  (ngSubmit)="addRoom(addRoomForm.value)"
+  class="addRoom"
+  [ngClass]="{ show: isShown }"
+>
+  <div class="addRoom-content">
+    <h2>Add Room</h2>
+    <div class="md-form">
+      <input
+        type="email"
+        id="Room"
+        class="form-control"
+        mdbInput
+        formControlName="roomName"
+        style="color: white"
+      />
+      <label for="Room">Room</label>
+    </div>
+    <em
+      style="margin: 20px 100px"
+      *ngIf="
+        addRoomForm.get('roomName').hasError('maxlength') &&
+        addRoomForm.get('roomName').touched
+      "
+      >Too Long !
+    </em>
+    <em style="margin: 20px 100px" *ngIf="error">
+      {{ error }}
+    </em>
+    <button
+      [disabled]="addRoomForm.invalid"
+      [ngClass]="{ invalid: addRoomForm.invalid }"
+      type="submit"
+      class="animated"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Add
+    </button>
+    <button (click)="closeModal()" type="button" class="animated">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Close
+    </button>
+  </div>
+</form>
