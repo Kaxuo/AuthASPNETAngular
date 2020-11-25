@@ -1,4 +1,5 @@
 import { MessageReceived } from 'src/app/Models/Messages';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   Component,
   ElementRef,
@@ -24,8 +25,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
+@UntilDestroy()
 export class ChatComponent implements OnInit {
-  object = this.auth.decryptedAndDecodedToken();
+  token = this.auth.decryptedAndDecodedToken();
   username: string;
   users: UserReceived[] = [];
   msgDto: MessageReceived;
@@ -34,7 +36,6 @@ export class ChatComponent implements OnInit {
   loading: boolean;
   onlineUsers: ConnectedUsers[] = [];
   rooms: Rooms[] = [];
-  token: string = this.LocalStorageService.retrieve('mongoID');
   isShown: boolean = false;
   addRoomForm: FormGroup;
   error: string;
@@ -49,18 +50,21 @@ export class ChatComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     // Messages //
-    this.chatService.GetMessage().subscribe((mess: MessageReceived[]) => {
-      this.msgInboxArray = mess;
-      setTimeout(() => {
-        this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
-      }, 400);
-    });
+    this.chatService
+      .GetMessage()
+      .pipe(take(1))
+      .subscribe((mess: MessageReceived[]) => {
+        this.msgInboxArray = mess;
+        setTimeout(() => {
+          this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+        }, 400);
+      });
 
     // New Messages
     this.chatService
       .retrieveMappedObject()
+      .pipe(untilDestroyed(this))
       .subscribe((receivedObj: MessageReceived) => {
         setTimeout(() => {
           this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
@@ -83,32 +87,37 @@ export class ChatComponent implements OnInit {
         this.users = users;
       });
 
-      // Get All users
+    // Get All users
     this.chatService
       .GetAllConnectedUserMongo()
+      .pipe(take(1))
       .subscribe((connectedUsers: ConnectedUsers[]) => {
         this.onlineUsers = connectedUsers;
       });
 
     // Dynamically track online/offline online users
-    this.chatService.removeUser().subscribe((user) => {
-      this.switchOffline(user.id);
-    });
+    this.chatService
+      .removeUser()
+      .pipe(untilDestroyed(this))
+      .subscribe((user) => {
+        this.switchOffline(user.id);
+      });
 
     // SingleUser //
-    this.chatService.retrieveSingleUser().subscribe((user: ConnectedUsers) => {
-      this.switchOnline(user);
-    });
+    this.chatService
+      .retrieveSingleUser()
+      .pipe(take(1))
+      .subscribe((user: ConnectedUsers) => {
+        this.switchOnline(user);
+      });
 
     // Owner Session //
     this.auth
-      .getOne(this.object.unique_name)
+      .getOne(this.token.unique_name)
+      .pipe(take(1))
       .subscribe((single: UserReceived) => {
         this.username = single.username;
       });
-    this.textbox = new FormGroup({
-      message: new FormControl('', [Validators.required]),
-    });
 
     // Rooms //
     this.chatService
@@ -119,10 +128,13 @@ export class ChatComponent implements OnInit {
         this.loading = false;
       });
 
-      // Check if a new room has been created
-    this.chatService.retrieveRoom().subscribe((room: Rooms) => {
-      this.rooms.push(room);
-    });
+    // Check if a new room has been created
+    this.chatService
+      .retrieveRoom()
+      .pipe(untilDestroyed(this))
+      .subscribe((room: Rooms) => {
+        this.rooms.push(room);
+      });
 
     // AddRoom Form //
     this.addRoomForm = new FormGroup({
@@ -130,6 +142,10 @@ export class ChatComponent implements OnInit {
         Validators.required,
         Validators.maxLength(30),
       ]),
+    });
+
+    this.textbox = new FormGroup({
+      message: new FormControl('', [Validators.required]),
     });
   }
 
@@ -185,7 +201,7 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  triggerFunction(event, el) {
+  breakLineForTextBox(event, el) {
     if (event.ctrlKey && event.key === 'Enter') {
       /*
         cannot make textarea produce a next line.

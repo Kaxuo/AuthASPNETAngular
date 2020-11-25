@@ -16,10 +16,7 @@
             <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
             <div class="status">
               <span>{{ el.username | titlecase }}</span>
-              <span
-                *ngIf="onlineCheck(el)"
-                class="stat"
-              >
+              <span *ngIf="onlineCheck(el)" class="stat">
                 <span class="circle"></span>Online</span
               >
               <span *ngIf="!onlineCheck(el)" class="stat">
@@ -32,7 +29,7 @@
       <hr />
       <h3>
         Rooms<mdb-icon
-          *ngIf="object.role == 'Admin'"
+          *ngIf="token.role == 'Admin'"
           (click)="showModal()"
           class="add"
           fas
@@ -191,7 +188,7 @@
           type="text"
           placeholder="Write your message"
           formControlName="message"
-          (keydown)="triggerFunction($event, textbox.value.message)"
+          (keydown)="breakLineForTextBox($event, textbox.value.message)"
         ></textarea>
         <button [disabled]="textbox.invalid" type="submit">
           <mdb-icon fas icon="paper-plane"></mdb-icon>

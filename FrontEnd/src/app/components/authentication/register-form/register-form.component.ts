@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { first, take, tap } from 'rxjs/operators';
 import { LocalStorageService } from 'ngx-webstorage';
 import { ChatService } from 'src/app/services/chat.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-register-form',
@@ -14,7 +15,16 @@ import { ChatService } from 'src/app/services/chat.service';
   styleUrls: ['./register-form.component.scss'],
 })
 export class RegisterFormComponent implements OnInit {
-  registerForm: FormGroup;
+  registerForm = this.fb.group({
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    username: ['', [Validators.required, Validators.pattern(/^\S*$/)]],
+    password: ['', Validators.required],
+    number: ['', Validators.required],
+    city: ['', Validators.required],
+    country: ['', Validators.required],
+    hobby: ['', Validators.required],
+  });
   message: string;
   clicked: boolean = false;
 
@@ -22,7 +32,8 @@ export class RegisterFormComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private LocalStorageService: LocalStorageService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -40,19 +51,6 @@ export class RegisterFormComponent implements OnInit {
         )
         .subscribe();
     }
-    this.registerForm = new FormGroup({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      username: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^\S*$/),
-      ]),
-      password: new FormControl('', [Validators.required]),
-      number: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      country: new FormControl('', [Validators.required]),
-      hobby: new FormControl('', [Validators.required]),
-    });
   }
 
   sendData(values: UserRegister) {

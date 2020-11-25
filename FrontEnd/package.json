@@ -23,6 +23,7 @@
     "@angular/router": "~10.0.14",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@microsoft/signalr": "^3.1.9",
+    "@ngneat/until-destroy": "^8.0.3",
     "@teamhive/lottie-player": "^1.0.0",
     "@types/chart.js": "^2.9.24",
     "angular-bootstrap-md": "^9.4.0",

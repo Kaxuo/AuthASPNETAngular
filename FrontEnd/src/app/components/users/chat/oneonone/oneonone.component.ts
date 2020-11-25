@@ -9,51 +9,9 @@ import { MessageReceived } from 'src/app/Models/Messages';
 })
 export class OneononeComponent implements OnInit {
   loading: boolean = false;
-  rooms: Rooms[] = [
-    {
-      id: 'lmao',
-      roomName: 'Fish',
-    },
-    {
-      id: 'lmao',
-      roomName: 'Hunt',
-    },
-    {
-      id: 'lmao',
-      roomName: 'Build',
-    },
-    {
-      id: 'lmao',
-      roomName: 'Gaming',
-    },
-    {
-      id: 'lmao',
-      roomName: 'Camping',
-    },
-  ];
+  rooms: Rooms[] = [];
 
-  messages: MessageReceived[] = [
-    {
-      senderName: 'Bob',
-      sentDate: new Date(),
-      content: "Hello man , it's your boy",
-    },
-    {
-      senderName: 'Kain',
-      sentDate: new Date(),
-      content: "azeazn , it's your boy",
-    },
-    {
-      senderName: 'Kayle',
-      sentDate: new Date(),
-      content: "Hello man , it'sazeazer boy",
-    },
-    {
-      senderName: 'Jin',
-      sentDate: new Date(),
-      content: "Hello man , it's your azeaz",
-    },
-  ];
+  messages: MessageReceived[] = [];
 
   show: Rooms[] = [...this.rooms];
 
@@ -87,7 +45,7 @@ export class OneononeComponent implements OnInit {
     }, 500);
   }
 
-  triggerFunction(event) {
+  breakLineForTextBox(event) {
     if (event.ctrlKey && event.key === 'Enter') {
       /*
         cannot make textarea produce a next line.

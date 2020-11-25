@@ -26,7 +26,17 @@ export class ChatService {
   readonly URL = `https://localhost:5001/api`;
   readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
 
-  private connection: any;
+  private connection: any = new signalR.HubConnectionBuilder()
+    .withUrl(
+      `https://localhost:5001/chat`,
+      {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets,
+      }
+    ) // mapping to the chathub as in startup.cs
+    .withAutomaticReconnect()
+    .configureLogging(signalR.LogLevel.Information)
+    .build();
 
   private receivedMessageObject: MessageReceived;
   private sharedObj = new Subject<MessageReceived>();

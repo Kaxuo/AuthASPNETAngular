@@ -66,7 +66,7 @@
               style="resize: none"
               type="text"
               placeholder="Write your message"
-              (keydown)="triggerFunction($event)"
+              (keydown)="breakLineForTextBox($event)"
             ></textarea>
             <button [disabled]="true" type="submit">
               <mdb-icon fas icon="paper-plane"></mdb-icon>
@@ -256,7 +256,7 @@
               style="resize: none"
               type="text"
               placeholder="Write your message"
-              (keydown)="triggerFunction($event)"
+              (keydown)="breakLineForTextBox($event)"
             ></textarea>
             <button [disabled]="true" type="submit">
               <mdb-icon fas icon="paper-plane"></mdb-icon>

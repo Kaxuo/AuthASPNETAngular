@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Rooms } from 'src/app/Models/ChatModels/Rooms';
 import { RoomUsers } from 'src/app/Models/ChatModels/RoomUsers';
 import { UserReceived } from 'src/app/Models/UsersReceived';
@@ -8,17 +8,20 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { LocalStorageService } from 'ngx-webstorage';
 import { colors } from 'src/app/components/users/chat/colors';
-import { map, take } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { MessageReceived } from 'src/app/Models/Messages';
 import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { combineLatest, forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
 })
+@UntilDestroy()
 export class RoomComponent implements OnInit {
-  object = this.auth.decryptedAndDecodedToken();
+  token = this.auth.decryptedAndDecodedToken();
   loading: boolean;
   singleRoom: Rooms;
   roomMessages: MessageReceived[];
@@ -42,22 +45,44 @@ export class RoomComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.chatService.retrieveRoom().subscribe((room: Rooms) => {
-      this.showRooms.push(room);
-    });
+    this.chatService
+      .retrieveRoom()
+      .pipe(untilDestroyed(this))
+      .subscribe((room: Rooms) => {
+        this.showRooms.push(room);
+      });
 
-    this.chatService.retrieveNewMessage().subscribe((message: any) => {
-      if (this.roomId == message.id) {
-        this.addMessageToBox(message);
-      }
-      setTimeout(() => {
-        this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
-      }, 200);
-    });
+    this.chatService
+      .retrieveUsersInRoom()
+      .pipe(untilDestroyed(this))
+      .subscribe((user: RoomUsers) => {
+        if (this.singleRoom.roomName == user.roomName) {
+          this.showUsers.push({
+            userId: user.userId,
+            username: user.username,
+          });
+          this.showUsers = this.getUniqueListBy(this.showUsers, 'username');
+        }
+      });
 
-    this.chatService.removeUser().subscribe((user) => {
-      this.switchOffline(user.id);
-    });
+    this.chatService
+      .retrieveNewMessage()
+      .pipe(untilDestroyed(this))
+      .subscribe((message: any) => {
+        if (this.roomId == message.id) {
+          this.addMessageToBox(message);
+        }
+        setTimeout(() => {
+          this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+        }, 200);
+      });
+
+    this.chatService
+      .removeUser()
+      .pipe(untilDestroyed(this))
+      .subscribe((user) => {
+        this.switchOffline(user.id);
+      });
 
     this.chatService
       .GetAllRoom()
@@ -67,36 +92,24 @@ export class RoomComponent implements OnInit {
         this.showRooms = [...this.rooms];
       });
 
-    this.route.params.subscribe((params) => {
-      this.roomId = params.id;
-      this.chatService
-        .GetSingleRoom(this.roomId)
-        .subscribe((singleRoom: Rooms) => {
-          this.singleRoom = singleRoom;
-          this.usersList = singleRoom.roomUsers.map((user, index) => {
-            return { ...user, colors: colors[index] };
-          });
-          this.showUsers = [...this.usersList];
-          // Nested ! //
-          this.chatService
-            .retrieveUsersInRoom()
-            .subscribe((user: RoomUsers) => {
-              if (this.singleRoom.roomName == user.roomName) {
-                this.showUsers.push({
-                  userId: user.userId,
-                  username: user.username,
-                });
-                this.showUsers = this.getUniqueListBy(
-                  this.showUsers,
-                  'username'
-                );
-              }
-            });
+    this.route.params
+      .pipe(
+        switchMap((param: Params) => {
+          this.roomId = param.id;
+          return this.chatService.GetSingleRoom(this.roomId);
+        }),
+        untilDestroyed(this)
+      )
+      .subscribe((singleRoom: Rooms) => {
+        this.singleRoom = singleRoom;
+        this.usersList = singleRoom.roomUsers.map((user, index) => {
+          return { ...user, colors: colors[index] };
         });
-    });
+        this.showUsers = [...this.usersList];
+      });
 
     this.auth
-      .getOne(this.object.unique_name)
+      .getOne(this.token.unique_name)
       .pipe(take(1))
       .subscribe((single: UserReceived) => {
         this.user = single;
@@ -107,27 +120,27 @@ export class RoomComponent implements OnInit {
       message: new FormControl('', [Validators.required]),
     });
 
-    this.chatService.removeUserInRoom().subscribe((userLeft: any) => {
-      if (userLeft.room == this.roomId) {
-        this.showUsers = this.showUsers.filter(
-          (users) => users.userId != userLeft.user
-        );
-      }
-    });
+    this.chatService
+      .removeUserInRoom()
+      .pipe(untilDestroyed(this))
+      .subscribe((userLeft: any) => {
+        if (userLeft.room == this.roomId) {
+          this.showUsers = this.showUsers.filter(
+            (users) => users.userId != userLeft.user
+          );
+        }
+      });
 
     this.chatService
       .GetAllConnectedUserMongo()
-      .pipe(
-        map((connectedUsers: ConnectedUsers[]) => {
-          return connectedUsers;
-        })
-      )
+      .pipe(take(1))
       .subscribe((connectedUsers: ConnectedUsers[]) => {
         this.onlineUsers = connectedUsers;
 
         // SingleUser //
         this.chatService
           .retrieveSingleUser()
+          .pipe(untilDestroyed(this))
           .subscribe((user: ConnectedUsers) => {
             this.switchOnline(user);
           });
@@ -158,7 +171,7 @@ export class RoomComponent implements OnInit {
     }, 500);
   }
 
-  triggerFunction(event, el) {
+  breakLineForTextBox(event, el) {
     if (event.ctrlKey && event.key === 'Enter') {
       /*
         cannot make textarea produce a next line.
