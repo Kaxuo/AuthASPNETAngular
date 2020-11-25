@@ -12,7 +12,7 @@ import { switchMap, take } from 'rxjs/operators';
 import { MessageReceived } from 'src/app/Models/Messages';
 import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { combineLatest, forkJoin, of } from 'rxjs';
+import { MongoUsers } from 'src/app/Models/ChatModels/MongoUsers';
 
 @Component({
   selector: 'app-room',
@@ -56,7 +56,7 @@ export class RoomComponent implements OnInit {
       .retrieveUsersInRoom()
       .pipe(untilDestroyed(this))
       .subscribe((user: RoomUsers) => {
-        if (this.singleRoom.roomName == user.roomName) {
+        if (this.singleRoom?.roomName == user.roomName) {
           this.showUsers.push({
             userId: user.userId,
             username: user.username,
@@ -136,14 +136,14 @@ export class RoomComponent implements OnInit {
       .pipe(take(1))
       .subscribe((connectedUsers: ConnectedUsers[]) => {
         this.onlineUsers = connectedUsers;
+      });
 
-        // SingleUser //
-        this.chatService
-          .retrieveSingleUser()
-          .pipe(untilDestroyed(this))
-          .subscribe((user: ConnectedUsers) => {
-            this.switchOnline(user);
-          });
+    // SingleUser //
+    this.chatService
+      .retrieveSingleUser()
+      .pipe(untilDestroyed(this))
+      .subscribe((user: ConnectedUsers) => {
+        this.switchOnline(user);
       });
 
     setTimeout(() => {
@@ -225,6 +225,10 @@ export class RoomComponent implements OnInit {
           .subscribe();
       }
     });
+  }
+
+  joinUser(element: MongoUsers) {
+    this.router.navigate(['chat/user/', element.id]);
   }
 
   myStyles(el): object {

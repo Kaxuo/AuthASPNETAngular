@@ -13,16 +13,13 @@ import { MongoUsers } from '../Models/ChatModels/MongoUsers';
   providedIn: 'root',
 })
 export class ChatService {
-
   // private chat = 'https://authaspnetcore.azurewebsites.net/chatsocket';
   // readonly GET_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/get';
   // readonly POST_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/send';
 
-
   // private chat = 'https://localhost:5001/chatsocket'
   // readonly GET_URL = 'https://localhost:5001/api/chat/get';
   // readonly POST_URL = 'https://localhost:5001/api/chat/send';
-
 
   // Charlotte //
 
@@ -30,13 +27,10 @@ export class ChatService {
   readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
 
   private connection: any = new signalR.HubConnectionBuilder()
-    .withUrl(
-      `https://localhost:5001/chat`,
-      {
-        skipNegotiation: true,
-        transport: signalR.HttpTransportType.WebSockets,
-      }
-    ) // mapping to the chathub as in startup.cs
+    .withUrl(`https://localhost:5001/chat`, {
+      skipNegotiation: true,
+      transport: signalR.HttpTransportType.WebSockets,
+    }) // mapping to the chathub as in startup.cs
     .withAutomaticReconnect()
     .configureLogging(signalR.LogLevel.Information)
     .build();
@@ -239,6 +233,10 @@ export class ChatService {
     return this.http.get(`${this.URL}/account`);
   }
 
+  GetSingleMongoUser(id){
+    return this.http.get(`${this.URL}/account/${id}`)
+  }
+
   GetAllConnectedUserMongo() {
     return this.http.get(`${this.URL}/account/all`);
   }
@@ -281,6 +279,10 @@ export class ChatService {
 
   leaveRoom(roomId, userId) {
     return this.http.delete(`${this.URL}/chat/room/${roomId}/users/${userId}`);
+  }
+
+  addContact(ownerId, body) {
+    return this.http.post(`${this.URL}/chat/private/${ownerId}/new`, body);
   }
 
   observeToken(): Observable<string> {

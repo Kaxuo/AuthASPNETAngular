@@ -7,12 +7,8 @@
         users online
       </h6>
       <div class="allUsers">
-        <div
-          class="users"
-          *ngFor="let el of users"
-          [routerLink]="['user', el.id]"
-        >
-          <ng-container *ngIf="token !== el.id">
+        <div class="users" *ngFor="let el of users" (click)="addContact(el)">
+          <ng-container *ngIf="mongoToken !== el.id">
             <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
             <div class="status">
               <span>{{ el.username | titlecase }}</span>

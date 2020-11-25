@@ -17,8 +17,9 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
 import { Rooms } from 'src/app/models/ChatModels/Rooms';
 import { Router } from '@angular/router';
-import { forkJoin, throwError } from 'rxjs';
+import { forkJoin, of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MongoUsers } from 'src/app/Models/ChatModels/MongoUsers';
 
 @Component({
   selector: 'app-chat',
@@ -39,6 +40,8 @@ export class ChatComponent implements OnInit {
   isShown: boolean = false;
   addRoomForm: FormGroup;
   error: string;
+  mongoToken: string = this.LocalStorageService.retrieve('mongoID');
+  mongoSingleUser: MongoUsers;
   // Allow Focus on the textbox after sending a message
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
@@ -136,6 +139,14 @@ export class ChatComponent implements OnInit {
         this.rooms.push(room);
       });
 
+    this.chatService
+      .GetSingleMongoUser(this.mongoToken)
+      .pipe(take(1))
+      .subscribe((user: MongoUsers) => {
+        console.log(user.contacts);
+        this.mongoSingleUser = user;
+      });
+
     // AddRoom Form //
     this.addRoomForm = new FormGroup({
       roomName: new FormControl('', [
@@ -201,18 +212,32 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  breakLineForTextBox(event, el) {
-    if (event.ctrlKey && event.key === 'Enter') {
-      /*
-        cannot make textarea produce a next line.
-      */
-      var text = <HTMLInputElement>document.getElementById('textarea1');
-      text.value += '\n';
-      //  text = text.
-    } else if (event.key === 'Enter') {
-      // allow the form to reset on the 1st line //
-      event.preventDefault();
-      this.send(el);
+  addContact(el) {
+    let newContact = {
+      username: this.username,
+      contactId: el.id,
+      contactName: el.username,
+    };
+    if (
+      this.mongoSingleUser.contacts.find(
+        (contacts) => contacts.contactId == el.id
+      )
+    ) {
+      this.router.navigate(['/chat/user', el.id]);
+    } else {
+      this.chatService
+        .addContact(this.mongoToken, newContact)
+        .pipe(
+          take(1),
+          catchError((error) => {
+            if (error.status == 400) {
+              return of(false);
+            }
+          })
+        )
+        .subscribe(() => {
+          this.router.navigate(['/chat/user', el.id]);
+        });
     }
   }
 
@@ -274,5 +299,20 @@ export class ChatComponent implements OnInit {
   checkJoined(element: Rooms) {
     let check = element.roomUsers.find((x) => x.username == this.username);
     return check;
+  }
+
+  breakLineForTextBox(event, el) {
+    if (event.ctrlKey && event.key === 'Enter') {
+      /*
+        cannot make textarea produce a next line.
+      */
+      var text = <HTMLInputElement>document.getElementById('textarea1');
+      text.value += '\n';
+      //  text = text.
+    } else if (event.key === 'Enter') {
+      // allow the form to reset on the 1st line //
+      event.preventDefault();
+      this.send(el);
+    }
   }
 }

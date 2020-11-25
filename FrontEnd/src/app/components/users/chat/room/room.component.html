@@ -105,7 +105,11 @@
         <div class="middleSection">
           <h5>Room's Users</h5>
           <ng-container *ngFor="let el of showUsers">
-            <div class="user" *ngIf="el.username != user.username">
+            <div
+              class="user"
+              *ngIf="el.username != user.username"
+              (click)="joinUser(el)"
+            >
               <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
               <h6>
                 {{ el.username }}
