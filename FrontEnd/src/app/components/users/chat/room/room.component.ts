@@ -23,6 +23,7 @@ import { MongoUsers } from 'src/app/Models/ChatModels/MongoUsers';
 export class RoomComponent implements OnInit {
   token = this.auth.decryptedAndDecodedToken();
   loading: boolean;
+  roomLoading: boolean;
   singleRoom: Rooms;
   roomMessages: MessageReceived[];
   user: UserReceived;
@@ -90,6 +91,7 @@ export class RoomComponent implements OnInit {
       .subscribe((rooms: Rooms[]) => {
         this.rooms = rooms;
         this.showRooms = [...this.rooms];
+        this.roomLoading = false;
       });
 
     this.route.params
@@ -113,7 +115,9 @@ export class RoomComponent implements OnInit {
       .pipe(take(1))
       .subscribe((single: UserReceived) => {
         this.user = single;
-        this.loading = false;
+        setTimeout(() => {
+          this.loading = false;
+        }, 1000);
       });
 
     this.sendMessageRoom = new FormGroup({
@@ -148,7 +152,7 @@ export class RoomComponent implements OnInit {
 
     setTimeout(() => {
       this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
-    }, 400);
+    }, 1200);
   }
 
   searchRoom(el) {
@@ -228,7 +232,7 @@ export class RoomComponent implements OnInit {
   }
 
   joinUser(element: MongoUsers) {
-    this.router.navigate(['chat/user/', element.id]);
+    this.router.navigate(['chat/user/', element.userId]);
   }
 
   myStyles(el): object {

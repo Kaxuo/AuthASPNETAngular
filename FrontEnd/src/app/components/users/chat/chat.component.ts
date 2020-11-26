@@ -143,7 +143,6 @@ export class ChatComponent implements OnInit {
       .GetSingleMongoUser(this.mongoToken)
       .pipe(take(1))
       .subscribe((user: MongoUsers) => {
-        console.log(user.contacts);
         this.mongoSingleUser = user;
       });
 

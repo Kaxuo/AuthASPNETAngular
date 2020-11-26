@@ -6,13 +6,13 @@ import { UserReceived } from 'src/app/Models/UsersReceived';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { LocalStorageService } from 'ngx-webstorage';
-import { catchError, switchMap, take } from 'rxjs/operators';
+import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { MessageReceived } from 'src/app/Models/Messages';
 import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { combineLatest, forkJoin, of, throwError, EMPTY } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { forkJoin, of, throwError } from 'rxjs';
 import { MongoUsers } from 'src/app/Models/ChatModels/MongoUsers';
+import { Contact } from 'src/app/Models/ChatModels/Contacts';
 
 @Component({
   selector: 'app-oneonone',
@@ -22,28 +22,20 @@ import { MongoUsers } from 'src/app/Models/ChatModels/MongoUsers';
 @UntilDestroy()
 export class OneononeComponent implements OnInit {
   token = this.auth.decryptedAndDecodedToken();
-  messages: MessageReceived[] = [
-    {
-      sentDate: new Date(),
-      content: 'lmao',
-      senderName: 'Freya',
-    },
-    {
-      sentDate: new Date(),
-      content: 'lmao',
-      senderName: 'Jin',
-    },
-  ];
+  recipient: Contact;
+  messages: MessageReceived[] = [];
   loading: boolean;
+  chatLoading: boolean;
   user: UserReceived;
   usersList: UserReceived[];
   showUsers: UserReceived[];
-  sendMessageRoom: FormGroup;
+  sendMessagePrivate: FormGroup;
   rooms: Rooms[] = [];
   showRooms: Rooms[] = [];
-  roomId: string;
+  recipientId: string;
   onlineUsers: ConnectedUsers[] = [];
   mongoSingleUser: MongoUsers;
+  mongoToken = this.LocalStorageService.retrieve('mongoID');
 
   @ViewChild('message') messageRef: ElementRef;
   @ViewChild('container') containerRef: ElementRef;
@@ -60,8 +52,15 @@ export class OneononeComponent implements OnInit {
     let allConnectedUserMongo = this.chatService.GetAllConnectedUserMongo();
     let allUserMongo = this.chatService.GetAllUserMongo();
     let allRooms = this.chatService.GetAllRoom();
+    let singleUser = this.chatService.GetSingleMongoUser(this.mongoToken);
 
-    forkJoin([getOwnerSession, allUserMongo, allConnectedUserMongo, allRooms])
+    forkJoin([
+      getOwnerSession,
+      allUserMongo,
+      allConnectedUserMongo,
+      allRooms,
+      singleUser,
+    ])
       .pipe(
         take(1),
         catchError((error) => {
@@ -69,16 +68,51 @@ export class OneononeComponent implements OnInit {
         })
       )
       .subscribe(
-        (result: [UserReceived, UserReceived[], ConnectedUsers[], Rooms[]]) => {
+        (
+          result: [
+            UserReceived,
+            UserReceived[],
+            ConnectedUsers[],
+            Rooms[],
+            MongoUsers
+          ]
+        ) => {
           this.user = result[0];
           this.usersList = result[1];
           this.onlineUsers = result[2];
           this.showUsers = [...this.usersList];
           this.rooms = result[3];
           this.showRooms = [...this.rooms];
-          this.loading = false;
+          this.mongoSingleUser = result[4];
+          setTimeout(() => {
+            this.loading = false;
+          }, 1000);
         }
       );
+
+    this.route.params
+      .pipe(
+        tap(() => {
+          this.chatLoading = true;
+        }),
+        switchMap((param: Params) => {
+          this.recipientId = param.id;
+          return this.chatService.GetSingleMongoUser(this.mongoToken);
+        }),
+        untilDestroyed(this)
+      )
+      .subscribe((singleUser: MongoUsers) => {
+        this.recipient = singleUser.contacts.find(
+          (x) => x.contactId == this.recipientId
+        );
+        this.messages = this.recipient.messages;
+        setTimeout(() => {
+          this.chatLoading = false;
+        }, 600);
+        setTimeout(() => {
+          this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+        }, 750);
+      });
 
     this.chatService
       .removeUser()
@@ -94,21 +128,37 @@ export class OneononeComponent implements OnInit {
         this.switchOnline(user);
       });
 
-    this.sendMessageRoom = new FormGroup({
+    this.chatService
+      .newPrivateMess()
+      .pipe(untilDestroyed(this))
+      .subscribe((message: any) => {
+        if (
+          message.sender.senderId == this.mongoToken &&
+          message.recipient == this.recipientId
+        ) {
+          this.addToInbox(message.sender);
+          setTimeout(() => {
+            this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+          }, 100);
+        }
+        if (
+          message.recipient == this.mongoToken &&
+          message.sender.senderId == this.recipientId
+        ) {
+          this.addToInbox(message.sender);
+          setTimeout(() => {
+            this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
+          }, 100);
+        }
+      });
+
+    this.sendMessagePrivate = new FormGroup({
       message: new FormControl('', [Validators.required]),
     });
 
-    this.chatService
-      .GetSingleMongoUser(this.LocalStorageService.retrieve('mongoID'))
-      .pipe(take(1))
-      .subscribe((user: MongoUsers) => {
-        console.log(user.contacts);
-        this.mongoSingleUser = user;
-      });
-
     setTimeout(() => {
       this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
-    }, 400);
+    }, 1200);
   }
 
   searchUser(el) {
@@ -148,15 +198,15 @@ export class OneononeComponent implements OnInit {
 
   send(el) {
     let message = {
-      senderId: this.LocalStorageService.retrieve('mongoID'),
+      senderId: this.mongoToken,
       senderName: this.user.username,
       content: el.message,
     };
     if (el != null) {
       this.chatService
-        .sendMessageRoom(this.route.snapshot.params.id, message)
+        .sendPrivateMessage(this.recipientId, message)
         .subscribe(); // Send the message via a service
-      this.sendMessageRoom.reset();
+      this.sendMessagePrivate.reset();
       this.messageRef.nativeElement.focus();
     }
     setTimeout(() => {
@@ -167,15 +217,13 @@ export class OneononeComponent implements OnInit {
   joinRoom(element: Rooms) {
     this.chatService.GetSingleRoom(element.id).subscribe((data: Rooms) => {
       if (
-        data.roomUsers.find(
-          (users) =>
-            this.LocalStorageService.retrieve('mongoId') == users.userId
-        ) == undefined
+        data.roomUsers.find((users) => this.mongoToken == users.userId) ==
+        undefined
       ) {
         this.chatService
           .joinRoom(element.id, {
             roomName: element.roomName,
-            userId: this.LocalStorageService.retrieve('mongoID'),
+            userId: this.mongoToken,
             username: this.user.username,
           })
           .subscribe();
@@ -197,11 +245,12 @@ export class OneononeComponent implements OnInit {
       this.router.navigate(['/chat/user', el.id]);
     } else {
       this.chatService
-        .addContact(this.LocalStorageService.retrieve('mongoID'), newContact)
+        .addContact(this.mongoToken, newContact)
         .pipe(
           take(1),
           catchError((error) => {
             if (error.status == 400) {
+              console.log(error);
               return of(false);
             }
           })
@@ -210,6 +259,10 @@ export class OneononeComponent implements OnInit {
           this.router.navigate(['/chat/user', el.id]);
         });
     }
+  }
+
+  addToInbox(message) {
+    this.messages.push(message);
   }
 
   scrollDown() {
