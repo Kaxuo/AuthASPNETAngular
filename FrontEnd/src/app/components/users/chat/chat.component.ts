@@ -17,7 +17,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
 import { Rooms } from 'src/app/models/ChatModels/Rooms';
 import { Router } from '@angular/router';
-import { forkJoin, of, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MongoUsers } from 'src/app/Models/ChatModels/MongoUsers';
 

@@ -8,11 +8,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { LocalStorageService } from 'ngx-webstorage';
 import { colors } from 'src/app/components/users/chat/colors';
-import { switchMap, take } from 'rxjs/operators';
+import { catchError, switchMap, take } from 'rxjs/operators';
 import { MessageReceived } from 'src/app/Models/Messages';
 import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MongoUsers } from 'src/app/Models/ChatModels/MongoUsers';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-room',
@@ -99,6 +100,9 @@ export class RoomComponent implements OnInit {
         switchMap((param: Params) => {
           this.roomId = param.id;
           return this.chatService.GetSingleRoom(this.roomId);
+        }),
+        catchError((error) => {
+          return throwError(error);
         }),
         untilDestroyed(this)
       )

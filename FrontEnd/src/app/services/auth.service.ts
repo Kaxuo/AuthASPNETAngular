@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebRequestService } from './web-request.service';
 import { UserRegister } from '../Models/UserRegister';
-import { map, shareReplay, tap, timestamp } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 import { UserAuth } from '../Models/UserAuth';
 import {
   BehaviorSubject,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { UserRegister } from '../../../Models/UserRegister';

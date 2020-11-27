@@ -105,6 +105,9 @@ export class OneononeComponent implements OnInit {
         this.recipient = singleUser.contacts.find(
           (x) => x.contactId == this.recipientId
         );
+        if (this.recipient == undefined) {
+          this.router.navigate(['404']);
+        }
         this.messages = this.recipient.messages;
         setTimeout(() => {
           this.chatLoading = false;

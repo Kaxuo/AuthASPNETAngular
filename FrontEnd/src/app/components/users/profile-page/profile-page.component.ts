@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { UserReceived } from 'src/app/Models/UsersReceived';
 import { FormControl, FormGroup, Validators } from '@angular/forms';

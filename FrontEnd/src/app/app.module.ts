@@ -31,7 +31,6 @@ import { ServerDownComponent } from './components/errorsPages/server-down/server
 import { NoPrivilegesComponent } from './components/errorsPages/no-privileges/no-privileges.component';
 import { SpinnerComponent } from './components/global/spinner/spinner.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { BackgroundComponent } from './components/global/background/background.component';
 import { ProjectsComponent } from './components/manager/projects/allProjects/projects.component';
 import { ProjectDetailsComponent } from './components/manager/projects/project-details/project-details.component';
 import { AddProjectComponent } from './components/manager/projects/add-project/add-project.component';
@@ -69,7 +68,6 @@ import { OneononeComponent } from './components/users/chat/oneonone/oneonone.com
     ServerDownComponent,
     NoPrivilegesComponent,
     SpinnerComponent,
-    BackgroundComponent,
     ProjectsComponent,
     ProjectDetailsComponent,
     AddProjectComponent,
