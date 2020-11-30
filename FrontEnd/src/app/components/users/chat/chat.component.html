@@ -7,21 +7,12 @@
         users online
       </h6>
       <div class="allUsers">
-<<<<<<< HEAD
         <ng-container *ngFor="let el of users">
           <div
             class="users"
             *ngIf="mongoToken !== el.id"
             (click)="addContact(el)"
           >
-=======
-        <div
-          class="users"
-          *ngFor="let el of users"
-          [routerLink]="['user', el.id]"
-        >
-          <ng-container *ngIf="token !== el.id">
->>>>>>> origin/master
             <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
             <div class="status">
               <span>{{ el.username | titlecase }}</span>
@@ -32,13 +23,8 @@
                 <span class="red"></span>Offline</span
               >
             </div>
-<<<<<<< HEAD
           </div>
         </ng-container>
-=======
-          </ng-container>
-        </div>
->>>>>>> origin/master
       </div>
       <hr />
       <h3>

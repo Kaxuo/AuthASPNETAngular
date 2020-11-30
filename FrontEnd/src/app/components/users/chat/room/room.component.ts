@@ -8,20 +8,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { LocalStorageService } from 'ngx-webstorage';
 import { colors } from 'src/app/components/users/chat/colors';
-<<<<<<< HEAD
 import { catchError, switchMap, take } from 'rxjs/operators';
 import { MessageReceived } from 'src/app/Models/Messages';
 import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MongoUsers } from 'src/app/Models/ChatModels/MongoUsers';
 import { throwError } from 'rxjs';
-=======
-import { switchMap, take } from 'rxjs/operators';
-import { MessageReceived } from 'src/app/Models/Messages';
-import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { combineLatest, forkJoin, of } from 'rxjs';
->>>>>>> origin/master
 
 @Component({
   selector: 'app-room',
@@ -32,10 +24,7 @@ import { combineLatest, forkJoin, of } from 'rxjs';
 export class RoomComponent implements OnInit {
   token = this.auth.decryptedAndDecodedToken();
   loading: boolean;
-<<<<<<< HEAD
   roomLoading: boolean;
-=======
->>>>>>> origin/master
   singleRoom: Rooms;
   roomMessages: MessageReceived[];
   user: UserReceived;
@@ -69,11 +58,7 @@ export class RoomComponent implements OnInit {
       .retrieveUsersInRoom()
       .pipe(untilDestroyed(this))
       .subscribe((user: RoomUsers) => {
-<<<<<<< HEAD
         if (this.singleRoom?.roomName == user.roomName) {
-=======
-        if (this.singleRoom.roomName == user.roomName) {
->>>>>>> origin/master
           this.showUsers.push({
             userId: user.userId,
             username: user.username,
@@ -107,10 +92,7 @@ export class RoomComponent implements OnInit {
       .subscribe((rooms: Rooms[]) => {
         this.rooms = rooms;
         this.showRooms = [...this.rooms];
-<<<<<<< HEAD
         this.roomLoading = false;
-=======
->>>>>>> origin/master
       });
 
     this.route.params
@@ -119,12 +101,9 @@ export class RoomComponent implements OnInit {
           this.roomId = param.id;
           return this.chatService.GetSingleRoom(this.roomId);
         }),
-<<<<<<< HEAD
         catchError((error) => {
           return throwError(error);
         }),
-=======
->>>>>>> origin/master
         untilDestroyed(this)
       )
       .subscribe((singleRoom: Rooms) => {
@@ -140,13 +119,9 @@ export class RoomComponent implements OnInit {
       .pipe(take(1))
       .subscribe((single: UserReceived) => {
         this.user = single;
-<<<<<<< HEAD
         setTimeout(() => {
           this.loading = false;
         }, 1000);
-=======
-        this.loading = false;
->>>>>>> origin/master
       });
 
     this.sendMessageRoom = new FormGroup({
@@ -169,7 +144,6 @@ export class RoomComponent implements OnInit {
       .pipe(take(1))
       .subscribe((connectedUsers: ConnectedUsers[]) => {
         this.onlineUsers = connectedUsers;
-<<<<<<< HEAD
       });
 
     // SingleUser //
@@ -178,25 +152,11 @@ export class RoomComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((user: ConnectedUsers) => {
         this.switchOnline(user);
-=======
-
-        // SingleUser //
-        this.chatService
-          .retrieveSingleUser()
-          .pipe(untilDestroyed(this))
-          .subscribe((user: ConnectedUsers) => {
-            this.switchOnline(user);
-          });
->>>>>>> origin/master
       });
 
     setTimeout(() => {
       this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
-<<<<<<< HEAD
     }, 1200);
-=======
-    }, 400);
->>>>>>> origin/master
   }
 
   searchRoom(el) {
@@ -275,13 +235,10 @@ export class RoomComponent implements OnInit {
     });
   }
 
-<<<<<<< HEAD
   joinUser(element: MongoUsers) {
     this.router.navigate(['chat/user/', element.userId]);
   }
 
-=======
->>>>>>> origin/master
   myStyles(el): object {
     let colors = this.usersList.find((x) => x.username == el.senderName);
     if (this.user.username == el.senderName) {

@@ -87,7 +87,7 @@ $bottomheight: 7vh;
           padding: 10px;
 
           &:hover {
-            background-color: rgba(50, 115, 220, 0.1);
+            background-color: rgba(50, 115, 220, 0.6);
             border-radius: 5px;
             cursor: pointer;
           }
@@ -111,15 +111,8 @@ $bottomheight: 7vh;
         background-color: lightgrey;
         cursor: pointer;
 
-<<<<<<< HEAD
         &:focus {
           outline: none;
-=======
-        h5 {
-          &:focus {
-            outline: none;
-          }
->>>>>>> origin/master
         }
       }
     }
@@ -143,11 +136,7 @@ $bottomheight: 7vh;
       .middleSection {
         display: flex;
         flex-direction: column;
-<<<<<<< HEAD
         height: 63.4vh;
-=======
-        height: $middleheight;
->>>>>>> origin/master
         overflow-y: auto;
         scroll-behavior: smooth;
 
@@ -155,25 +144,15 @@ $bottomheight: 7vh;
           margin: 5px 20px;
           display: flex;
           flex-direction: column;
-<<<<<<< HEAD
 
           p {
             width: fit-content;
-=======
-          justify-content: flex-end;
-          align-items: flex-end;
-
-          p {
->>>>>>> origin/master
             text-align: justify;
             background-color: white;
             padding: 15px 20px;
             border-radius: 10px;
             white-space: pre-wrap;
-<<<<<<< HEAD
             color: white;
-=======
->>>>>>> origin/master
           }
         }
       }
@@ -228,25 +207,10 @@ $bottomheight: 7vh;
         flex-grow: 1;
         overflow: hidden;
         overflow-y: auto;
-<<<<<<< HEAD
         .room {
           display: flex;
           align-items: center;
           padding: 10px;
-=======
-
-        h5 {
-          align-self: center;
-          margin: 20px 0px;
-        }
-
-        .user {
-          display: flex;
-          align-items: center;
-          padding-left: 40px;
-          height: 5vh;
-          margin: 10px 0px;
->>>>>>> origin/master
 
           &:hover {
             background-color: rgba(50, 115, 220, 0.1);
@@ -258,13 +222,8 @@ $bottomheight: 7vh;
             font-size: 30px;
           }
 
-<<<<<<< HEAD
           h5 {
             margin: 0 0 0 10px;
-=======
-          h6 {
-            margin-left: 10px;
->>>>>>> origin/master
           }
         }
       }
@@ -279,7 +238,6 @@ $bottomheight: 7vh;
   }
 }
 
-<<<<<<< HEAD
 .middleSection {
   display: flex;
   flex-direction: column;
@@ -295,14 +253,17 @@ $bottomheight: 7vh;
   .user {
     display: flex;
     align-items: center;
-    padding-left: 40px;
     height: 5vh;
-    margin: 10px 0px;
+    padding: 20px 40px;
 
     &:hover {
-      background-color: rgba(50, 115, 220, 0.1);
+      background-color: rgba(50, 115, 220, 0.6);
       border-radius: 5px;
       cursor: pointer;
+    }
+
+    &:focus {
+      outline: none;
     }
 
     .stat {
@@ -341,8 +302,6 @@ $bottomheight: 7vh;
   background-color: #ff725d;
 }
 
-=======
->>>>>>> origin/master
 @media only screen and (max-width: 1090px) {
   .top {
     h3 {
@@ -359,7 +318,6 @@ $bottomheight: 7vh;
   }
 }
 
-<<<<<<< HEAD
 .rightone {
   align-items: flex-end;
 }
@@ -368,8 +326,10 @@ $bottomheight: 7vh;
   align-items: flex-start;
 }
 
-=======
->>>>>>> origin/master
+.active {
+  background-color: rgba(50, 115, 220, 0.3);
+}
+
 @media only screen and (max-width: 705px) {
   .user {
     padding: 0px !important;
@@ -386,12 +346,9 @@ $bottomheight: 7vh;
     }
   }
 }
-<<<<<<< HEAD
 
 @media only screen and (max-width: 980px) {
   .letter {
     display: none;
   }
 }
-=======
->>>>>>> origin/master

@@ -13,46 +13,24 @@ import { MongoUsers } from '../Models/ChatModels/MongoUsers';
   providedIn: 'root',
 })
 export class ChatService {
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
   // private chat = 'https://authaspnetcore.azurewebsites.net/chatsocket';
   // readonly GET_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/get';
   // readonly POST_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/send';
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
   // private chat = 'https://localhost:5001/chatsocket'
   // readonly GET_URL = 'https://localhost:5001/api/chat/get';
   // readonly POST_URL = 'https://localhost:5001/api/chat/send';
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
   // Charlotte //
 
   readonly URL = `https://localhost:5001/api`;
   readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
 
   private connection: any = new signalR.HubConnectionBuilder()
-<<<<<<< HEAD
     .withUrl(`https://localhost:5001/chat`, {
       skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets,
     }) // mapping to the chathub as in startup.cs
-=======
-    .withUrl(
-      `https://localhost:5001/chat`,
-      {
-        skipNegotiation: true,
-        transport: signalR.HttpTransportType.WebSockets,
-      }
-    ) // mapping to the chathub as in startup.cs
->>>>>>> origin/master
     .withAutomaticReconnect()
     .configureLogging(signalR.LogLevel.Information)
     .build();
@@ -73,12 +51,9 @@ export class ChatService {
   private roomMessage: MessageReceived;
   private sharedRoomMessage = new Subject<MessageReceived>();
 
-<<<<<<< HEAD
   private privateMessageOnline: any;
   private sharedPrivateMessageOnline = new Subject<any>();
 
-=======
->>>>>>> origin/master
   private userJoinRoom: MongoUsers;
   private sharedUsersInRoom = new Subject<MongoUsers>();
 
@@ -144,10 +119,6 @@ export class ChatService {
         this.addingRoom(room);
       });
       this.connection.on('newJoinRoom', (user: MongoUsers) => {
-<<<<<<< HEAD
-=======
-        console.log('newJoinrooms');
->>>>>>> origin/master
         this.userJoinedRoom(user);
       });
       this.connection.on('joinRoomSuccess', () => {
@@ -156,7 +127,6 @@ export class ChatService {
       this.connection.on('leavingRoom', (roomId: string, userId: string) => {
         this.removedUsersInRoom.next({ room: roomId, user: userId });
       });
-<<<<<<< HEAD
       this.connection.on('addedContactOffline', (user) => {
         console.log(user);
       });
@@ -175,18 +145,12 @@ export class ChatService {
           });
         }
       );
-=======
->>>>>>> origin/master
       this.connection.on(
         'receiveNewRoomMessage',
         (message: MessageReceived, id: string) => {
           this.roomMessageReceived(message, id);
         }
       );
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
       console.log('connected');
     } catch (err) {
       console.log(err);
@@ -227,14 +191,11 @@ export class ChatService {
     this.sharedUsers.next(this.usersConnected);
   }
 
-<<<<<<< HEAD
   private newPrivateMessage(message: any) {
     this.privateMessageOnline = message;
     this.sharedPrivateMessageOnline.next(this.privateMessageOnline);
   }
 
-=======
->>>>>>> origin/master
   /* ****************************** Public Methods **************************************** */
 
   // Calls the controller method
@@ -282,13 +243,10 @@ export class ChatService {
     return this.sharedUsersInRoom.asObservable();
   }
 
-<<<<<<< HEAD
   public newPrivateMess(): Observable<MessageReceived> {
     return this.sharedPrivateMessageOnline.asObservable();
   }
 
-=======
->>>>>>> origin/master
   public disconnectUser() {
     if (this.connection) {
       this.connection.stop();
@@ -303,13 +261,10 @@ export class ChatService {
     return this.http.get(`${this.URL}/account`);
   }
 
-<<<<<<< HEAD
   GetSingleMongoUser(id) {
     return this.http.get(`${this.URL}/account/${id}`);
   }
 
-=======
->>>>>>> origin/master
   GetAllConnectedUserMongo() {
     return this.http.get(`${this.URL}/account/all`);
   }
@@ -354,7 +309,6 @@ export class ChatService {
     return this.http.delete(`${this.URL}/chat/room/${roomId}/users/${userId}`);
   }
 
-<<<<<<< HEAD
   addContact(ownerId, body) {
     return this.http.post(`${this.URL}/chat/private/${ownerId}/new`, body);
   }
@@ -362,8 +316,6 @@ export class ChatService {
     return this.http.post(`${this.URL}/chat/private/${receiverId}/send`, body);
   }
 
-=======
->>>>>>> origin/master
   observeToken(): Observable<string> {
     return merge(
       of(this.LocalStorageService.retrieve('mongoID')),

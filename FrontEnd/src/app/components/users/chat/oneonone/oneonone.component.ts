@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-<<<<<<< HEAD
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Rooms } from 'src/app/Models/ChatModels/Rooms';
@@ -14,17 +13,12 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { forkJoin, of, throwError } from 'rxjs';
 import { MongoUsers } from 'src/app/Models/ChatModels/MongoUsers';
 import { Contact } from 'src/app/Models/ChatModels/Contacts';
-=======
-import { Rooms } from 'src/app/Models/ChatModels/Rooms';
-import { MessageReceived } from 'src/app/Models/Messages';
->>>>>>> origin/master
 
 @Component({
   selector: 'app-oneonone',
   templateUrl: './oneonone.component.html',
   styleUrls: ['./oneonone.component.scss'],
 })
-<<<<<<< HEAD
 @UntilDestroy()
 export class OneononeComponent implements OnInit {
   token = this.auth.decryptedAndDecodedToken();
@@ -181,55 +175,16 @@ export class OneononeComponent implements OnInit {
   }
 
   searchRoom(el) {
-=======
-export class OneononeComponent implements OnInit {
-  loading: boolean = false;
-  rooms: Rooms[] = [];
-
-  messages: MessageReceived[] = [];
-
-  show: Rooms[] = [...this.rooms];
-
-  @ViewChild('message') messageRef: ElementRef;
-  @ViewChild('container') containerRef: ElementRef;
-  constructor() {}
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
-    }, 400);
-  }
-
-  searchRoom(el) {
     let valueToSearch = el.toLocaleLowerCase().trim();
     setTimeout(() => {
       let newRooms = this.rooms.filter((rooms) =>
         rooms.roomName.toLocaleLowerCase().includes(valueToSearch)
       );
-      this.show = newRooms;
-    }, 500);
-  }
-
-  searchUser(el) {
->>>>>>> origin/master
-    let valueToSearch = el.toLocaleLowerCase().trim();
-    setTimeout(() => {
-      let newRooms = this.rooms.filter((rooms) =>
-        rooms.roomName.toLocaleLowerCase().includes(valueToSearch)
-      );
-<<<<<<< HEAD
       this.showRooms = newRooms;
     }, 500);
   }
 
   breakLineForTextBox(event, el) {
-=======
-      this.show = newRooms;
-    }, 500);
-  }
-
-  breakLineForTextBox(event) {
->>>>>>> origin/master
     if (event.ctrlKey && event.key === 'Enter') {
       /*
         cannot make textarea produce a next line.
@@ -240,7 +195,6 @@ export class OneononeComponent implements OnInit {
     } else if (event.key === 'Enter') {
       // allow the form to reset on the 1st line //
       event.preventDefault();
-<<<<<<< HEAD
       this.send(el);
     }
   }
@@ -341,9 +295,6 @@ export class OneononeComponent implements OnInit {
       return { 'background-color': '#6666FF' };
     } else {
       return { 'background-color': '#20B2AA' };
-=======
-      // this.send(el);
->>>>>>> origin/master
     }
   }
 }

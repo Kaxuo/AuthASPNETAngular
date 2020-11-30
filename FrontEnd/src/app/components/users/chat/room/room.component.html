@@ -29,6 +29,7 @@
         <div class="rooms">
           <div
             class="room"
+            routerLinkActive="active"
             [routerLink]="['/chat/room', el.id]"
             *ngFor="let el of showRooms"
             (click)="joinRoom(el)"
@@ -105,15 +106,11 @@
         <div class="middleSection">
           <h5>Room's Users</h5>
           <ng-container *ngFor="let el of showUsers">
-<<<<<<< HEAD
             <div
               class="user"
               *ngIf="el.username != user.username"
               (click)="joinUser(el)"
             >
-=======
-            <div class="user" *ngIf="el.username != user.username">
->>>>>>> origin/master
               <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
               <h6>
                 {{ el.username }}
