@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr'; // import signalR
 import { HttpClient } from '@angular/common/http';
 import { MessageReceived } from '../Models/Messages';
@@ -13,16 +13,13 @@ import { MongoUsers } from '../Models/ChatModels/MongoUsers';
   providedIn: 'root',
 })
 export class ChatService {
-
   // private chat = 'https://authaspnetcore.azurewebsites.net/chatsocket';
   // readonly GET_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/get';
   // readonly POST_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/send';
 
-
   // private chat = 'https://localhost:5001/chatsocket'
   // readonly GET_URL = 'https://localhost:5001/api/chat/get';
   // readonly POST_URL = 'https://localhost:5001/api/chat/send';
-
 
   // Charlotte //
 
@@ -30,13 +27,10 @@ export class ChatService {
   readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
 
   private connection: any = new signalR.HubConnectionBuilder()
-    .withUrl(
-      `https://localhost:5001/chat`,
-      {
-        skipNegotiation: true,
-        transport: signalR.HttpTransportType.WebSockets,
-      }
-    ) // mapping to the chathub as in startup.cs
+    .withUrl(`https://localhost:5001/chat`, {
+      skipNegotiation: true,
+      transport: signalR.HttpTransportType.WebSockets,
+    }) // mapping to the chathub as in startup.cs
     .withAutomaticReconnect()
     .configureLogging(signalR.LogLevel.Information)
     .build();
@@ -56,6 +50,9 @@ export class ChatService {
 
   private roomMessage: MessageReceived;
   private sharedRoomMessage = new Subject<MessageReceived>();
+
+  private privateMessageOnline: any;
+  private sharedPrivateMessageOnline = new Subject<any>();
 
   private userJoinRoom: MongoUsers;
   private sharedUsersInRoom = new Subject<MongoUsers>();
@@ -122,7 +119,6 @@ export class ChatService {
         this.addingRoom(room);
       });
       this.connection.on('newJoinRoom', (user: MongoUsers) => {
-        console.log('newJoinrooms');
         this.userJoinedRoom(user);
       });
       this.connection.on('joinRoomSuccess', () => {
@@ -131,13 +127,30 @@ export class ChatService {
       this.connection.on('leavingRoom', (roomId: string, userId: string) => {
         this.removedUsersInRoom.next({ room: roomId, user: userId });
       });
+      this.connection.on('addedContactOffline', (user) => {
+        console.log(user);
+      });
+      this.connection.on('receiveNewPrivateMessage', (message, receiverId) => {
+        this.newPrivateMessage({
+          sender: message,
+          recipient: receiverId,
+        });
+      });
+      this.connection.on(
+        'addedPrivateMessageOffline',
+        (message, receiverId) => {
+          this.newPrivateMessage({
+            sender: message,
+            recipient: receiverId,
+          });
+        }
+      );
       this.connection.on(
         'receiveNewRoomMessage',
         (message: MessageReceived, id: string) => {
           this.roomMessageReceived(message, id);
         }
       );
-
       console.log('connected');
     } catch (err) {
       console.log(err);
@@ -176,6 +189,11 @@ export class ChatService {
   private usersConnecting(users: ConnectedUsers[]) {
     this.usersConnected = users;
     this.sharedUsers.next(this.usersConnected);
+  }
+
+  private newPrivateMessage(message: any) {
+    this.privateMessageOnline = message;
+    this.sharedPrivateMessageOnline.next(this.privateMessageOnline);
   }
 
   /* ****************************** Public Methods **************************************** */
@@ -225,6 +243,10 @@ export class ChatService {
     return this.sharedUsersInRoom.asObservable();
   }
 
+  public newPrivateMess(): Observable<MessageReceived> {
+    return this.sharedPrivateMessageOnline.asObservable();
+  }
+
   public disconnectUser() {
     if (this.connection) {
       this.connection.stop();
@@ -237,6 +259,10 @@ export class ChatService {
   // Charlotte's API
   GetAllUserMongo() {
     return this.http.get(`${this.URL}/account`);
+  }
+
+  GetSingleMongoUser(id) {
+    return this.http.get(`${this.URL}/account/${id}`);
   }
 
   GetAllConnectedUserMongo() {
@@ -281,6 +307,13 @@ export class ChatService {
 
   leaveRoom(roomId, userId) {
     return this.http.delete(`${this.URL}/chat/room/${roomId}/users/${userId}`);
+  }
+
+  addContact(ownerId, body) {
+    return this.http.post(`${this.URL}/chat/private/${ownerId}/new`, body);
+  }
+  sendPrivateMessage(receiverId, body) {
+    return this.http.post(`${this.URL}/chat/private/${receiverId}/send`, body);
   }
 
   observeToken(): Observable<string> {

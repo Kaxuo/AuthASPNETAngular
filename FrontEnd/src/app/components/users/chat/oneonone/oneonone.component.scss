@@ -87,7 +87,7 @@ $bottomheight: 7vh;
           padding: 10px;
 
           &:hover {
-            background-color: rgba(50, 115, 220, 0.1);
+            background-color: rgba(50, 115, 220, 0.6);
             border-radius: 5px;
             cursor: pointer;
           }
@@ -111,10 +111,8 @@ $bottomheight: 7vh;
         background-color: lightgrey;
         cursor: pointer;
 
-        h5 {
-          &:focus {
-            outline: none;
-          }
+        &:focus {
+          outline: none;
         }
       }
     }
@@ -138,7 +136,7 @@ $bottomheight: 7vh;
       .middleSection {
         display: flex;
         flex-direction: column;
-        height: $middleheight;
+        height: 63.4vh;
         overflow-y: auto;
         scroll-behavior: smooth;
 
@@ -146,15 +144,15 @@ $bottomheight: 7vh;
           margin: 5px 20px;
           display: flex;
           flex-direction: column;
-          justify-content: flex-end;
-          align-items: flex-end;
 
           p {
+            width: fit-content;
             text-align: justify;
             background-color: white;
             padding: 15px 20px;
             border-radius: 10px;
             white-space: pre-wrap;
+            color: white;
           }
         }
       }
@@ -170,6 +168,7 @@ $bottomheight: 7vh;
           width: 47vw;
           height: 5vh;
           margin: 0px 5px;
+          resize: none;
         }
 
         button {
@@ -209,18 +208,10 @@ $bottomheight: 7vh;
         flex-grow: 1;
         overflow: hidden;
         overflow-y: auto;
-
-        h5 {
-          align-self: center;
-          margin: 20px 0px;
-        }
-
-        .user {
+        .room {
           display: flex;
           align-items: center;
-          padding-left: 40px;
-          height: 5vh;
-          margin: 10px 0px;
+          padding: 10px;
 
           &:hover {
             background-color: rgba(50, 115, 220, 0.1);
@@ -232,8 +223,8 @@ $bottomheight: 7vh;
             font-size: 30px;
           }
 
-          h6 {
-            margin-left: 10px;
+          h5 {
+            margin: 0 0 0 10px;
           }
         }
       }
@@ -246,6 +237,70 @@ $bottomheight: 7vh;
       }
     }
   }
+}
+
+.middleSection {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+  overflow-y: auto;
+
+  h5 {
+    align-self: center;
+    margin: 20px 0px;
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    height: 5vh;
+    padding: 20px 40px;
+
+    &:hover {
+      background-color: rgba(50, 115, 220, 0.6);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    .stat {
+      margin-bottom: 10px;
+      margin-right: 1vw;
+    }
+
+    .icon {
+      font-size: 30px;
+    }
+
+    h6 {
+      margin-left: 10px;
+      flex-grow: 1;
+    }
+  }
+}
+
+.circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 7px;
+  margin-left: 10px !important;
+  background-color: #58b666;
+}
+
+.red {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 7px;
+  margin-left: 10px !important;
+  background-color: #ff725d;
 }
 
 @media only screen and (max-width: 1090px) {
@@ -264,6 +319,25 @@ $bottomheight: 7vh;
   }
 }
 
+.rightone {
+  align-items: flex-end;
+}
+
+.leftone {
+  align-items: flex-start;
+}
+
+.active {
+  background-color: rgba(50, 115, 220, 0.3);
+}
+
+.roomSkeleton {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-left: 10px;
+}
+
 @media only screen and (max-width: 705px) {
   .user {
     padding: 0px !important;
@@ -278,5 +352,11 @@ $bottomheight: 7vh;
     h5 {
       font-size: 15px;
     }
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .letter {
+    display: none;
   }
 }

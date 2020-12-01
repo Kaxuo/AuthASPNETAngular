@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { throwError } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Task } from 'src/app/Models/Tasks';
 import { UserReceived } from 'src/app/Models/UsersReceived';
 import { AuthService } from 'src/app/services/auth.service';

@@ -29,6 +29,7 @@
         <div class="rooms">
           <div
             class="room"
+            routerLinkActive="active"
             [routerLink]="['/chat/room', el.id]"
             *ngFor="let el of showRooms"
             (click)="joinRoom(el)"
@@ -71,7 +72,6 @@
         <div style="text-align: center">
           <mdb-icon
             style="cursor: pointer; font-size: 25px; width: 50px"
-            class="lmao"
             (click)="scrollDown()"
             fas
             icon="angle-double-down"
@@ -105,7 +105,11 @@
         <div class="middleSection">
           <h5>Room's Users</h5>
           <ng-container *ngFor="let el of showUsers">
-            <div class="user" *ngIf="el.username != user.username">
+            <div
+              class="user"
+              *ngIf="el.username != user.username"
+              (click)="joinUser(el)"
+            >
               <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
               <h6>
                 {{ el.username }}
@@ -287,7 +291,6 @@
         <div style="text-align: center">
           <mdb-icon
             style="cursor: pointer; font-size: 25px; width: 50px"
-            class="lmao"
             (click)="scrollDown()"
             fas
             icon="angle-double-down"
