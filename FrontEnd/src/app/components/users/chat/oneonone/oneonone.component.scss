@@ -168,6 +168,7 @@ $bottomheight: 7vh;
           width: 47vw;
           height: 5vh;
           margin: 0px 5px;
+          resize: none;
         }
 
         button {
@@ -328,6 +329,13 @@ $bottomheight: 7vh;
 
 .active {
   background-color: rgba(50, 115, 220, 0.3);
+}
+
+.roomSkeleton {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-left: 10px;
 }
 
 @media only screen and (max-width: 705px) {
