@@ -47,6 +47,7 @@ export class RoomComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.onlineUsers = this.chatService.connectedUsers;
     this.chatService
       .retrieveRoom()
       .pipe(untilDestroyed(this))
@@ -137,13 +138,6 @@ export class RoomComponent implements OnInit {
             (users) => users.userId != userLeft.user
           );
         }
-      });
-
-    this.chatService
-      .GetAllConnectedUserMongo()
-      .pipe(take(1))
-      .subscribe((connectedUsers: ConnectedUsers[]) => {
-        this.onlineUsers = connectedUsers;
       });
 
     // SingleUser //

@@ -7,6 +7,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { LocalStorageService } from 'ngx-webstorage';
 import { Router } from '@angular/router';
 import { ChatService } from 'src/app/services/chat.service';
+import { MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-sign-in-form',
@@ -17,14 +18,14 @@ export class SignInFormComponent implements OnInit {
   signInForm: FormGroup;
   message: string;
   loading: boolean = false;
-  he: boolean = true;
   // test = new BehaviorSubject<number>(0);
 
   constructor(
     private auth: AuthService,
     private LocalStorageService: LocalStorageService,
     private router: Router,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private azureLogin: MsalService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +47,15 @@ export class SignInFormComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
+
+    // this.BroadcastService.subscribe('msal:loginSuccess', (success) => {
+    //   if (success.idToken.claims['acr'] === 'B2C_1_SignUpIn') {
+    //     window.alert('Password has been resetted');
+    //   }
+    //   console.log('success');
+    //   return this.azureLogin.logout();
+    // });
+
     // setInterval(() => {
     //   this.test.next(this.testB++)
     // }, 2000);
@@ -75,7 +85,7 @@ export class SignInFormComponent implements OnInit {
         )
       )
       .subscribe();
-      
+
     this.chatService
       .GetAllUserMongo()
       .pipe(take(1))
@@ -109,5 +119,71 @@ export class SignInFormComponent implements OnInit {
             .subscribe();
         }
       });
+  }
+
+  AzureLogin() {
+    this.azureLogin.loginPopup().then((result) => {
+      this.auth
+        .login({
+          username: result.idTokenClaims.emails[0].split('@')[0],
+          password: result.idTokenClaims.extension_FirstName,
+        })
+        .pipe(
+          take(1),
+          switchMap(() => {
+            return this.auth.isAdmin().pipe(
+              tap((isAdmin) => {
+                if (isAdmin) {
+                  this.router.navigate(['users']);
+                } else {
+                  this.router.navigate(['tasks']);
+                }
+              })
+            );
+          }),
+          catchError(
+            (err: HttpErrorResponse) => (this.message = err.error.message)
+          )
+        )
+        .subscribe();
+
+      this.chatService
+        .GetAllUserMongo()
+        .pipe(take(1))
+        .subscribe((users: any) => {
+          if (
+            users.find(
+              (x) => x.username == result.idTokenClaims.emails[0].split('@')[0]
+            )
+          ) {
+            this.chatService
+              .Log(result.idTokenClaims.emails[0].split('@')[0])
+              .pipe(
+                take(1),
+                tap((data: any) =>
+                  this.LocalStorageService.store('mongoID', data.body.id)
+                )
+              )
+              .subscribe((res: HttpResponse<any>) => {
+                console.log(res);
+              });
+          } else {
+            this.chatService
+              .CreateAccount({
+                username: result.idTokenClaims.emails[0].split('@')[0],
+                password: '12345',
+                firstname: 'Default',
+                lastName: 'Default',
+              })
+              .pipe(
+                take(1),
+                tap((data: any) => {
+                  this.LocalStorageService.store('mongoID', data.body.id);
+                })
+              )
+              .subscribe();
+          }
+        });
+    });
   }
 }

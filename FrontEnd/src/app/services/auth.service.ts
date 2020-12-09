@@ -10,8 +10,6 @@ import {
   merge,
   Observable,
   of,
-  Subject,
-  throwError,
 } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { UpdateUser } from '../Models/UpdateUser';
@@ -160,6 +158,5 @@ export class AuthService {
   private removeSession() {
     this.LocalStorageService.clear('token');
     this.LocalStorageService.clear('mongoID');
-    this.router.navigate(['signin']);
   }
 }

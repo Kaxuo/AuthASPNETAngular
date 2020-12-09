@@ -51,8 +51,6 @@ Thumbs.db
 
 # Test
 .env.development.*
-\FrontEnd\src\app\services\keys.ts
-secrets/
 
 # Build results
 [Dd]ebug/
