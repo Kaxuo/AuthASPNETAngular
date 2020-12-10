@@ -79,7 +79,7 @@
           }
 
           .icon {
-            font-size: 60px;
+            font-size: 50px;
             @media only screen and (max-width: 420px) {
               display: none;
             }
@@ -211,6 +211,7 @@
 .status {
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 
   .stat {
     font-size: 15px !important;

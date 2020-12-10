@@ -8,6 +8,7 @@ import { merge, Observable, of, Subject } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { map } from 'rxjs/operators';
 import { MongoUsers } from '../Models/ChatModels/MongoUsers';
+import { ConnectionOptions } from 'tls';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,7 @@ export class ChatService {
 
   readonly URL = `https://localhost:5001/api`;
   readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
+  // readonly URL = 'https://chat-prototype-api.azurewebsites.net/api'
 
   private connection: any = new signalR.HubConnectionBuilder()
     .withUrl(`https://localhost:5001/chat`, {
@@ -60,6 +62,8 @@ export class ChatService {
   private removedUsers = new Subject<MongoUsers>();
   private removedUsersInRoom = new Subject<any>();
 
+  public connectedUsers: ConnectedUsers[] = [];
+
   constructor(
     private http: HttpClient,
     private LocalStorageService: LocalStorageService
@@ -69,13 +73,13 @@ export class ChatService {
         this.start();
         this.connection.on('userConnectedList', (users: ConnectedUsers[]) => {
           this.usersConnecting(users);
+          this.connectedUsers = users;
         });
         this.connection.on('updatedConnectedUser', (user: ConnectedUsers) => {
           this.singleUserConnected(user);
         });
         this.connection.on('newDisconnectedUser', (user: MongoUsers) => {
           this.removedUsers.next(user);
-          this.RemoveConnected(user.id).subscribe();
         });
       } else {
         this.connection.stop();
@@ -118,7 +122,7 @@ export class ChatService {
       this.connection.on('receiveNewRoom', (room: Rooms) => {
         this.addingRoom(room);
       });
-      this.connection.on('newJoinRoom', (user: MongoUsers) => {
+      this.connection.on('newJoinRoom', (connectionId, user: MongoUsers) => {
         this.userJoinedRoom(user);
       });
       this.connection.on('joinRoomSuccess', () => {
@@ -128,6 +132,9 @@ export class ChatService {
         this.removedUsersInRoom.next({ room: roomId, user: userId });
       });
       this.connection.on('addedContactOffline', (user) => {
+        console.log(user);
+      });
+      this.connection.on('receiveNewContact', (user) => {
         console.log(user);
       });
       this.connection.on('receiveNewPrivateMessage', (message, receiverId) => {
@@ -250,9 +257,6 @@ export class ChatService {
   public disconnectUser() {
     if (this.connection) {
       this.connection.stop();
-      this.RemoveConnected(
-        this.LocalStorageService.retrieve('mongoID')
-      ).subscribe();
     }
   }
 
@@ -265,10 +269,6 @@ export class ChatService {
     return this.http.get(`${this.URL}/account/${id}`);
   }
 
-  GetAllConnectedUserMongo() {
-    return this.http.get(`${this.URL}/account/all`);
-  }
-
   CreateAccount(body) {
     return this.http.post(`${this.URL}/account`, body, {
       observe: 'response',
@@ -279,10 +279,6 @@ export class ChatService {
     return this.http.get(`${this.URL}/account/login/${body}`, {
       observe: 'response',
     });
-  }
-
-  RemoveConnected(id) {
-    return this.http.get(`${this.URL}/account/remove/${id}`);
   }
 
   GetAllRoom() {

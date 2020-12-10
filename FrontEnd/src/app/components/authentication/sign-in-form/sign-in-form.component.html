@@ -1,18 +1,14 @@
-
 <div class="contain">
   <div class="left">
     <div class="header">
       <h2 class="animation a1">Welcome Back</h2>
       <h4 class="animation a2">
-        Log in to your account using username and password
+        Log in to your account using email and password
       </h4>
     </div>
-    <form
-      [formGroup]="signInForm"
-      (ngSubmit)="sendData(signInForm.value)"
-      class="form"
-    >
-      <input
+    <!-- (ngSubmit)="sendData(signInForm.value)" -->
+    <form [formGroup]="signInForm" (ngSubmit)="AzureLogin()" class="form">
+      <!-- <input
         type="text"
         class="form-field animation a3"
         placeholder="Username"
@@ -39,14 +35,15 @@
         "
         >Required</em
       >
+      <em *ngIf="message">{{ message }}</em> -->
+      <!-- [disabled]="signInForm.invalid" -->
+      <!-- [ngClass]="{ invalid: !signInForm.invalid }" -->
 
-      <em *ngIf="message">{{ message }}</em>
+      <em *ngIf="message"> {{ message }}</em>
       <button
         type="submit"
-        [disabled]="signInForm.invalid"
-        style="margin-top: 25px"
+        style="margin-top: 25px; color: white"
         class="animation a6"
-        [ngClass]="{ invalid: !signInForm.invalid }"
       >
         LOGIN
       </button>

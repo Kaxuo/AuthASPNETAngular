@@ -2,10 +2,6 @@
   <div class="chatbox">
     <div class="left" *ngIf="users && loading == false">
       <h4>Hello {{ username }}</h4>
-      <h6>
-        <span *ngIf="onlineUsers">{{ onlineUsers.length - 1 || "0" }}</span>
-        users online
-      </h6>
       <div class="allUsers">
         <ng-container *ngFor="let el of users">
           <div

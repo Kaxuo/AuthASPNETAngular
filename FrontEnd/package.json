@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~10.0.14",
     "@angular/platform-browser-dynamic": "~10.0.14",
     "@angular/router": "~10.0.14",
+    "@azure/msal-angular": "^1.1.2",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@microsoft/signalr": "^3.1.9",
     "@ngneat/until-destroy": "^8.0.3",
@@ -33,6 +34,7 @@
     "crypto-js": "^4.0.0",
     "hammerjs": "^2.0.8",
     "jwt-decode": "^3.0.0-beta.2",
+    "msal": "^1.4.4",
     "ngx-skeleton-loader": "^2.5.0",
     "ngx-spinner": "^10.0.1",
     "ngx-webstorage": "^6.0.0",
@@ -42,7 +44,7 @@
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1000.8",
+    "@angular-devkit/build-angular": "^0.1100.3",
     "@angular/cli": "^10.0.8",
     "@angular/compiler-cli": "~10.0.14",
     "@types/jasmine": "~3.5.0",

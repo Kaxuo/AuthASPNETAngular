@@ -49,6 +49,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { RoomComponent } from './components/users/chat/room/room.component';
 import { MatInputModule } from '@angular/material/input';
 import { OneononeComponent } from './components/users/chat/oneonone/oneonone.component';
+import { MsalModule } from '@azure/msal-angular';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,24 @@ import { OneononeComponent } from './components/users/chat/oneonone/oneonone.com
     NgxWebstorageModule.forRoot(),
     DragDropModule,
     MatInputModule,
+    MsalModule.forRoot(
+      {
+        auth: {
+          clientId: '040f561b-6869-4559-b248-17b07ac877a8',
+          authority:
+            'https://AuthASPAngular.b2clogin.com/AuthASPAngular.onmicrosoft.com/B2C_1_SignInOnly',
+          validateAuthority: false,
+          redirectUri: 'http://localhost:4200',
+        },
+        cache: {
+          cacheLocation: 'localStorage',
+          storeAuthStateInCookie: false,
+        },
+      },
+      {
+        consentScopes: ['user.read', 'openid', 'profile'],
+      }
+    ),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -107,7 +126,8 @@ import { OneononeComponent } from './components/users/chat/oneonone/oneonone.com
       useClass: BearerTokenInterceptor,
       multi: true,
     },
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    // add # to urls to allow you to refresh
+    // { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
   bootstrap: [AppComponent],
 })

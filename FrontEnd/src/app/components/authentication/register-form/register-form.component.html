@@ -7,12 +7,13 @@
         Register to be able to manage projects and tasks
       </h4>
     </div>
+    <!-- (ngSubmit)="sendData(registerForm.value)" -->
     <form
       class="form"
       [formGroup]="registerForm"
-      (ngSubmit)="sendData(registerForm.value)"
+      (ngSubmit)="AzureRegister()"
     >
-      <input
+      <!-- <input
         class="form-field animation a3"
         type="text"
         placeholder="Firstname"
@@ -71,12 +72,6 @@
         "
         >Required</em
       >
-      <!-- <small
-        id="materialRegisterFormPasswordHelpBlock"
-        class="form-text text-muted mb-4"
-      >
-        At least 8 characters and 1 digit
-      </small> -->
       <input
         class="form-field animation a7"
         type="number"
@@ -128,14 +123,13 @@
           registerForm.get('hobby').touched
         "
         >Required</em
-      >
-
+      > -->
+      <!-- [disabled]="registerForm.invalid || clicked"
+      [ngClass]="{ invalid: !registerForm.invalid }" -->
       <button
-        [disabled]="registerForm.invalid || clicked"
-        [ngClass]="{ invalid: !registerForm.invalid }"
         class="animation a11"
         type="submit"
-        style="margin-top: 25px"
+        style="margin-top: 25px; color: white"
       >
         REGISTER
       </button>

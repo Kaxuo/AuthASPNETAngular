@@ -53,6 +53,7 @@ export class ChatComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.onlineUsers = this.chatService.connectedUsers;
     // Messages //
     this.chatService
       .GetMessage()
@@ -90,14 +91,6 @@ export class ChatComponent implements OnInit {
         this.users = users;
       });
 
-    // Get All users
-    this.chatService
-      .GetAllConnectedUserMongo()
-      .pipe(take(1))
-      .subscribe((connectedUsers: ConnectedUsers[]) => {
-        this.onlineUsers = connectedUsers;
-      });
-
     // Dynamically track online/offline online users
     this.chatService
       .removeUser()
@@ -109,7 +102,7 @@ export class ChatComponent implements OnInit {
     // SingleUser //
     this.chatService
       .retrieveSingleUser()
-      .pipe(take(1))
+      .pipe(untilDestroyed(this))
       .subscribe((user: ConnectedUsers) => {
         this.switchOnline(user);
       });

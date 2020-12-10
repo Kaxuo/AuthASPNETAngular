@@ -10,7 +10,6 @@ import { LocalStorageService } from 'ngx-webstorage';
 export class AuthenticationGuard implements CanActivate {
 
   constructor(
-    private auth: AuthService,
     private router: Router,
     private LocalStorageService : LocalStorageService
   ) {}

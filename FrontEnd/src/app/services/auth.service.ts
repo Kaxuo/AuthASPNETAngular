@@ -5,14 +5,7 @@ import { WebRequestService } from './web-request.service';
 import { UserRegister } from '../Models/UserRegister';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { UserAuth } from '../Models/UserAuth';
-import {
-  BehaviorSubject,
-  merge,
-  Observable,
-  of,
-  Subject,
-  throwError,
-} from 'rxjs';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { UpdateUser } from '../Models/UpdateUser';
 import { Task } from '../Models/Tasks';

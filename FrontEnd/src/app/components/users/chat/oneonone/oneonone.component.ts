@@ -49,7 +49,6 @@ export class OneononeComponent implements OnInit {
 
   ngOnInit(): void {
     let getOwnerSession = this.auth.getOne(this.token.unique_name);
-    let allConnectedUserMongo = this.chatService.GetAllConnectedUserMongo();
     let allUserMongo = this.chatService.GetAllUserMongo();
     let allRooms = this.chatService.GetAllRoom();
     let singleUser = this.chatService.GetSingleMongoUser(this.mongoToken);
@@ -57,7 +56,6 @@ export class OneononeComponent implements OnInit {
     forkJoin([
       getOwnerSession,
       allUserMongo,
-      allConnectedUserMongo,
       allRooms,
       singleUser,
     ])
@@ -72,18 +70,17 @@ export class OneononeComponent implements OnInit {
           result: [
             UserReceived,
             UserReceived[],
-            ConnectedUsers[],
             Rooms[],
             MongoUsers
           ]
         ) => {
           this.user = result[0];
           this.usersList = result[1];
-          this.onlineUsers = result[2];
+          this.onlineUsers = this.chatService.connectedUsers;
           this.showUsers = [...this.usersList];
-          this.rooms = result[3];
+          this.rooms = result[2];
           this.showRooms = [...this.rooms];
-          this.mongoSingleUser = result[4];
+          this.mongoSingleUser = result[3];
           setTimeout(() => {
             this.loading = false;
           }, 1000);
