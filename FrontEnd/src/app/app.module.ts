@@ -107,7 +107,6 @@ import { MsalModule } from '@azure/msal-angular';
           authority:
             'https://AuthASPAngular.b2clogin.com/AuthASPAngular.onmicrosoft.com/B2C_1_SignInOnly',
           validateAuthority: false,
-          redirectUri: 'http://localhost:4200',
         },
         cache: {
           cacheLocation: 'localStorage',
