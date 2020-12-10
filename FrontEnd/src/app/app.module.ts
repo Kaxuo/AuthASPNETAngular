@@ -127,7 +127,7 @@ import { MsalModule } from '@azure/msal-angular';
       multi: true,
     },
     // add # to urls to allow you to refresh
-    // { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
   bootstrap: [AppComponent],
 })
