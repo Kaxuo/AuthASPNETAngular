@@ -122,68 +122,83 @@ export class SignInFormComponent implements OnInit {
   }
 
   AzureLogin() {
-    this.azureLogin.loginPopup().then((result) => {
-      this.auth
-        .login({
-          username: result.idTokenClaims.emails[0].split('@')[0],
-          password: result.idTokenClaims.extension_FirstName,
-        })
-        .pipe(
-          take(1),
-          switchMap(() => {
-            return this.auth.isAdmin().pipe(
-              tap((isAdmin) => {
-                if (isAdmin) {
-                  this.router.navigate(['users']);
-                } else {
-                  this.router.navigate(['tasks']);
-                }
-              })
-            );
-          }),
-          catchError(
-            (err: HttpErrorResponse) => (this.message = err.error.message)
-          )
-        )
-        .subscribe();
-
-      this.chatService
-        .GetAllUserMongo()
-        .pipe(take(1))
-        .subscribe((users: any) => {
-          if (
-            users.find(
-              (x) => x.username == result.idTokenClaims.emails[0].split('@')[0]
-            )
-          ) {
-            this.chatService
-              .Log(result.idTokenClaims.emails[0].split('@')[0])
-              .pipe(
-                take(1),
-                tap((data: any) =>
-                  this.LocalStorageService.store('mongoID', data.body.id)
-                )
-              )
-              .subscribe((res: HttpResponse<any>) => {
-                console.log(res);
-              });
-          } else {
-            this.chatService
-              .CreateAccount({
-                username: result.idTokenClaims.emails[0].split('@')[0],
-                password: '12345',
-                firstname: 'Default',
-                lastName: 'Default',
-              })
-              .pipe(
-                take(1),
-                tap((data: any) => {
-                  this.LocalStorageService.store('mongoID', data.body.id);
+    this.azureLogin
+      .loginPopup()
+      .then((result) => {
+        this.auth
+          .login({
+            username: result.idTokenClaims.emails[0].split('@')[0],
+            password: result.idTokenClaims.extension_FirstName,
+          })
+          .pipe(
+            take(1),
+            switchMap(() => {
+              return this.auth.isAdmin().pipe(
+                tap((isAdmin) => {
+                  if (isAdmin) {
+                    this.router.navigate(['users']);
+                  } else {
+                    this.router.navigate(['tasks']);
+                  }
                 })
+              );
+            }),
+            catchError(
+              (err: HttpErrorResponse) => (this.message = err.error.message)
+            )
+          )
+          .subscribe();
+
+        this.chatService
+          .GetAllUserMongo()
+          .pipe(take(1))
+          .subscribe((users: any) => {
+            if (
+              users.find(
+                (x) =>
+                  x.username == result.idTokenClaims.emails[0].split('@')[0]
               )
-              .subscribe();
-          }
-        });
-    });
+            ) {
+              this.chatService
+                .Log(result.idTokenClaims.emails[0].split('@')[0])
+                .pipe(
+                  take(1),
+                  tap((data: any) =>
+                    this.LocalStorageService.store('mongoID', data.body.id)
+                  )
+                )
+                .subscribe((res: HttpResponse<any>) => {
+                  console.log(res);
+                });
+            } else {
+              this.chatService
+                .CreateAccount({
+                  username: result.idTokenClaims.emails[0].split('@')[0],
+                  password: '12345',
+                  firstname: 'Default',
+                  lastName: 'Default',
+                })
+                .pipe(
+                  take(1),
+                  tap((data: any) => {
+                    this.LocalStorageService.store('mongoID', data.body.id);
+                  })
+                )
+                .subscribe();
+            }
+          });
+      })
+      .catch((err) => {
+        if (err.errorCode == 'user_cancelled') {
+          this.message = 'You cancelled the login process';
+        }
+        if (err.errorCode == 'server_error') {
+          this.message = 'User does not exist';
+        }
+        if (err.errorCode == 'login_progress_error') {
+          this.message = 'You already opened the login page';
+        }
+        console.log(err.errorCode);
+      });
   }
 }

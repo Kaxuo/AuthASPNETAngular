@@ -7,11 +7,7 @@
       </h4>
     </div>
     <!-- (ngSubmit)="sendData(signInForm.value)" -->
-    <form
-      [formGroup]="signInForm"
-      (ngSubmit)="AzureLogin()"
-      class="form"
-    >
+    <form [formGroup]="signInForm" (ngSubmit)="AzureLogin()" class="form">
       <!-- <input
         type="text"
         class="form-field animation a3"
@@ -39,10 +35,11 @@
         "
         >Required</em
       >
-
       <em *ngIf="message">{{ message }}</em> -->
       <!-- [disabled]="signInForm.invalid" -->
       <!-- [ngClass]="{ invalid: !signInForm.invalid }" -->
+
+      <em *ngIf="message"> {{ message }}</em>
       <button
         type="submit"
         style="margin-top: 25px; color: white"

@@ -12,7 +12,6 @@ import { Task } from '../Models/Tasks';
 import jwt_decode from 'jwt-decode';
 import * as CryptoJS from 'crypto-js';
 import { secret } from '../secrets/keys';
-import { MsalService } from '@azure/msal-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +23,7 @@ export class AuthService {
   constructor(
     private webRequest: WebRequestService,
     private router: Router,
-    private LocalStorageService: LocalStorageService,
-    private azureLogin: MsalService
+    private LocalStorageService: LocalStorageService
   ) {}
 
   observeToken(): Observable<string> {
@@ -153,8 +151,8 @@ export class AuthService {
   }
 
   private removeSession() {
-    this.azureLogin.logout();
     this.LocalStorageService.clear('token');
     this.LocalStorageService.clear('mongoID');
+    this.router.navigate(['signin']);
   }
 }
