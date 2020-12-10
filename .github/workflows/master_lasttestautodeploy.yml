@@ -5,8 +5,9 @@ name: Build and deploy ASP.Net Core app to Azure Web App - lasttestautodeploy
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build-and-deploy:
@@ -14,12 +15,25 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
+      
+    - name: Use Node.js 12.8
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.8
 
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.102'
 
+    - name: Dependencies
+      run: npm install
+      working-directory: FrontEnd
+      
+    - name: Build
+      run: npm run build -- --prod
+      working-directory: FrontEnd
+      
     - name: Build with dotnet
       run: dotnet build --configuration Release
 
