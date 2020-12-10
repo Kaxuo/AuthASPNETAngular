@@ -198,7 +198,6 @@ export class SignInFormComponent implements OnInit {
         if (err.errorCode == 'login_progress_error') {
           this.message = 'You already opened the login page';
         }
-        console.log(err.errorCode);
       });
   }
 }
