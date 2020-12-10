@@ -103,7 +103,7 @@ import { MsalModule } from '@azure/msal-angular';
     MsalModule.forRoot(
       {
         auth: {
-          clientId: '040f561b-6869-4559-b248-17b07ac877a8',
+          clientId: '52810140-36e8-4d31-a3c2-243a5aa3a389',
           authority:
             'https://AuthASPAngular.b2clogin.com/AuthASPAngular.onmicrosoft.com/B2C_1_SignInOnly',
           validateAuthority: false,
