@@ -88,7 +88,6 @@ export class ChatComponent implements OnInit {
         })
       )
       .subscribe((users: UserReceived[]) => {
-        console.log(users);
         this.users = users;
       });
 

@@ -3,7 +3,6 @@ import { AuthService } from '../../../services/auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ChatService } from 'src/app/services/chat.service';
-import { MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-navbar',
@@ -39,14 +38,12 @@ export class NavbarComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private ChatService: ChatService,
-    private azureLogin: MsalService
   ) {}
 
   ngOnInit(): void {}
 
   logout() {
     this.ChatService.disconnectUser();
-    this.azureLogin.logout()
     this.auth.logout();
   }
 

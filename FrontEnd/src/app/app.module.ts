@@ -105,12 +105,12 @@ import { MsalModule } from '@azure/msal-angular';
         auth: {
           clientId: '040f561b-6869-4559-b248-17b07ac877a8',
           authority:
-            'https://AuthASPAngular.b2clogin.com/AuthASPAngular.onmicrosoft.com/B2C_1_SignUpSignIn',
+            'https://AuthASPAngular.b2clogin.com/AuthASPAngular.onmicrosoft.com/B2C_1_SignInOnly',
           validateAuthority: false,
           redirectUri: 'http://localhost:4200',
         },
         cache: {
-          cacheLocation: 'sessionStorage',
+          cacheLocation: 'localStorage',
           storeAuthStateInCookie: false,
         },
       },

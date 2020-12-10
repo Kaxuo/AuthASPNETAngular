@@ -5,18 +5,14 @@ import { WebRequestService } from './web-request.service';
 import { UserRegister } from '../Models/UserRegister';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { UserAuth } from '../Models/UserAuth';
-import {
-  BehaviorSubject,
-  merge,
-  Observable,
-  of,
-} from 'rxjs';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { UpdateUser } from '../Models/UpdateUser';
 import { Task } from '../Models/Tasks';
 import jwt_decode from 'jwt-decode';
 import * as CryptoJS from 'crypto-js';
 import { secret } from '../secrets/keys';
+import { MsalService } from '@azure/msal-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +24,8 @@ export class AuthService {
   constructor(
     private webRequest: WebRequestService,
     private router: Router,
-    private LocalStorageService: LocalStorageService
+    private LocalStorageService: LocalStorageService,
+    private azureLogin: MsalService
   ) {}
 
   observeToken(): Observable<string> {
@@ -156,6 +153,7 @@ export class AuthService {
   }
 
   private removeSession() {
+    this.azureLogin.logout();
     this.LocalStorageService.clear('token');
     this.LocalStorageService.clear('mongoID');
   }
