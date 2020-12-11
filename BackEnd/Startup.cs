@@ -20,7 +20,6 @@ using System.Text;
 using BackEnd.Data.Interface;
 using BackEnd.Data.DatabaseMethods;
 using BackEnd.Hub;
-using System.Configuration;
 
 namespace BackEnd
 {
@@ -29,19 +28,7 @@ namespace BackEnd
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-        }
-        
-        String GetConnectionString()
-        {
-            // Get the Connection String from Application Settings (App Service) 
-            // with graceful fallback to web.config
-            string cs = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
-            if (cs == null)
-                throw new Exception("Could not locate DB connection string");
-
-            return cs;
-        }        
+        }     
 
         public IConfiguration Configuration { get; }
 
@@ -58,7 +45,7 @@ namespace BackEnd
             services.AddSignalR();
             services.AddMvc();
             services.AddDbContext<Context>(options => options.UseSqlServer(
-            Configuration.GetConnectionString(GetConnectionString())
+            Configuration.GetConnectionString("DefaultConnection")
         ));
             services.AddScoped<IUser, UserMethods>();
             services.AddScoped<IProjects, ProjectMethods>();
