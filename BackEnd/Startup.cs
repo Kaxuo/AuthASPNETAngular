@@ -44,12 +44,9 @@ namespace BackEnd
             services.AddControllers();
             services.AddSignalR();
             services.AddMvc();
-            services.AddEntityFrameworkSqlServer()
-                    .AddDbContext<Context>(options =>
-            {
-                var connString = Configuration.Get("Data:DefaultConnection:ConnectionString");
-                options.UseSqlServer(connString);
-            });
+            services.AddDbContext<Context>(options => options.UseSqlServer(
+            Configuration.GetConnectionString("DefaultConnection")
+        ));
             services.AddScoped<IUser, UserMethods>();
             services.AddScoped<IProjects, ProjectMethods>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
