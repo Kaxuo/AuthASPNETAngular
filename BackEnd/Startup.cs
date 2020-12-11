@@ -45,7 +45,7 @@ namespace BackEnd
             services.AddSignalR();
             services.AddMvc();
             services.AddDbContext<Context>(options => options.UseSqlServer(
-            Configuration.GetConnectionString("DefaultConnection")
+            Configuration.GetConnectionString("Data:DefaultConnection:ConnectionString")
         ));
             services.AddScoped<IUser, UserMethods>();
             services.AddScoped<IProjects, ProjectMethods>();
