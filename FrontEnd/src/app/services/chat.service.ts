@@ -24,12 +24,12 @@ export class ChatService {
 
   // Charlotte //
 
-  // readonly URL = `https://localhost:5001/api`;
-  // readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
-  // readonly CHAT_URL = 'https://localhost:5001/chat';
-  readonly URL = 'https://chat-prototype-api.azurewebsites.net/api'
-  readonly POST_URL = 'https://chat-prototype-api.azurewebsites.net/api/chat/puublic/send';
-  readonly CHAT_URL = 'https://chat-prototype-api.azurewebsites.net/chat'
+  readonly URL = `https://localhost:5001/api`;
+  readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
+  readonly CHAT_URL = 'https://localhost:5001/chat';
+  // readonly URL = 'https://chat-prototype-api.azurewebsites.net/api'
+  // readonly POST_URL = 'https://chat-prototype-api.azurewebsites.net/api/chat/puublic/send';
+  // readonly CHAT_URL = 'https://chat-prototype-api.azurewebsites.net/chat'
 
   private connection: any = new signalR.HubConnectionBuilder()
     .withUrl(this.CHAT_URL, {
