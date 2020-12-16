@@ -14,13 +14,6 @@ import { ConnectionOptions } from 'tls';
   providedIn: 'root',
 })
 export class ChatService {
-  // private chat = 'https://authaspnetcore.azurewebsites.net/chatsocket';
-  // readonly GET_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/get';
-  // readonly POST_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/send';
-
-  // private chat = 'https://localhost:5001/chatsocket'
-  // readonly GET_URL = 'https://localhost:5001/api/chat/get';
-  // readonly POST_URL = 'https://localhost:5001/api/chat/send';
 
   // Charlotte //
 
