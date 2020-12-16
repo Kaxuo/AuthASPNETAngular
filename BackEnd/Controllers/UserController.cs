@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using BackEnd.Exceptions;
+using Microsoft.Extensions.Configuration;
 
 namespace BackEnd.Controllers
 {
@@ -23,11 +24,13 @@ namespace BackEnd.Controllers
         private readonly IUser _userRepository;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
-        public UserController(IUser repository, IMapper mapper, IOptions<AppSettings> appSettings)
+        public IConfiguration Configuration { get; }
+        public UserController(IUser repository, IMapper mapper, IOptions<AppSettings> appSettings, IConfiguration configuration)
         {
             _userRepository = repository;
             _mapper = mapper;
             _appSettings = appSettings.Value;
+            Configuration = configuration;
         }
 
         [Authorize]
@@ -48,7 +51,8 @@ namespace BackEnd.Controllers
             {
                 _userRepository.CreateUser(user, model.Password);
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                // var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var key = Encoding.ASCII.GetBytes(Configuration.GetConnectionString("Secret"));
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]
@@ -85,7 +89,8 @@ namespace BackEnd.Controllers
                 return BadRequest(new { message = " Username or password is incorrect" });
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            // var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(Configuration.GetConnectionString("Secret"));
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

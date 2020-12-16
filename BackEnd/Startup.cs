@@ -1,16 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
@@ -33,6 +27,7 @@ namespace BackEnd
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -57,6 +52,7 @@ namespace BackEnd
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
+            // var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             var key = Encoding.ASCII.GetBytes(Configuration.GetConnectionString("Secret"));
             services.AddAuthentication(x =>
             {
@@ -119,7 +115,7 @@ namespace BackEnd
             app.UseAuthorization();
 
             app.UseDefaultFiles();
-             
+
             app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
