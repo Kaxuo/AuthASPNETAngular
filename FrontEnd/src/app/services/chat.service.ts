@@ -16,7 +16,10 @@ import { ConnectionOptions } from 'tls';
 export class ChatService {
 
   // Charlotte //
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3d46476d8ca04739477e00f345816133a5550713
   // readonly URL = `https://localhost:5001/api`;
   // readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
   // readonly CHAT_URL = 'https://localhost:5001/chat';
