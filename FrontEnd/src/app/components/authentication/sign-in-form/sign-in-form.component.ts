@@ -190,7 +190,7 @@ export class SignInFormComponent implements OnInit {
           });
       })
       .catch((err) => {
-      this.loading = false;
+        this.loading = false;
         if (err.errorCode == 'user_cancelled') {
           this.message = 'You cancelled the login process';
         }
