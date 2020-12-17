@@ -86,6 +86,7 @@ export class RegisterFormComponent implements OnInit {
       .loginPopup({
         authority:
           'https://AuthASPAngular.b2clogin.com/AuthASPAngular.onmicrosoft.com/B2C_1_SignUpOnly',
+           redirectUri: 'https://taskmanagerchatapplication.azurewebsites.net',
       })
       .then((result) => {
         this.auth
