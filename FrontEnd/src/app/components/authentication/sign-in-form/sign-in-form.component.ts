@@ -125,6 +125,7 @@ export class SignInFormComponent implements OnInit {
     this.azureLogin
       .loginPopup()
       .then((result) => {
+        this.loading = true;
         this.auth
           .login({
             username: result.idTokenClaims.emails[0].split('@')[0],
