@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/Models/Project';
-import { take } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-projects',
@@ -27,12 +27,19 @@ export class ProjectsComponent implements OnInit {
   deleteProject(element) {
     this.projectService
       .deleteProject(element.id)
-      .pipe(take(1))
-      .subscribe(
-        (res) =>
-          (this.projects = this.projects.filter(
-            (projects) => projects.id != element.id
-          ))
-      );
+      .pipe(
+        take(1),
+        tap(() => {
+          this.loading = true;
+        })
+      )
+      .subscribe((res) => {
+        setTimeout(() => {
+          this.loading = false;
+        }, 200);
+        this.projects = this.projects.filter(
+          (projects) => projects.id != element.id
+        );
+      });
   }
 }

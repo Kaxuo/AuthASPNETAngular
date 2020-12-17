@@ -288,10 +288,10 @@ export class ChatComponent implements OnInit {
     this.isShown = false;
   }
 
-  checkJoined(element: Rooms) {
-    let check = element.roomUsers.find((x) => x.username == this.username);
-    return check;
-  }
+  // checkJoined(element: Rooms) {
+  //   let check = element.roomUsers.find((x) => x.username == this.username);
+  //   return check;
+  // }
 
   breakLineForTextBox(event, el) {
     if (event.ctrlKey && event.key === 'Enter') {

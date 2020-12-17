@@ -24,7 +24,7 @@
       />
       <ng-container *ngIf="display">
         <ul *ngIf="toSearch.length > 0">
-          <li (mousedown)="select(el)" *ngFor="let el of toSearch">
+          <li class="drop"(mousedown)="select(el)" *ngFor="let el of toSearch">
             {{ el.name }}
           </li>
         </ul>

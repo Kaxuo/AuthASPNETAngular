@@ -28,9 +28,9 @@
         <h4 style="text-align: center">Users</h4>
         <div class="middleSection">
           <ng-container *ngFor="let el of showUsers">
+            <!-- [routerLink]="['/chat/user', el.id]" -->
             <div
               class="user"
-              [routerLink]="['/chat/user', el.id]"
               routerLinkActive="active"
               (click)="addContact(el)"
               *ngIf="el.username.toLowerCase() !== user.username.toLowerCase()"
@@ -39,12 +39,10 @@
               <h6>{{ el.username | titlecase }}</h6>
               <span class="stat" *ngIf="onlineCheck(el)">
                 <span class="circle"></span
-                ><span class="letter">Online</span></span
-              >
+              ></span>
               <span class="stat" *ngIf="!onlineCheck(el)">
                 <span class="red"></span
-                ><span class="letter">Offline</span></span
-              >
+              ></span>
             </div>
           </ng-container>
         </div>
@@ -54,7 +52,7 @@
       </div>
       <div class="middleSide">
         <div class="top">
-          <h3>You are talking with {{ recipient.contactName | titlecase }}</h3>
+          <h3>Talking with {{ recipient.contactName | titlecase }}</h3>
         </div>
         <div #container class="middleSection" *ngIf="chatLoading == false">
           <div

@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
     { name: 'Projects', link: '/assignTasks' },
     { name: 'Tasks', link: '/tasks' },
     { name: 'Profile', link: '/profile' },
+    { name: 'Chat', link: '/chat' },
     { name: 'Update', link: '/update' },
   ];
 
@@ -27,6 +28,7 @@ export class NavbarComponent implements OnInit {
     { name: 'Projects', link: '/assignTasks' },
     { name: 'Tasks', link: '/tasks' },
     { name: 'Profile', link: '/profile' },
+    { name: 'Chat', link: '/chat' },
     { name: 'Update', link: '/update' },
   ];
 
