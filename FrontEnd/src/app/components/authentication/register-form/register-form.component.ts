@@ -27,7 +27,7 @@ export class RegisterFormComponent implements OnInit {
     hobby: ['', Validators.required],
   });
   message: string;
-  clicked: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private auth: AuthService,
@@ -89,6 +89,7 @@ export class RegisterFormComponent implements OnInit {
            redirectUri: 'https://taskmanagerchatapplication.azurewebsites.net',
       })
       .then((result) => {
+        this.loading = true;
         this.auth
           .register({
             firstName: result.idTokenClaims.extension_FirstName,
