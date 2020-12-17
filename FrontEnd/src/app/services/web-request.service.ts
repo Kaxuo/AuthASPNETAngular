@@ -14,7 +14,7 @@ export class WebRequestService {
 
   constructor(private http: HttpClient) {
     // this.ROOT_URL = 'https://localhost:5001';
-    this.ROOT_URL = 'https://taskmanagerandchat.azurewebsites.net';
+    this.ROOT_URL = 'https://taskmanagerchatapplication.azurewebsites.net';
   }
 
   // Users //
