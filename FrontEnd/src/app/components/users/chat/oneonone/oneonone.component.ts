@@ -53,12 +53,7 @@ export class OneononeComponent implements OnInit {
     let allRooms = this.chatService.GetAllRoom();
     let singleUser = this.chatService.GetSingleMongoUser(this.mongoToken);
 
-    forkJoin([
-      getOwnerSession,
-      allUserMongo,
-      allRooms,
-      singleUser,
-    ])
+    forkJoin([getOwnerSession, allUserMongo, allRooms, singleUser])
       .pipe(
         take(1),
         catchError((error) => {
@@ -66,14 +61,7 @@ export class OneononeComponent implements OnInit {
         })
       )
       .subscribe(
-        (
-          result: [
-            UserReceived,
-            UserReceived[],
-            Rooms[],
-            MongoUsers
-          ]
-        ) => {
+        (result: [UserReceived, UserReceived[], Rooms[], MongoUsers]) => {
           this.user = result[0];
           this.usersList = result[1];
           this.onlineUsers = this.chatService.connectedUsers;
@@ -109,9 +97,6 @@ export class OneononeComponent implements OnInit {
         setTimeout(() => {
           this.chatLoading = false;
         }, 600);
-        setTimeout(() => {
-          this.containerRef.nativeElement.scrollTop = this.containerRef.nativeElement.scrollHeight;
-        }, 750);
       });
 
     this.chatService

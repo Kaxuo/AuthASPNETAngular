@@ -14,13 +14,6 @@ import { ConnectionOptions } from 'tls';
   providedIn: 'root',
 })
 export class ChatService {
-  // private chat = 'https://authaspnetcore.azurewebsites.net/chatsocket';
-  // readonly GET_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/get';
-  // readonly POST_URL = 'https://authaspnetcore.azurewebsites.net/api/chat/send';
-
-  // private chat = 'https://localhost:5001/chatsocket'
-  // readonly GET_URL = 'https://localhost:5001/api/chat/get';
-  // readonly POST_URL = 'https://localhost:5001/api/chat/send';
 
   // Charlotte //
 
@@ -28,7 +21,7 @@ export class ChatService {
   // readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
   // readonly CHAT_URL = 'https://localhost:5001/chat';
   readonly URL = 'https://chat-prototype-api.azurewebsites.net/api'
-  readonly POST_URL = 'https://chat-prototype-api.azurewebsites.net/api/chat/puublic/send';
+  readonly POST_URL = 'https://chat-prototype-api.azurewebsites.net/api/chat/public/send';
   readonly CHAT_URL = 'https://chat-prototype-api.azurewebsites.net/chat'
 
   private connection: any = new signalR.HubConnectionBuilder()

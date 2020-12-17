@@ -13,8 +13,8 @@ export class WebRequestService {
   readonly ROOT_URL;
 
   constructor(private http: HttpClient) {
-    this.ROOT_URL = 'https://localhost:5001';
-    // this.ROOT_URL = 'https://lasttestautodeploy.azurewebsites.net';
+    // this.ROOT_URL = 'https://localhost:5001';
+    this.ROOT_URL = 'https://taskmanagerandchat.azurewebsites.net';
   }
 
   // Users //

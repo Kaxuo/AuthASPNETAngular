@@ -6,6 +6,7 @@ $bottomheight: 7vh;
 
 .page {
   height: 100vh;
+  width: 100vw;
   background-image: -webkit-linear-gradient(
     30deg,
     #013a6b 33%,
@@ -19,7 +20,6 @@ $bottomheight: 7vh;
 
   .box {
     height: 90vh;
-    width: 90vw;
   }
 
   .headNav {
@@ -40,12 +40,12 @@ $bottomheight: 7vh;
 
   .board {
     display: flex;
-    width: 90vw;
     height: 85vh;
 
     .leftside {
       background-color: white;
-      width: $leftrightwidth;
+      min-width: 300px;
+      max-width: 300px;
       display: flex;
       flex-direction: column;
 
@@ -65,7 +65,8 @@ $bottomheight: 7vh;
         align-self: center;
 
         .search {
-          width: 15vw;
+          min-width: 250px;
+          max-width: 250px;
         }
       }
 
@@ -106,8 +107,9 @@ $bottomheight: 7vh;
       }
 
       .exit {
-        width: $leftrightwidth;
-        height: 8.5vh;
+        min-width: 300px;
+        max-width: 300px;
+        height: 90px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -174,7 +176,7 @@ $bottomheight: 7vh;
         }
 
         button {
-          width: 3vw;
+          width: 40px;
           height: 5vh;
           margin: 0px 5px;
         }
@@ -276,11 +278,6 @@ $bottomheight: 7vh;
 }
 
 @media only screen and (max-width: 1090px) {
-  .top {
-    h3 {
-      font-size: 20px;
-    }
-  }
   .topSide {
     .icon {
       display: none;
@@ -310,13 +307,11 @@ $bottomheight: 7vh;
       display: none;
     }
   }
-  .room {
-    .icon {
-      font-size: 15px !important;
-    }
-    h5 {
-      font-size: 15px;
-    }
+  .rightSide {
+    display: none;
+  }
+  .text {
+    width: 35vw !important;
   }
 }
 
@@ -325,3 +320,32 @@ $bottomheight: 7vh;
     display: none;
   }
 }
+
+@media only screen and (max-width: 450px) {
+  .top {
+    h3 {
+      font-size: 20px;
+      padding-top: 20px !important;
+      margin: 0 !important;
+    }
+  }
+  .page {
+    height: 150vh !important;
+    width: 150vw !important;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .page {
+    height: 120vh;
+    width: 120vw;
+  }
+}
+
+@media only screen and (max-width: 100px) {
+  .page {
+    height: 110vh;
+    width: 110vw;
+  }
+}
+

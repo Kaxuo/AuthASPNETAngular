@@ -64,6 +64,7 @@
 
     &:hover + .dropdown {
       opacity: 1;
+      max-height: 1000px !important;
     }
 
     &:focus {
@@ -103,13 +104,12 @@
     transition: opacity 0.5s ease-in-out, max-height 0.5s ease-out;
     text-align: justify;
     border-radius: 10px;
-
+    border: 1px solid black;
     @media only screen and (max-width: 1000px) {
       text-align: center;
       width: 420px;
       position: static;
-      max-height: 0;
-      max-height: 1000px;
+      max-height: 50px;
     }
   }
 }
