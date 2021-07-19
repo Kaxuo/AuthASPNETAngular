@@ -8,20 +8,19 @@ import { merge, Observable, of, Subject } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { map } from 'rxjs/operators';
 import { MongoUsers } from '../Models/ChatModels/MongoUsers';
-import { ConnectionOptions } from 'tls';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-
   // Charlotte //
-  // readonly URL = `https://localhost:5001/api`;
-  // readonly POST_URL = 'https://localhost:5001/api/chat/public/send';
-  // readonly CHAT_URL = 'https://localhost:5001/chat';
-  readonly URL = 'https://chat-prototype-api.azurewebsites.net/api'
-  readonly POST_URL = 'https://chat-prototype-api.azurewebsites.net/api/chat/public/send';
-  readonly CHAT_URL = 'https://chat-prototype-api.azurewebsites.net/chat'
+  // readonly URL = 'https://chat-prototype-api.azurewebsites.net/api'
+  // readonly POST_URL = 'https://chat-prototype-api.azurewebsites.net/api/chat/public/send';
+  // readonly CHAT_URL = 'https://chat-prototype-api.azurewebsites.net/chat'
+  readonly URL = environment.rURL;
+  readonly POST_URL = environment.POST_URL;
+  readonly CHAT_URL = environment.CHAT_URL;
 
   private connection: any = new signalR.HubConnectionBuilder()
     .withUrl(this.CHAT_URL, {

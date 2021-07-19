@@ -9,6 +9,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { ChatService } from 'src/app/services/chat.service';
 import { FormBuilder } from '@angular/forms';
 import { MsalService } from '@azure/msal-angular';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-register-form',
@@ -86,7 +87,7 @@ export class RegisterFormComponent implements OnInit {
       .loginPopup({
         authority:
           'https://AuthASPAngular.b2clogin.com/AuthASPAngular.onmicrosoft.com/B2C_1_SignUpOnly',
-           redirectUri: 'https://taskmanagerchatapplication.azurewebsites.net',
+           redirectUri: environment.redirect,
       })
       .then((result) => {
         this.loading = true;

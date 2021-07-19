@@ -8,6 +8,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { Router } from '@angular/router';
 import { ChatService } from 'src/app/services/chat.service';
 import { MsalService } from '@azure/msal-angular';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-sign-in-form',
@@ -63,6 +64,17 @@ export class SignInFormComponent implements OnInit {
     // this.test.pipe(tap(console.log)).subscribe()
   }
 
+  deleteAllCookies() {
+    var cookies = document.cookie.split(';');
+
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i];
+      var eqPos = cookie.indexOf('=');
+      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    }
+  }
+
   sendData(values: UserAuth) {
     values.username = values.username.trim();
     this.auth
@@ -80,9 +92,11 @@ export class SignInFormComponent implements OnInit {
             })
           );
         }),
-        catchError(
-          (err: HttpErrorResponse) => (this.message = err.error.message)
-        )
+        catchError((err: HttpErrorResponse) => {
+          this.message = err.error.message;
+          this.loading = false;
+          return throwError(err);
+        })
       )
       .subscribe();
 
@@ -144,9 +158,11 @@ export class SignInFormComponent implements OnInit {
                 })
               );
             }),
-            catchError(
-              (err: HttpErrorResponse) => (this.message = err.error.message)
-            )
+            catchError((err: HttpErrorResponse) => {
+              this.message = err.error.message;
+              this.loading = false;
+              return throwError(err);
+            })
           )
           .subscribe();
 

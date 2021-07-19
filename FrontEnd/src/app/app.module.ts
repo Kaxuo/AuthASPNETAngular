@@ -50,6 +50,7 @@ import { RoomComponent } from './components/users/chat/room/room.component';
 import { MatInputModule } from '@angular/material/input';
 import { OneononeComponent } from './components/users/chat/oneonone/oneonone.component';
 import { MsalModule } from '@azure/msal-angular';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -86,13 +87,13 @@ import { MsalModule } from '@azure/msal-angular';
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     NgxSkeletonLoaderModule,
     MDBBootstrapModule.forRoot(),
     NavbarModule,
     WavesModule.forRoot(),
     ButtonsModule.forRoot(),
     AppRoutingModule,
-    ReactiveFormsModule,
     HttpClientModule,
     TableModule,
     NgxSpinnerModule,
@@ -107,7 +108,7 @@ import { MsalModule } from '@azure/msal-angular';
           authority:
             'https://AuthASPAngular.b2clogin.com/AuthASPAngular.onmicrosoft.com/B2C_1_SignInOnly',
           validateAuthority: false,
-          redirectUri:"https://taskmanagerchatapplication.azurewebsites.net"
+          redirectUri:environment.redirect
         },
         cache: {
           cacheLocation: 'localStorage',

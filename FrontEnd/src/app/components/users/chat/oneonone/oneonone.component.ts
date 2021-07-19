@@ -127,8 +127,7 @@ export class OneononeComponent implements OnInit {
           }, 100);
         }
         if (
-          message.recipient == this.mongoToken &&
-          message.sender.senderId == this.recipientId
+          message.recipient == this.recipientId
         ) {
           this.addToInbox(message.sender);
           setTimeout(() => {

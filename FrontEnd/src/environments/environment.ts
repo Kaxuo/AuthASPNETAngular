@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  redirect:'http://localhost:4200/',
+  rURL: `https://localhost:5001/api`,
+  POST_URL: 'https://localhost:5001/api/chat/public/send',
+  CHAT_URL: 'https://localhost:5001/chat',
 };
 
 /*
