@@ -4,33 +4,22 @@
       <h4>Hello {{ username }}</h4>
       <div class="allUsers">
         <ng-container *ngFor="let el of users">
-          <div
-            class="users"
-            *ngIf="mongoToken !== el.id"
-            (click)="addContact(el)"
-          >
+          <div class="users" *ngIf="mongoToken !== el.id" (click)="addContact(el)">
             <mdb-icon class="icon" fas icon="user-circle"></mdb-icon>
             <div class="status">
               <span>{{ el.username | titlecase }}</span>
               <span *ngIf="onlineCheck(el)" class="stat">
-                <span class="circle"></span>Online</span
-              >
+                <span class="circle"></span>Online</span>
               <span *ngIf="!onlineCheck(el)" class="stat">
-                <span class="red"></span>Offline</span
-              >
+                <span class="red"></span>Offline</span>
             </div>
           </div>
         </ng-container>
       </div>
       <hr />
       <h3>
-        Rooms<mdb-icon
-          *ngIf="token.role == 'Admin'"
-          (click)="showModal()"
-          class="add"
-          fas
-          icon="plus-circle"
-        ></mdb-icon>
+        Rooms<mdb-icon *ngIf="token.role == 'Admin'" (click)="showModal()" class="add" fas icon="plus-circle">
+        </mdb-icon>
       </h3>
       <div class="rooms" *ngIf="rooms">
         <div class="room" *ngFor="let el of rooms" (click)="joinRoom(el)">
@@ -54,15 +43,9 @@
       <h6>?? users online</h6>
       <div class="allUsers">
         <div class="users">
-          <ngx-skeleton-loader
-            class="skeleton"
-            count="1"
-            appearance="circle"
-            animation="pulse"
-            [theme]="{
+          <ngx-skeleton-loader class="skeleton" count="1" appearance="circle" animation="pulse" [theme]="{
               transform: 'scale(1.1)'
-            }"
-          ></ngx-skeleton-loader>
+            }"></ngx-skeleton-loader>
           <div style="width: 90px">
             <span>
               <ngx-skeleton-loader animation="pulse"></ngx-skeleton-loader>
@@ -70,15 +53,9 @@
           </div>
         </div>
         <div class="users">
-          <ngx-skeleton-loader
-            class="skeleton"
-            count="1"
-            appearance="circle"
-            animation="pulse"
-            [theme]="{
+          <ngx-skeleton-loader class="skeleton" count="1" appearance="circle" animation="pulse" [theme]="{
               transform: 'scale(1.1)'
-            }"
-          ></ngx-skeleton-loader>
+            }"></ngx-skeleton-loader>
           <div style="width: 90px">
             <span>
               <ngx-skeleton-loader animation="pulse"></ngx-skeleton-loader>
@@ -86,15 +63,9 @@
           </div>
         </div>
         <div class="users">
-          <ngx-skeleton-loader
-            class="skeleton"
-            count="1"
-            appearance="circle"
-            animation="pulse"
-            [theme]="{
+          <ngx-skeleton-loader class="skeleton" count="1" appearance="circle" animation="pulse" [theme]="{
               transform: 'scale(1.1)'
-            }"
-          ></ngx-skeleton-loader>
+            }"></ngx-skeleton-loader>
           <div style="width: 90px">
             <span>
               <ngx-skeleton-loader animation="pulse"></ngx-skeleton-loader>
@@ -102,15 +73,9 @@
           </div>
         </div>
         <div class="users">
-          <ngx-skeleton-loader
-            class="skeleton"
-            count="1"
-            appearance="circle"
-            animation="pulse"
-            [theme]="{
+          <ngx-skeleton-loader class="skeleton" count="1" appearance="circle" animation="pulse" [theme]="{
               transform: 'scale(1.1)'
-            }"
-          ></ngx-skeleton-loader>
+            }"></ngx-skeleton-loader>
           <div style="width: 90px">
             <span>
               <ngx-skeleton-loader animation="pulse"></ngx-skeleton-loader>
@@ -118,15 +83,9 @@
           </div>
         </div>
         <div class="users">
-          <ngx-skeleton-loader
-            class="skeleton"
-            count="1"
-            appearance="circle"
-            animation="pulse"
-            [theme]="{
+          <ngx-skeleton-loader class="skeleton" count="1" appearance="circle" animation="pulse" [theme]="{
               transform: 'scale(1.1)'
-            }"
-          ></ngx-skeleton-loader>
+            }"></ngx-skeleton-loader>
           <div style="width: 90px">
             <span>
               <ngx-skeleton-loader animation="pulse"></ngx-skeleton-loader>
@@ -135,65 +94,42 @@
         </div>
       </div>
       <hr />
-      <h3>Rooms<mdb-icon class="add" fas icon="plus-circle"></mdb-icon></h3>
-      <div class="roomSkeleton" >
-        <ngx-skeleton-loader
-          class="skeleton3"
-          count="1"
-          appearance="circle"
-          animation="pulse"
-          [theme]="{
+      <h3>Rooms<mdb-icon class="add" fas icon="plus-circle"></mdb-icon>
+      </h3>
+      <div class="roomSkeleton">
+        <ngx-skeleton-loader class="skeleton3" count="1" appearance="circle" animation="pulse" [theme]="{
             transform: 'scale(1.1)'
-          }"
-        ></ngx-skeleton-loader>
+          }"></ngx-skeleton-loader>
         <div class="skeleton2">
           <span>
             <ngx-skeleton-loader animation="pulse"></ngx-skeleton-loader>
           </span>
         </div>
       </div>
-      <div class="roomSkeleton" >
-        <ngx-skeleton-loader
-          class="skeleton3"
-          count="1"
-          appearance="circle"
-          animation="pulse"
-          [theme]="{
+      <div class="roomSkeleton">
+        <ngx-skeleton-loader class="skeleton3" count="1" appearance="circle" animation="pulse" [theme]="{
             transform: 'scale(1.1)'
-          }"
-        ></ngx-skeleton-loader>
+          }"></ngx-skeleton-loader>
         <div class="skeleton2">
           <span>
             <ngx-skeleton-loader animation="pulse"></ngx-skeleton-loader>
           </span>
         </div>
       </div>
-      <div class="roomSkeleton" >
-        <ngx-skeleton-loader
-          class="skeleton3"
-          count="1"
-          appearance="circle"
-          animation="pulse"
-          [theme]="{
+      <div class="roomSkeleton">
+        <ngx-skeleton-loader class="skeleton3" count="1" appearance="circle" animation="pulse" [theme]="{
             transform: 'scale(1.1)'
-          }"
-        ></ngx-skeleton-loader>
+          }"></ngx-skeleton-loader>
         <div class="skeleton2">
           <span>
             <ngx-skeleton-loader animation="pulse"></ngx-skeleton-loader>
           </span>
         </div>
       </div>
-      <div class="roomSkeleton" >
-        <ngx-skeleton-loader
-          class="skeleton3"
-          count="1"
-          appearance="circle"
-          animation="pulse"
-          [theme]="{
+      <div class="roomSkeleton">
+        <ngx-skeleton-loader class="skeleton3" count="1" appearance="circle" animation="pulse" [theme]="{
             transform: 'scale(1.1)'
-          }"
-        ></ngx-skeleton-loader>
+          }"></ngx-skeleton-loader>
         <div class="skeleton2">
           <span>
             <ngx-skeleton-loader animation="pulse"></ngx-skeleton-loader>
@@ -208,17 +144,13 @@
       <p>{{ msgInboxArray.length }} messages</p>
       <hr />
       <div #container class="messages">
-        <div
-          [ngClass]="username == mObj.senderName ? 'leftone' : 'rightone'"
-          class="singleMessage"
-          *ngFor="let mObj of msgInboxArray"
-        >
+        <div [ngClass]="username == mObj.senderName ? 'leftone' : 'rightone'" class="singleMessage"
+          *ngFor="let mObj of msgInboxArray">
           <h6>
             <!-- {{ mObj.user }} -->
             {{ mObj.senderName }}
             <!-- <span style="color: grey">{{ mObj.dateCreated | date: "dd MMMM yyyy, HH:mm:ss" }} </span> -->
-            <span style="color: grey"
-              >{{ mObj.sentDate | date: "dd MMMM yyyy, HH:mm:ss" }}
+            <span style="color: grey">{{ mObj.sentDate | date: "dd MMMM yyyy, HH:mm:ss" }}
             </span>
             <mdb-icon fas icon="angle-down"></mdb-icon>
           </h6>
@@ -229,28 +161,13 @@
         </div>
       </div>
       <div style="text-align: center">
-        <mdb-icon
-          style="cursor: pointer; font-size: 25px; width: 50px"
-          (click)="scrollDown()"
-          fas
-          icon="angle-double-down"
-        ></mdb-icon>
+        <mdb-icon style="cursor: pointer; font-size: 25px; width: 50px" (click)="scrollDown()" fas
+          icon="angle-double-down"></mdb-icon>
       </div>
       <hr />
-      <form
-        [formGroup]="textbox"
-        (ngSubmit)="send(textbox.value.message)"
-        class="form"
-      >
-        <textarea
-          #message
-          id="textarea1"
-          style="resize: none"
-          type="text"
-          placeholder="Write your message"
-          formControlName="message"
-          (keydown)="breakLineForTextBox($event, textbox.value.message)"
-        ></textarea>
+      <form [formGroup]="textbox" (ngSubmit)="send(textbox.value.message)" class="form">
+        <textarea #message id="textarea1" style="resize: none" type="text" placeholder="Write your message"
+          formControlName="message" (keydown)="breakLineForTextBox($event, textbox.value.message)"></textarea>
         <button [disabled]="textbox.invalid" type="submit">
           <mdb-icon fas icon="paper-plane"></mdb-icon>
         </button>
@@ -265,36 +182,22 @@
       <div #container class="messages">
         <div class="rightone" class="singleMessage">
           <span>
-            <ngx-skeleton-loader
-              count="5"
-              animation="progress"
-              [theme]="{
+            <ngx-skeleton-loader count="5" animation="progress" [theme]="{
                 height: '150px',
                 'background-color': 'grey',
                 border: '1px solid white'
-              }"
-            ></ngx-skeleton-loader>
+              }"></ngx-skeleton-loader>
           </span>
         </div>
       </div>
       <div style="text-align: center">
-        <mdb-icon
-          style="cursor: pointer; font-size: 25px; width: 50px"
-          (click)="scrollDown()"
-          fas
-          icon="angle-double-down"
-        ></mdb-icon>
+        <mdb-icon style="cursor: pointer; font-size: 25px; width: 50px" (click)="scrollDown()" fas
+          icon="angle-double-down"></mdb-icon>
       </div>
       <hr />
       <form [formGroup]="textbox" (ngSubmit)="console.log('lmao')" class="form">
-        <textarea
-          #message
-          id="textarea1"
-          style="resize: none"
-          type="text"
-          placeholder="Wait Please"
-          formControlName="message"
-        ></textarea>
+        <textarea #message id="textarea1" style="resize: none" type="text" placeholder="Wait Please"
+          formControlName="message"></textarea>
         <button [disabled]="true" type="submit">
           <mdb-icon fas icon="paper-plane"></mdb-icon>
         </button>
@@ -305,43 +208,24 @@
 </div>
 
 <!-- Modal Content -->
-<form
-  *ngIf="addRoomForm"
-  [formGroup]="addRoomForm"
-  (ngSubmit)="addRoom(addRoomForm.value)"
-  class="addRoom"
-  [ngClass]="{ show: isShown }"
->
+<form *ngIf="addRoomForm" [formGroup]="addRoomForm" (ngSubmit)="addRoom(addRoomForm.value)" class="addRoom"
+  [ngClass]="{ show: isShown }">
   <div class="addRoom-content">
     <h2>Add Room</h2>
     <div class="md-form">
-      <input
-        type="email"
-        id="Room"
-        class="form-control"
-        mdbInput
-        formControlName="roomName"
-        style="color: white"
-      />
+      <input type="email" id="Room" class="form-control" mdbInput formControlName="roomName" style="color: white" />
       <label for="Room">Room</label>
     </div>
-    <em
-      style="margin: 20px 100px"
-      *ngIf="
+    <em style="margin: 20px 100px" *ngIf="
         addRoomForm.get('roomName').hasError('maxlength') &&
         addRoomForm.get('roomName').touched
-      "
-      >Too Long !
+      ">Too Long !
     </em>
     <em style="margin: 20px 100px" *ngIf="error">
       {{ error }}
     </em>
-    <button
-      [disabled]="addRoomForm.invalid"
-      [ngClass]="{ invalid: addRoomForm.invalid }"
-      type="submit"
-      class="animated"
-    >
+    <button [disabled]="addRoomForm.invalid" [ngClass]="{ invalid: addRoomForm.invalid }" type="submit"
+      class="animated">
       <span></span>
       <span></span>
       <span></span>
@@ -357,3 +241,7 @@
     </button>
   </div>
 </form>
+
+<div class="private-room" style="text-align:center">
+  <button routerLink="private" mat-button>Private</button>
+</div>

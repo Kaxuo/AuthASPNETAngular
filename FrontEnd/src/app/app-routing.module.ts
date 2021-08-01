@@ -29,6 +29,8 @@ import { KanbanComponent } from './components/manager/projects/kanban/kanban.com
 import { ChatComponent } from './components/users/chat/chat.component';
 import { RoomComponent } from './components/users/chat/room/room.component';
 import { OneononeComponent } from './components/users/chat/oneonone/oneonone.component';
+import { EidComponent } from './components/users/chat/private/eid/eid.component';
+import { PrivateChatComponent } from './components/users/chat/private/private-chat/private-chat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -58,6 +60,16 @@ const routes: Routes = [
   {
     path: 'chat',
     component: ChatComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'chat/private',
+    component: EidComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'chat/private/:id',
+    component: PrivateChatComponent,
     canActivate: [AuthenticationGuard],
   },
   {

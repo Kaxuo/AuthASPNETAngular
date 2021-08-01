@@ -51,6 +51,9 @@ import { MatInputModule } from '@angular/material/input';
 import { OneononeComponent } from './components/users/chat/oneonone/oneonone.component';
 import { MsalModule } from '@azure/msal-angular';
 import { environment } from 'src/environments/environment';
+import { MatButtonModule } from '@angular/material/button';
+import { EidComponent } from './components/users/chat/private/eid/eid.component';
+import { PrivateChatComponent } from './components/users/chat/private/private-chat/private-chat.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +87,8 @@ import { environment } from 'src/environments/environment';
     ChatComponent,
     RoomComponent,
     OneononeComponent,
+    EidComponent,
+    PrivateChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,6 +106,7 @@ import { environment } from 'src/environments/environment';
     NgxWebstorageModule.forRoot(),
     DragDropModule,
     MatInputModule,
+    MatButtonModule,
     MsalModule.forRoot(
       {
         auth: {
@@ -108,7 +114,7 @@ import { environment } from 'src/environments/environment';
           authority:
             'https://AuthASPAngular.b2clogin.com/AuthASPAngular.onmicrosoft.com/B2C_1_SignInOnly',
           validateAuthority: false,
-          redirectUri:environment.redirect
+          redirectUri: environment.redirect,
         },
         cache: {
           cacheLocation: 'localStorage',
