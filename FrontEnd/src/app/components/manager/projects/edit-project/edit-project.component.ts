@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
-import { Project } from 'src/app/Models/Project';
+import { Project } from 'src/app/models/Project';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({

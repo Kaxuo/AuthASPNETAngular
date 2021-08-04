@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/Models/Project';
+import { Project } from 'src/app/models/Project';
 import { take, tap } from 'rxjs/operators';
 
 @Component({

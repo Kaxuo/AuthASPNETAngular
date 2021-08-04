@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/Models/Project';
+import { Project } from 'src/app/models/Project';
 import { take } from 'rxjs/operators';
-import { Task } from 'src/app/Models/Tasks';
+import { Task } from 'src/app/models/Tasks';
 import { defineCustomElements } from '@teamhive/lottie-player/loader';
 
 @Component({

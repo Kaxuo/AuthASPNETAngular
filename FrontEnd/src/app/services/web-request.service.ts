@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserRegister } from '../Models/UserRegister';
-import { UserAuth } from '../Models/UserAuth';
-import { UpdateUser } from '../Models/UpdateUser';
-import { Task } from '../Models/Tasks';
-import { Project } from '../Models/Project';
+import { UserRegister } from '../models/UserRegister';
+import { UserAuth } from '../models/UserAuth';
+import { UpdateUser } from '../models/UpdateUser';
+import { Task } from '../models/Tasks';
+import { Project } from '../models/Project';
 
 @Injectable({
   providedIn: 'root',

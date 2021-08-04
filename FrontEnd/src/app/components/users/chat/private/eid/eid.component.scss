@@ -1,4 +1,22 @@
 .body{
   height:100vh;
-  background-color: white;
+  background-color: #ffffff;
+  .text{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  h3{
+    padding:20px 0px;
+  }
+  .mat-button{
+    margin: 10px;
+    padding:0px 20px;
+    color:white;
+    background-color: #3F51B5;
+  }
+  .error{
+    color:red;
+  }
 }

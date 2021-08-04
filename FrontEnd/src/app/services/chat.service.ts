@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr'; // import signalR
 import { HttpClient } from '@angular/common/http';
-import { MessageReceived } from '../Models/Messages';
-import { ConnectedUsers } from '../Models/ChatModels/ConnectedUsers';
-import { Rooms } from '../Models/ChatModels/Rooms';
+import { MessageReceived } from '../models/Messages';
+import { ConnectedUsers } from '../models/ChatModels/ConnectedUsers';
+import { Rooms } from '../models/ChatModels/Rooms';
 import { merge, Observable, of, Subject } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { map } from 'rxjs/operators';
-import { MongoUsers } from '../Models/ChatModels/MongoUsers';
+import { MongoUsers } from '../models/ChatModels/MongoUsers';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

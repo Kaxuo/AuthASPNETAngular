@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { UserAuth } from 'src/app/Models/UserAuth';
+import { UserAuth } from 'src/app/models/UserAuth';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { LocalStorageService } from 'ngx-webstorage';

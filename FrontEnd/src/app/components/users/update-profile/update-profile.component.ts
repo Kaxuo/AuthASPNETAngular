@@ -5,9 +5,9 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { LocalStorageService } from 'ngx-webstorage';
-import { UpdateUser } from 'src/app/Models/UpdateUser';
+import { UpdateUser } from 'src/app/models/UpdateUser';
 import jwt_decode from 'jwt-decode';
-import { UserReceived } from 'src/app/Models/UsersReceived';
+import { UserReceived } from 'src/app/models/UsersReceived';
 
 @Component({
   selector: 'app-update-profile',

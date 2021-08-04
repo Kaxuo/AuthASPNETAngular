@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
-import { Task } from '../../../Models/Tasks';
+import { Task } from '../../../models/Tasks';
 import { Router } from '@angular/router';
 import {
   CdkDragDrop,

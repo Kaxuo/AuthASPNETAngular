@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
-import { Task } from 'src/app/Models/Tasks';
+import { Task } from 'src/app/models/Tasks';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({

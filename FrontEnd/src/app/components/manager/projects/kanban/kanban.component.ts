@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of, throwError } from 'rxjs';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
-import { Project } from 'src/app/Models/Project';
+import { Project } from 'src/app/models/Project';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
-import { UserReceived } from 'src/app/Models/UsersReceived';
-import { Task } from 'src/app/Models/Tasks';
+import { UserReceived } from 'src/app/models/UsersReceived';
+import { Task } from 'src/app/models/Tasks';
 
 @Component({
   selector: 'app-kanban',

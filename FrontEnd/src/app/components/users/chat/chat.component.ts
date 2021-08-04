@@ -1,4 +1,4 @@
-import { MessageReceived } from 'src/app/Models/Messages';
+import { MessageReceived } from 'src/app/models/Messages';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   Component,
@@ -7,19 +7,19 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { UserReceived } from 'src/app/Models/UsersReceived';
+import { UserReceived } from 'src/app/models/UsersReceived';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, map, take } from 'rxjs/operators';
 import { colors } from './colors';
 import { ChatService } from 'src/app/services/chat.service';
 import { LocalStorageService } from 'ngx-webstorage';
-import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
+import { ConnectedUsers } from 'src/app/models/ChatModels/ConnectedUsers';
 import { Rooms } from 'src/app/models/ChatModels/Rooms';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MongoUsers } from 'src/app/Models/ChatModels/MongoUsers';
+import { MongoUsers } from 'src/app/models/ChatModels/MongoUsers';
 
 @Component({
   selector: 'app-chat',

@@ -1,18 +1,18 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Rooms } from 'src/app/Models/ChatModels/Rooms';
-import { UserReceived } from 'src/app/Models/UsersReceived';
+import { Rooms } from 'src/app/models/ChatModels/Rooms';
+import { UserReceived } from 'src/app/models/UsersReceived';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { LocalStorageService } from 'ngx-webstorage';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
-import { MessageReceived } from 'src/app/Models/Messages';
-import { ConnectedUsers } from 'src/app/Models/ChatModels/ConnectedUsers';
+import { MessageReceived } from 'src/app/models/Messages';
+import { ConnectedUsers } from 'src/app/models/ChatModels/ConnectedUsers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { forkJoin, of, throwError } from 'rxjs';
-import { MongoUsers } from 'src/app/Models/ChatModels/MongoUsers';
-import { Contact } from 'src/app/Models/ChatModels/Contacts';
+import { MongoUsers } from 'src/app/models/ChatModels/MongoUsers';
+import { Contact } from 'src/app/models/ChatModels/Contacts';
 
 @Component({
   selector: 'app-oneonone',

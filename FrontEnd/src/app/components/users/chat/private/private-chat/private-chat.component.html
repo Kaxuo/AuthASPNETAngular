@@ -1,1 +1,38 @@
-<p>private-chat works!</p>
+<div class="private-body">
+  <div class="private-box">
+    <div class="center-box">
+      <div class="leftside">
+        <div class="title">Users list</div>
+        <div class="users">
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Bob</span></p>
+          <p><span>Icon</span><span>Kain</span></p>
+        </div>
+      </div>
+      <div class="rightside">
+        <div #container class="messages">
+          <span
+            [ngClass]="i % 2 == 1 ? 'mine' : 'yours'"
+            class="all-messages"
+            *ngFor="let mess of messages; let i = index"
+            >{{ mess }}</span
+          >
+        </div>
+        <hr class="line"/>
+      </div>
+    </div>
+  </div>
+</div>

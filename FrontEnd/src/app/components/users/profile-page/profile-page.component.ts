@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
-import { UserReceived } from 'src/app/Models/UsersReceived';
+import { UserReceived } from 'src/app/models/UsersReceived';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Task } from 'src/app/Models/Tasks';
+import { Task } from 'src/app/models/Tasks';
 
 @Component({
   selector: 'app-profile-page',

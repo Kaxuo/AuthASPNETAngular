@@ -1,4 +1,4 @@
-import { Task } from '../Models/Tasks';
+import { Task } from './Tasks';
 export interface UserReceived {
   id: number;
   firstName: string;
